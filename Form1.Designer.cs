@@ -57,8 +57,12 @@
 			this.RebuildLibraryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ProgressBarStatusStrip = new System.Windows.Forms.ToolStripProgressBar();
 			this.ProgressBarLblStatusStrip = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.ActivePlaylistTab = new System.Windows.Forms.TabPage();
+			this.LibraryTab = new System.Windows.Forms.TabPage();
 			this.StatusStrip.SuspendLayout();
 			this.MenuStrip.SuspendLayout();
+			this.tabControl1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// StatusStrip
@@ -66,7 +70,7 @@
 			this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ProgressBarStatusStrip,
             this.ProgressBarLblStatusStrip});
-			this.StatusStrip.Location = new System.Drawing.Point(0, 328);
+			this.StatusStrip.Location = new System.Drawing.Point(0, 399);
 			this.StatusStrip.Name = "StatusStrip";
 			this.StatusStrip.Size = new System.Drawing.Size(754, 22);
 			this.StatusStrip.TabIndex = 0;
@@ -309,11 +313,42 @@
 			this.ProgressBarLblStatusStrip.Size = new System.Drawing.Size(39, 17);
 			this.ProgressBarLblStatusStrip.Text = "Ready";
 			// 
+			// tabControl1
+			// 
+			this.tabControl1.Controls.Add(this.ActivePlaylistTab);
+			this.tabControl1.Controls.Add(this.LibraryTab);
+			this.tabControl1.Location = new System.Drawing.Point(12, 169);
+			this.tabControl1.Name = "tabControl1";
+			this.tabControl1.SelectedIndex = 0;
+			this.tabControl1.Size = new System.Drawing.Size(278, 240);
+			this.tabControl1.TabIndex = 2;
+			// 
+			// ActivePlaylistTab
+			// 
+			this.ActivePlaylistTab.Location = new System.Drawing.Point(4, 22);
+			this.ActivePlaylistTab.Name = "ActivePlaylistTab";
+			this.ActivePlaylistTab.Padding = new System.Windows.Forms.Padding(3);
+			this.ActivePlaylistTab.Size = new System.Drawing.Size(270, 214);
+			this.ActivePlaylistTab.TabIndex = 0;
+			this.ActivePlaylistTab.Text = "Active Playlist";
+			this.ActivePlaylistTab.UseVisualStyleBackColor = true;
+			// 
+			// LibraryTab
+			// 
+			this.LibraryTab.Location = new System.Drawing.Point(4, 22);
+			this.LibraryTab.Name = "LibraryTab";
+			this.LibraryTab.Padding = new System.Windows.Forms.Padding(3);
+			this.LibraryTab.Size = new System.Drawing.Size(270, 214);
+			this.LibraryTab.TabIndex = 1;
+			this.LibraryTab.Text = "Music Library";
+			this.LibraryTab.UseVisualStyleBackColor = true;
+			// 
 			// MainFrm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(754, 350);
+			this.ClientSize = new System.Drawing.Size(754, 421);
+			this.Controls.Add(this.tabControl1);
 			this.Controls.Add(this.StatusStrip);
 			this.Controls.Add(this.MenuStrip);
 			this.MainMenuStrip = this.MenuStrip;
@@ -323,6 +358,7 @@
 			this.StatusStrip.PerformLayout();
 			this.MenuStrip.ResumeLayout(false);
 			this.MenuStrip.PerformLayout();
+			this.tabControl1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -364,6 +400,9 @@
 		private System.Windows.Forms.ToolStripMenuItem AboutMenuItem;
 		private System.Windows.Forms.ToolStripProgressBar ProgressBarStatusStrip;
 		private System.Windows.Forms.ToolStripStatusLabel ProgressBarLblStatusStrip;
+		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.TabPage ActivePlaylistTab;
+		private System.Windows.Forms.TabPage LibraryTab;
 	}
 }
 
