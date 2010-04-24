@@ -12,5 +12,14 @@ namespace BooBoxClient {
 		public MainFrm() {
 			InitializeComponent();
 		}
+
+		private void MainFrm_Resize(object sender, EventArgs e) {
+			SongTrack.Width = this.Width - 17;
+			SongBufferingProgressBar.Width = this.Width - 42;
+		}
+
+		private void MainFrm_Load(object sender, EventArgs e) {
+
+		}
 	}
 }
