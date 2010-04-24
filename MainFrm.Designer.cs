@@ -57,7 +57,7 @@
 			this.HelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.AboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.TabControl = new System.Windows.Forms.TabControl();
 			this.ActivePlaylistTab = new System.Windows.Forms.TabPage();
 			this.LibraryTab = new System.Windows.Forms.TabPage();
 			this.SongBufferingProgressBar = new System.Windows.Forms.ProgressBar();
@@ -71,9 +71,13 @@
 			this.button2 = new System.Windows.Forms.Button();
 			this.pictureBox2 = new System.Windows.Forms.PictureBox();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.NewPlaylistCmd = new System.Windows.Forms.Button();
+			this.DeletePlaylistCmd = new System.Windows.Forms.Button();
+			this.PlaylistComb = new System.Windows.Forms.ComboBox();
 			this.StatusStrip.SuspendLayout();
 			this.MenuStrip.SuspendLayout();
-			this.tabControl1.SuspendLayout();
+			this.TabControl.SuspendLayout();
+			this.ActivePlaylistTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.SongTrack)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeTrack)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -85,7 +89,7 @@
 			this.StatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ProgressBarStatusStrip,
             this.ProgressBarLblStatusStrip});
-			this.StatusStrip.Location = new System.Drawing.Point(0, 399);
+			this.StatusStrip.Location = new System.Drawing.Point(0, 440);
 			this.StatusStrip.Name = "StatusStrip";
 			this.StatusStrip.Size = new System.Drawing.Size(684, 22);
 			this.StatusStrip.TabIndex = 0;
@@ -328,22 +332,25 @@
 			this.AboutMenuItem.Size = new System.Drawing.Size(118, 22);
 			this.AboutMenuItem.Text = "About";
 			// 
-			// tabControl1
+			// TabControl
 			// 
-			this.tabControl1.Controls.Add(this.ActivePlaylistTab);
-			this.tabControl1.Controls.Add(this.LibraryTab);
-			this.tabControl1.Location = new System.Drawing.Point(6, 142);
-			this.tabControl1.Name = "tabControl1";
-			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(617, 240);
-			this.tabControl1.TabIndex = 2;
+			this.TabControl.Controls.Add(this.ActivePlaylistTab);
+			this.TabControl.Controls.Add(this.LibraryTab);
+			this.TabControl.Location = new System.Drawing.Point(7, 82);
+			this.TabControl.Name = "TabControl";
+			this.TabControl.SelectedIndex = 0;
+			this.TabControl.Size = new System.Drawing.Size(672, 352);
+			this.TabControl.TabIndex = 2;
 			// 
 			// ActivePlaylistTab
 			// 
+			this.ActivePlaylistTab.Controls.Add(this.NewPlaylistCmd);
+			this.ActivePlaylistTab.Controls.Add(this.DeletePlaylistCmd);
+			this.ActivePlaylistTab.Controls.Add(this.PlaylistComb);
 			this.ActivePlaylistTab.Location = new System.Drawing.Point(4, 22);
 			this.ActivePlaylistTab.Name = "ActivePlaylistTab";
 			this.ActivePlaylistTab.Padding = new System.Windows.Forms.Padding(3);
-			this.ActivePlaylistTab.Size = new System.Drawing.Size(609, 214);
+			this.ActivePlaylistTab.Size = new System.Drawing.Size(664, 326);
 			this.ActivePlaylistTab.TabIndex = 0;
 			this.ActivePlaylistTab.Text = "Active Playlist";
 			this.ActivePlaylistTab.UseVisualStyleBackColor = true;
@@ -360,16 +367,16 @@
 			// 
 			// SongBufferingProgressBar
 			// 
-			this.SongBufferingProgressBar.Location = new System.Drawing.Point(12, 127);
+			this.SongBufferingProgressBar.Location = new System.Drawing.Point(292, 58);
 			this.SongBufferingProgressBar.Name = "SongBufferingProgressBar";
-			this.SongBufferingProgressBar.Size = new System.Drawing.Size(658, 10);
+			this.SongBufferingProgressBar.Size = new System.Drawing.Size(378, 10);
 			this.SongBufferingProgressBar.TabIndex = 22;
 			// 
 			// CounterLbl
 			// 
-			this.CounterLbl.Location = new System.Drawing.Point(5, 93);
+			this.CounterLbl.Location = new System.Drawing.Point(285, 24);
 			this.CounterLbl.Name = "CounterLbl";
-			this.CounterLbl.Size = new System.Drawing.Size(178, 13);
+			this.CounterLbl.Size = new System.Drawing.Size(252, 13);
 			this.CounterLbl.TabIndex = 21;
 			this.CounterLbl.Text = "0:00";
 			// 
@@ -377,10 +384,10 @@
 			// 
 			this.SongTrack.AutoSize = false;
 			this.SongTrack.BackColor = System.Drawing.SystemColors.Control;
-			this.SongTrack.Location = new System.Drawing.Point(0, 105);
+			this.SongTrack.Location = new System.Drawing.Point(280, 36);
 			this.SongTrack.Maximum = 10000;
 			this.SongTrack.Name = "SongTrack";
-			this.SongTrack.Size = new System.Drawing.Size(683, 23);
+			this.SongTrack.Size = new System.Drawing.Size(403, 23);
 			this.SongTrack.TabIndex = 20;
 			this.SongTrack.TickStyle = System.Windows.Forms.TickStyle.None;
 			// 
@@ -429,7 +436,6 @@
 			// 
 			// button1
 			// 
-			this.button1.Enabled = false;
 			this.button1.Location = new System.Drawing.Point(6, 24);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(75, 23);
@@ -439,7 +445,6 @@
 			// 
 			// button2
 			// 
-			this.button2.Enabled = false;
 			this.button2.Location = new System.Drawing.Point(6, 53);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(75, 23);
@@ -465,11 +470,37 @@
 			this.pictureBox1.TabIndex = 29;
 			this.pictureBox1.TabStop = false;
 			// 
+			// NewPlaylistCmd
+			// 
+			this.NewPlaylistCmd.Location = new System.Drawing.Point(573, 4);
+			this.NewPlaylistCmd.Name = "NewPlaylistCmd";
+			this.NewPlaylistCmd.Size = new System.Drawing.Size(85, 23);
+			this.NewPlaylistCmd.TabIndex = 10;
+			this.NewPlaylistCmd.Text = "New Playlist";
+			this.NewPlaylistCmd.UseVisualStyleBackColor = true;
+			// 
+			// DeletePlaylistCmd
+			// 
+			this.DeletePlaylistCmd.Location = new System.Drawing.Point(482, 4);
+			this.DeletePlaylistCmd.Name = "DeletePlaylistCmd";
+			this.DeletePlaylistCmd.Size = new System.Drawing.Size(85, 23);
+			this.DeletePlaylistCmd.TabIndex = 9;
+			this.DeletePlaylistCmd.Text = "Delete Playlist";
+			this.DeletePlaylistCmd.UseVisualStyleBackColor = true;
+			// 
+			// PlaylistComb
+			// 
+			this.PlaylistComb.FormattingEnabled = true;
+			this.PlaylistComb.Location = new System.Drawing.Point(6, 6);
+			this.PlaylistComb.Name = "PlaylistComb";
+			this.PlaylistComb.Size = new System.Drawing.Size(470, 21);
+			this.PlaylistComb.TabIndex = 8;
+			// 
 			// MainFrm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(684, 421);
+			this.ClientSize = new System.Drawing.Size(684, 462);
 			this.Controls.Add(this.pictureBox2);
 			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.button2);
@@ -481,7 +512,7 @@
 			this.Controls.Add(this.SongBufferingProgressBar);
 			this.Controls.Add(this.CounterLbl);
 			this.Controls.Add(this.SongTrack);
-			this.Controls.Add(this.tabControl1);
+			this.Controls.Add(this.TabControl);
 			this.Controls.Add(this.StatusStrip);
 			this.Controls.Add(this.MenuStrip);
 			this.MainMenuStrip = this.MenuStrip;
@@ -493,7 +524,8 @@
 			this.StatusStrip.PerformLayout();
 			this.MenuStrip.ResumeLayout(false);
 			this.MenuStrip.PerformLayout();
-			this.tabControl1.ResumeLayout(false);
+			this.TabControl.ResumeLayout(false);
+			this.ActivePlaylistTab.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.SongTrack)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeTrack)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -539,7 +571,7 @@
 		private System.Windows.Forms.ToolStripMenuItem AboutMenuItem;
 		private System.Windows.Forms.ToolStripProgressBar ProgressBarStatusStrip;
 		private System.Windows.Forms.ToolStripStatusLabel ProgressBarLblStatusStrip;
-		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.TabControl TabControl;
 		private System.Windows.Forms.TabPage ActivePlaylistTab;
 		private System.Windows.Forms.TabPage LibraryTab;
 		private System.Windows.Forms.ProgressBar SongBufferingProgressBar;
@@ -553,6 +585,9 @@
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.PictureBox pictureBox2;
+		private System.Windows.Forms.Button NewPlaylistCmd;
+		private System.Windows.Forms.Button DeletePlaylistCmd;
+		private System.Windows.Forms.ComboBox PlaylistComb;
 	}
 }
 
