@@ -15,14 +15,15 @@ namespace BooBoxClient {
 		}
 
 		private void MainFrm_Resize(object sender, EventArgs e) {
-			SongTrack.Width = this.Width - 217;
-			SongBufferingProgressBar.Width = this.Width - 242;
-			TabControl.Width = this.Width - 28;
-			VolumeDownPicBox.Left = this.Width - 204;
-			VolumeUpPicBox.Left = this.Width - 37;
-			VolumeTrack.Left = this.Width - 187;
-	
-			TabControl.Height = this.Height - 148;
+			#region Horizontal Calculations
+			//SongTrack.Width = this.Width - 217;
+			//SongBufferingProgressBar.Width = this.Width - 242;
+			//TabControl.Width = this.Width - 28;
+			//PlaylistComb.Width = TabControl.Width - 200;
+			#endregion
+			#region Vertical Calculations
+			//TabControl.Height = this.Height - 148;
+			#endregion
 		}
 
 		private void MainFrm_Load(object sender, EventArgs e) {

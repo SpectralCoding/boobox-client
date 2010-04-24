@@ -334,6 +334,9 @@
 			// 
 			// TabControl
 			// 
+			this.TabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.TabControl.Controls.Add(this.ActivePlaylistTab);
 			this.TabControl.Controls.Add(this.LibraryTab);
 			this.TabControl.Location = new System.Drawing.Point(7, 82);
@@ -357,7 +360,8 @@
 			// 
 			// NewPlaylistCmd
 			// 
-			this.NewPlaylistCmd.Location = new System.Drawing.Point(573, 4);
+			this.NewPlaylistCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.NewPlaylistCmd.Location = new System.Drawing.Point(575, 4);
 			this.NewPlaylistCmd.Name = "NewPlaylistCmd";
 			this.NewPlaylistCmd.Size = new System.Drawing.Size(85, 23);
 			this.NewPlaylistCmd.TabIndex = 10;
@@ -366,7 +370,8 @@
 			// 
 			// DeletePlaylistCmd
 			// 
-			this.DeletePlaylistCmd.Location = new System.Drawing.Point(482, 4);
+			this.DeletePlaylistCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DeletePlaylistCmd.Location = new System.Drawing.Point(484, 4);
 			this.DeletePlaylistCmd.Name = "DeletePlaylistCmd";
 			this.DeletePlaylistCmd.Size = new System.Drawing.Size(85, 23);
 			this.DeletePlaylistCmd.TabIndex = 9;
@@ -375,10 +380,12 @@
 			// 
 			// PlaylistComb
 			// 
+			this.PlaylistComb.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.PlaylistComb.FormattingEnabled = true;
 			this.PlaylistComb.Location = new System.Drawing.Point(6, 6);
 			this.PlaylistComb.Name = "PlaylistComb";
-			this.PlaylistComb.Size = new System.Drawing.Size(470, 21);
+			this.PlaylistComb.Size = new System.Drawing.Size(472, 21);
 			this.PlaylistComb.TabIndex = 8;
 			// 
 			// LibraryTab
@@ -393,6 +400,8 @@
 			// 
 			// SongBufferingProgressBar
 			// 
+			this.SongBufferingProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.SongBufferingProgressBar.Location = new System.Drawing.Point(212, 62);
 			this.SongBufferingProgressBar.Name = "SongBufferingProgressBar";
 			this.SongBufferingProgressBar.Size = new System.Drawing.Size(458, 10);
@@ -408,6 +417,8 @@
 			// 
 			// SongTrack
 			// 
+			this.SongTrack.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.SongTrack.AutoSize = false;
 			this.SongTrack.BackColor = System.Drawing.SystemColors.Control;
 			this.SongTrack.Location = new System.Drawing.Point(200, 40);
@@ -419,10 +430,11 @@
 			// 
 			// VolumeTrack
 			// 
+			this.VolumeTrack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.VolumeTrack.AutoSize = false;
 			this.VolumeTrack.BackColor = System.Drawing.SystemColors.Control;
 			this.VolumeTrack.LargeChange = 1;
-			this.VolumeTrack.Location = new System.Drawing.Point(513, 2);
+			this.VolumeTrack.Location = new System.Drawing.Point(511, 4);
 			this.VolumeTrack.Maximum = 100;
 			this.VolumeTrack.Name = "VolumeTrack";
 			this.VolumeTrack.Size = new System.Drawing.Size(152, 23);
@@ -480,8 +492,9 @@
 			// 
 			// VolumeUpPicBox
 			// 
+			this.VolumeUpPicBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.VolumeUpPicBox.Image = global::BooBoxClient.Properties.Resources.VolumeUp;
-			this.VolumeUpPicBox.Location = new System.Drawing.Point(663, 2);
+			this.VolumeUpPicBox.Location = new System.Drawing.Point(661, 4);
 			this.VolumeUpPicBox.Name = "VolumeUpPicBox";
 			this.VolumeUpPicBox.Size = new System.Drawing.Size(20, 20);
 			this.VolumeUpPicBox.TabIndex = 30;
@@ -489,8 +502,9 @@
 			// 
 			// VolumeDownPicBox
 			// 
+			this.VolumeDownPicBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.VolumeDownPicBox.Image = global::BooBoxClient.Properties.Resources.VolumeDown;
-			this.VolumeDownPicBox.Location = new System.Drawing.Point(496, 2);
+			this.VolumeDownPicBox.Location = new System.Drawing.Point(494, 4);
 			this.VolumeDownPicBox.Name = "VolumeDownPicBox";
 			this.VolumeDownPicBox.Size = new System.Drawing.Size(20, 20);
 			this.VolumeDownPicBox.TabIndex = 29;
