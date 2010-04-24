@@ -60,6 +60,13 @@ namespace BooBoxClient.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Playing {
+            get {
+                object obj = ResourceManager.GetObject("Playing", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap VolumeDown {
             get {
                 object obj = ResourceManager.GetObject("VolumeDown", resourceCulture);

@@ -81,6 +81,7 @@
     <None Include="Resources\VolumeUp.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Playing.png" />
     <Content Include="Resources\VolumeDown.png" />
   </ItemGroup>
   <ItemGroup>

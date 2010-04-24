@@ -23,6 +23,8 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.StatusStrip = new System.Windows.Forms.StatusStrip();
 			this.ProgressBarStatusStrip = new System.Windows.Forms.ToolStripProgressBar();
 			this.ProgressBarLblStatusStrip = new System.Windows.Forms.ToolStripStatusLabel();
@@ -72,8 +74,6 @@
 			this.PlayCmd = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
-			this.VolumeUpPicBox = new System.Windows.Forms.PictureBox();
-			this.VolumeDownPicBox = new System.Windows.Forms.PictureBox();
 			this.DelCmd = new System.Windows.Forms.Button();
 			this.ToBottomCmd = new System.Windows.Forms.Button();
 			this.DownCmd = new System.Windows.Forms.Button();
@@ -83,11 +83,38 @@
 			this.VolumeUpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.VolumeDownMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
-			this.MusicLibraryDGV = new System.Windows.Forms.DataGridView();
 			this.NewPlaylistMLComb = new System.Windows.Forms.Button();
 			this.DeletePlaylistMLCmd = new System.Windows.Forms.Button();
 			this.AddToPlaylistMLCmd = new System.Windows.Forms.Button();
 			this.PlaylistMLComb = new System.Windows.Forms.ComboBox();
+			this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+			this.VolumeUpPicBox = new System.Windows.Forms.PictureBox();
+			this.VolumeDownPicBox = new System.Windows.Forms.PictureBox();
+			this.MusicLibraryDGV = new System.Windows.Forms.DataGridView();
+			this.PlayingMLDGVColumn = new System.Windows.Forms.DataGridViewImageColumn();
+			this.TitleMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ArtistsMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.AlbumMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.LengthMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.SizeMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.PlaysMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.GenresMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.TrackMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.YearMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.CommentMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ServerMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.PlayingAPDGVColumn = new System.Windows.Forms.DataGridViewImageColumn();
+			this.TitleAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ArtistsAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.AlbumAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.LengthAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.SizeAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.PlaysAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.GenresAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.TrackAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.YearAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.CommentAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ServerAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.StatusStrip.SuspendLayout();
 			this.MenuStrip.SuspendLayout();
 			this.TabControl.SuspendLayout();
@@ -95,9 +122,9 @@
 			this.LibraryTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.SongTrack)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeTrack)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.ActivePlaylistDGV)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeUpPicBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeDownPicBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.ActivePlaylistDGV)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.MusicLibraryDGV)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -338,18 +365,18 @@
 			// 
 			this.HelpMenuItem.Name = "HelpMenuItem";
 			this.HelpMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-			this.HelpMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.HelpMenuItem.Size = new System.Drawing.Size(118, 22);
 			this.HelpMenuItem.Text = "Help";
 			// 
 			// toolStripMenuItem1
 			// 
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(115, 6);
 			// 
 			// AboutMenuItem
 			// 
 			this.AboutMenuItem.Name = "AboutMenuItem";
-			this.AboutMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.AboutMenuItem.Size = new System.Drawing.Size(118, 22);
 			this.AboutMenuItem.Text = "About";
 			// 
 			// TabControl
@@ -416,11 +443,11 @@
 			// 
 			// LibraryTab
 			// 
+			this.LibraryTab.Controls.Add(this.MusicLibraryDGV);
 			this.LibraryTab.Controls.Add(this.NewPlaylistMLComb);
 			this.LibraryTab.Controls.Add(this.DeletePlaylistMLCmd);
 			this.LibraryTab.Controls.Add(this.AddToPlaylistMLCmd);
 			this.LibraryTab.Controls.Add(this.PlaylistMLComb);
-			this.LibraryTab.Controls.Add(this.MusicLibraryDGV);
 			this.LibraryTab.Location = new System.Drawing.Point(4, 22);
 			this.LibraryTab.Name = "LibraryTab";
 			this.LibraryTab.Padding = new System.Windows.Forms.Padding(3);
@@ -522,26 +549,6 @@
 			this.button2.Text = "Shuffle Off";
 			this.button2.UseVisualStyleBackColor = true;
 			// 
-			// VolumeUpPicBox
-			// 
-			this.VolumeUpPicBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.VolumeUpPicBox.Image = global::BooBoxClient.Properties.Resources.VolumeUp;
-			this.VolumeUpPicBox.Location = new System.Drawing.Point(661, 4);
-			this.VolumeUpPicBox.Name = "VolumeUpPicBox";
-			this.VolumeUpPicBox.Size = new System.Drawing.Size(20, 20);
-			this.VolumeUpPicBox.TabIndex = 30;
-			this.VolumeUpPicBox.TabStop = false;
-			// 
-			// VolumeDownPicBox
-			// 
-			this.VolumeDownPicBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.VolumeDownPicBox.Image = global::BooBoxClient.Properties.Resources.VolumeDown;
-			this.VolumeDownPicBox.Location = new System.Drawing.Point(494, 4);
-			this.VolumeDownPicBox.Name = "VolumeDownPicBox";
-			this.VolumeDownPicBox.Size = new System.Drawing.Size(20, 20);
-			this.VolumeDownPicBox.TabIndex = 29;
-			this.VolumeDownPicBox.TabStop = false;
-			// 
 			// DelCmd
 			// 
 			this.DelCmd.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -594,12 +601,33 @@
 			// 
 			// ActivePlaylistDGV
 			// 
+			this.ActivePlaylistDGV.AllowUserToAddRows = false;
+			this.ActivePlaylistDGV.AllowUserToDeleteRows = false;
+			this.ActivePlaylistDGV.AllowUserToResizeColumns = false;
+			this.ActivePlaylistDGV.AllowUserToResizeRows = false;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+			this.ActivePlaylistDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.ActivePlaylistDGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.ActivePlaylistDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.ActivePlaylistDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.PlayingAPDGVColumn,
+            this.TitleAPDGVColumn,
+            this.ArtistsAPDGVColumn,
+            this.AlbumAPDGVColumn,
+            this.LengthAPDGVColumn,
+            this.SizeAPDGVColumn,
+            this.PlaysAPDGVColumn,
+            this.GenresAPDGVColumn,
+            this.TrackAPDGVColumn,
+            this.YearAPDGVColumn,
+            this.CommentAPDGVColumn,
+            this.ServerAPDGVColumn});
+			this.ActivePlaylistDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
 			this.ActivePlaylistDGV.Location = new System.Drawing.Point(6, 33);
 			this.ActivePlaylistDGV.Name = "ActivePlaylistDGV";
+			this.ActivePlaylistDGV.RowHeadersVisible = false;
 			this.ActivePlaylistDGV.Size = new System.Drawing.Size(613, 287);
 			this.ActivePlaylistDGV.TabIndex = 15;
 			// 
@@ -621,17 +649,6 @@
 			// 
 			this.toolStripMenuItem6.Name = "toolStripMenuItem6";
 			this.toolStripMenuItem6.Size = new System.Drawing.Size(211, 6);
-			// 
-			// MusicLibraryDGV
-			// 
-			this.MusicLibraryDGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.MusicLibraryDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.MusicLibraryDGV.Location = new System.Drawing.Point(5, 6);
-			this.MusicLibraryDGV.Name = "MusicLibraryDGV";
-			this.MusicLibraryDGV.Size = new System.Drawing.Size(653, 287);
-			this.MusicLibraryDGV.TabIndex = 19;
 			// 
 			// NewPlaylistMLComb
 			// 
@@ -673,6 +690,239 @@
 			this.PlaylistMLComb.Size = new System.Drawing.Size(380, 21);
 			this.PlaylistMLComb.TabIndex = 20;
 			// 
+			// dataGridViewImageColumn1
+			// 
+			this.dataGridViewImageColumn1.HeaderText = "Playing";
+			this.dataGridViewImageColumn1.Image = global::BooBoxClient.Properties.Resources.Playing;
+			this.dataGridViewImageColumn1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+			this.dataGridViewImageColumn1.MinimumWidth = 20;
+			this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+			this.dataGridViewImageColumn1.Width = 20;
+			// 
+			// VolumeUpPicBox
+			// 
+			this.VolumeUpPicBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.VolumeUpPicBox.Image = global::BooBoxClient.Properties.Resources.VolumeUp;
+			this.VolumeUpPicBox.Location = new System.Drawing.Point(661, 4);
+			this.VolumeUpPicBox.Name = "VolumeUpPicBox";
+			this.VolumeUpPicBox.Size = new System.Drawing.Size(20, 20);
+			this.VolumeUpPicBox.TabIndex = 30;
+			this.VolumeUpPicBox.TabStop = false;
+			// 
+			// VolumeDownPicBox
+			// 
+			this.VolumeDownPicBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.VolumeDownPicBox.Image = global::BooBoxClient.Properties.Resources.VolumeDown;
+			this.VolumeDownPicBox.Location = new System.Drawing.Point(494, 4);
+			this.VolumeDownPicBox.Name = "VolumeDownPicBox";
+			this.VolumeDownPicBox.Size = new System.Drawing.Size(20, 20);
+			this.VolumeDownPicBox.TabIndex = 29;
+			this.VolumeDownPicBox.TabStop = false;
+			// 
+			// MusicLibraryDGV
+			// 
+			this.MusicLibraryDGV.AllowUserToAddRows = false;
+			this.MusicLibraryDGV.AllowUserToDeleteRows = false;
+			this.MusicLibraryDGV.AllowUserToResizeColumns = false;
+			this.MusicLibraryDGV.AllowUserToResizeRows = false;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+			this.MusicLibraryDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+			this.MusicLibraryDGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.MusicLibraryDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.MusicLibraryDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.PlayingMLDGVColumn,
+            this.TitleMLDGVColumn,
+            this.ArtistsMLDGVColumn,
+            this.AlbumMLDGVColumn,
+            this.LengthMLDGVColumn,
+            this.SizeMLDGVColumn,
+            this.PlaysMLDGVColumn,
+            this.GenresMLDGVColumn,
+            this.TrackMLDGVColumn,
+            this.YearMLDGVColumn,
+            this.CommentMLDGVColumn,
+            this.ServerMLDGVColumn});
+			this.MusicLibraryDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+			this.MusicLibraryDGV.Location = new System.Drawing.Point(5, 6);
+			this.MusicLibraryDGV.Name = "MusicLibraryDGV";
+			this.MusicLibraryDGV.RowHeadersVisible = false;
+			this.MusicLibraryDGV.Size = new System.Drawing.Size(653, 287);
+			this.MusicLibraryDGV.TabIndex = 24;
+			// 
+			// PlayingMLDGVColumn
+			// 
+			this.PlayingMLDGVColumn.HeaderText = "P";
+			this.PlayingMLDGVColumn.Image = global::BooBoxClient.Properties.Resources.Playing;
+			this.PlayingMLDGVColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+			this.PlayingMLDGVColumn.MinimumWidth = 20;
+			this.PlayingMLDGVColumn.Name = "PlayingMLDGVColumn";
+			this.PlayingMLDGVColumn.Width = 20;
+			// 
+			// TitleMLDGVColumn
+			// 
+			this.TitleMLDGVColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.TitleMLDGVColumn.FillWeight = 200F;
+			this.TitleMLDGVColumn.HeaderText = "Title";
+			this.TitleMLDGVColumn.MinimumWidth = 200;
+			this.TitleMLDGVColumn.Name = "TitleMLDGVColumn";
+			// 
+			// ArtistsMLDGVColumn
+			// 
+			this.ArtistsMLDGVColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.ArtistsMLDGVColumn.HeaderText = "Artists";
+			this.ArtistsMLDGVColumn.MinimumWidth = 100;
+			this.ArtistsMLDGVColumn.Name = "ArtistsMLDGVColumn";
+			// 
+			// AlbumMLDGVColumn
+			// 
+			this.AlbumMLDGVColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.AlbumMLDGVColumn.HeaderText = "Album";
+			this.AlbumMLDGVColumn.MinimumWidth = 100;
+			this.AlbumMLDGVColumn.Name = "AlbumMLDGVColumn";
+			// 
+			// LengthMLDGVColumn
+			// 
+			this.LengthMLDGVColumn.HeaderText = "Length";
+			this.LengthMLDGVColumn.MinimumWidth = 50;
+			this.LengthMLDGVColumn.Name = "LengthMLDGVColumn";
+			this.LengthMLDGVColumn.Width = 50;
+			// 
+			// SizeMLDGVColumn
+			// 
+			this.SizeMLDGVColumn.HeaderText = "Size";
+			this.SizeMLDGVColumn.MinimumWidth = 40;
+			this.SizeMLDGVColumn.Name = "SizeMLDGVColumn";
+			this.SizeMLDGVColumn.Width = 40;
+			// 
+			// PlaysMLDGVColumn
+			// 
+			this.PlaysMLDGVColumn.HeaderText = "Plays";
+			this.PlaysMLDGVColumn.MinimumWidth = 40;
+			this.PlaysMLDGVColumn.Name = "PlaysMLDGVColumn";
+			this.PlaysMLDGVColumn.Width = 40;
+			// 
+			// GenresMLDGVColumn
+			// 
+			this.GenresMLDGVColumn.HeaderText = "Genres";
+			this.GenresMLDGVColumn.MinimumWidth = 50;
+			this.GenresMLDGVColumn.Name = "GenresMLDGVColumn";
+			// 
+			// TrackMLDGVColumn
+			// 
+			this.TrackMLDGVColumn.HeaderText = "Track";
+			this.TrackMLDGVColumn.MinimumWidth = 40;
+			this.TrackMLDGVColumn.Name = "TrackMLDGVColumn";
+			this.TrackMLDGVColumn.Width = 40;
+			// 
+			// YearMLDGVColumn
+			// 
+			this.YearMLDGVColumn.HeaderText = "Year";
+			this.YearMLDGVColumn.MinimumWidth = 40;
+			this.YearMLDGVColumn.Name = "YearMLDGVColumn";
+			this.YearMLDGVColumn.Width = 40;
+			// 
+			// CommentMLDGVColumn
+			// 
+			this.CommentMLDGVColumn.HeaderText = "Comment";
+			this.CommentMLDGVColumn.MinimumWidth = 50;
+			this.CommentMLDGVColumn.Name = "CommentMLDGVColumn";
+			this.CommentMLDGVColumn.Width = 150;
+			// 
+			// ServerMLDGVColumn
+			// 
+			this.ServerMLDGVColumn.HeaderText = "Server";
+			this.ServerMLDGVColumn.MinimumWidth = 50;
+			this.ServerMLDGVColumn.Name = "ServerMLDGVColumn";
+			this.ServerMLDGVColumn.Width = 150;
+			// 
+			// PlayingAPDGVColumn
+			// 
+			this.PlayingAPDGVColumn.HeaderText = "P";
+			this.PlayingAPDGVColumn.Image = global::BooBoxClient.Properties.Resources.Playing;
+			this.PlayingAPDGVColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+			this.PlayingAPDGVColumn.MinimumWidth = 20;
+			this.PlayingAPDGVColumn.Name = "PlayingAPDGVColumn";
+			this.PlayingAPDGVColumn.Width = 20;
+			// 
+			// TitleAPDGVColumn
+			// 
+			this.TitleAPDGVColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.TitleAPDGVColumn.FillWeight = 200F;
+			this.TitleAPDGVColumn.HeaderText = "Title";
+			this.TitleAPDGVColumn.MinimumWidth = 200;
+			this.TitleAPDGVColumn.Name = "TitleAPDGVColumn";
+			// 
+			// ArtistsAPDGVColumn
+			// 
+			this.ArtistsAPDGVColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.ArtistsAPDGVColumn.HeaderText = "Artists";
+			this.ArtistsAPDGVColumn.MinimumWidth = 100;
+			this.ArtistsAPDGVColumn.Name = "ArtistsAPDGVColumn";
+			// 
+			// AlbumAPDGVColumn
+			// 
+			this.AlbumAPDGVColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.AlbumAPDGVColumn.HeaderText = "Album";
+			this.AlbumAPDGVColumn.MinimumWidth = 100;
+			this.AlbumAPDGVColumn.Name = "AlbumAPDGVColumn";
+			// 
+			// LengthAPDGVColumn
+			// 
+			this.LengthAPDGVColumn.HeaderText = "Length";
+			this.LengthAPDGVColumn.MinimumWidth = 50;
+			this.LengthAPDGVColumn.Name = "LengthAPDGVColumn";
+			this.LengthAPDGVColumn.Width = 50;
+			// 
+			// SizeAPDGVColumn
+			// 
+			this.SizeAPDGVColumn.HeaderText = "Size";
+			this.SizeAPDGVColumn.MinimumWidth = 40;
+			this.SizeAPDGVColumn.Name = "SizeAPDGVColumn";
+			this.SizeAPDGVColumn.Width = 40;
+			// 
+			// PlaysAPDGVColumn
+			// 
+			this.PlaysAPDGVColumn.HeaderText = "Plays";
+			this.PlaysAPDGVColumn.MinimumWidth = 40;
+			this.PlaysAPDGVColumn.Name = "PlaysAPDGVColumn";
+			this.PlaysAPDGVColumn.Width = 40;
+			// 
+			// GenresAPDGVColumn
+			// 
+			this.GenresAPDGVColumn.HeaderText = "Genres";
+			this.GenresAPDGVColumn.MinimumWidth = 50;
+			this.GenresAPDGVColumn.Name = "GenresAPDGVColumn";
+			// 
+			// TrackAPDGVColumn
+			// 
+			this.TrackAPDGVColumn.HeaderText = "Track";
+			this.TrackAPDGVColumn.MinimumWidth = 40;
+			this.TrackAPDGVColumn.Name = "TrackAPDGVColumn";
+			this.TrackAPDGVColumn.Width = 40;
+			// 
+			// YearAPDGVColumn
+			// 
+			this.YearAPDGVColumn.HeaderText = "Year";
+			this.YearAPDGVColumn.MinimumWidth = 40;
+			this.YearAPDGVColumn.Name = "YearAPDGVColumn";
+			this.YearAPDGVColumn.Width = 40;
+			// 
+			// CommentAPDGVColumn
+			// 
+			this.CommentAPDGVColumn.HeaderText = "Comment";
+			this.CommentAPDGVColumn.MinimumWidth = 50;
+			this.CommentAPDGVColumn.Name = "CommentAPDGVColumn";
+			this.CommentAPDGVColumn.Width = 150;
+			// 
+			// ServerAPDGVColumn
+			// 
+			this.ServerAPDGVColumn.HeaderText = "Server";
+			this.ServerAPDGVColumn.MinimumWidth = 50;
+			this.ServerAPDGVColumn.Name = "ServerAPDGVColumn";
+			this.ServerAPDGVColumn.Width = 150;
+			// 
 			// MainFrm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -707,9 +957,9 @@
 			this.LibraryTab.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.SongTrack)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeTrack)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.ActivePlaylistDGV)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeUpPicBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeDownPicBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.ActivePlaylistDGV)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.MusicLibraryDGV)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -782,7 +1032,32 @@
 		private System.Windows.Forms.Button DeletePlaylistMLCmd;
 		private System.Windows.Forms.Button AddToPlaylistMLCmd;
 		private System.Windows.Forms.ComboBox PlaylistMLComb;
+		private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
 		private System.Windows.Forms.DataGridView MusicLibraryDGV;
+		private System.Windows.Forms.DataGridViewImageColumn PlayingAPDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn TitleAPDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ArtistsAPDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn AlbumAPDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn LengthAPDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn SizeAPDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn PlaysAPDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn GenresAPDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn TrackAPDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn YearAPDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn CommentAPDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ServerAPDGVColumn;
+		private System.Windows.Forms.DataGridViewImageColumn PlayingMLDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn TitleMLDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ArtistsMLDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn AlbumMLDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn LengthMLDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn SizeMLDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn PlaysMLDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn GenresMLDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn TrackMLDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn YearMLDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn CommentMLDGVColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ServerMLDGVColumn;
 	}
 }
 
