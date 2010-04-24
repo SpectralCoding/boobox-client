@@ -59,9 +59,9 @@
 			this.AboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.TabControl = new System.Windows.Forms.TabControl();
 			this.ActivePlaylistTab = new System.Windows.Forms.TabPage();
-			this.NewPlaylistCmd = new System.Windows.Forms.Button();
-			this.DeletePlaylistCmd = new System.Windows.Forms.Button();
-			this.PlaylistComb = new System.Windows.Forms.ComboBox();
+			this.NewPlaylistAPCmd = new System.Windows.Forms.Button();
+			this.DeletePlaylistAPCmd = new System.Windows.Forms.Button();
+			this.PlaylistAPComb = new System.Windows.Forms.ComboBox();
 			this.LibraryTab = new System.Windows.Forms.TabPage();
 			this.SongBufferingProgressBar = new System.Windows.Forms.ProgressBar();
 			this.CounterLbl = new System.Windows.Forms.Label();
@@ -74,14 +74,31 @@
 			this.button2 = new System.Windows.Forms.Button();
 			this.VolumeUpPicBox = new System.Windows.Forms.PictureBox();
 			this.VolumeDownPicBox = new System.Windows.Forms.PictureBox();
+			this.DelCmd = new System.Windows.Forms.Button();
+			this.ToBottomCmd = new System.Windows.Forms.Button();
+			this.DownCmd = new System.Windows.Forms.Button();
+			this.UpCmd = new System.Windows.Forms.Button();
+			this.ToTopCmd = new System.Windows.Forms.Button();
+			this.ActivePlaylistDGV = new System.Windows.Forms.DataGridView();
+			this.VolumeUpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.VolumeDownMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
+			this.MusicLibraryDGV = new System.Windows.Forms.DataGridView();
+			this.NewPlaylistMLComb = new System.Windows.Forms.Button();
+			this.DeletePlaylistMLCmd = new System.Windows.Forms.Button();
+			this.AddToPlaylistMLCmd = new System.Windows.Forms.Button();
+			this.PlaylistMLComb = new System.Windows.Forms.ComboBox();
 			this.StatusStrip.SuspendLayout();
 			this.MenuStrip.SuspendLayout();
 			this.TabControl.SuspendLayout();
 			this.ActivePlaylistTab.SuspendLayout();
+			this.LibraryTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.SongTrack)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeTrack)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeUpPicBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeDownPicBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.ActivePlaylistDGV)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.MusicLibraryDGV)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// StatusStrip
@@ -201,6 +218,9 @@
             this.PlayMenuItem,
             this.NextMenuItem,
             this.PreviousMenuItem,
+            this.toolStripMenuItem6,
+            this.VolumeUpMenuItem,
+            this.VolumeDownMenuItem,
             this.toolStripMenuItem2,
             this.ShuffleMenuItem,
             this.RepeatMenuItem});
@@ -212,27 +232,27 @@
 			// 
 			this.PlayMenuItem.Name = "PlayMenuItem";
 			this.PlayMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-			this.PlayMenuItem.Size = new System.Drawing.Size(173, 22);
+			this.PlayMenuItem.Size = new System.Drawing.Size(214, 22);
 			this.PlayMenuItem.Text = "Play";
 			// 
 			// NextMenuItem
 			// 
 			this.NextMenuItem.Name = "NextMenuItem";
 			this.NextMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Right)));
-			this.NextMenuItem.Size = new System.Drawing.Size(173, 22);
+			this.NextMenuItem.Size = new System.Drawing.Size(214, 22);
 			this.NextMenuItem.Text = "Next";
 			// 
 			// PreviousMenuItem
 			// 
 			this.PreviousMenuItem.Name = "PreviousMenuItem";
 			this.PreviousMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Left)));
-			this.PreviousMenuItem.Size = new System.Drawing.Size(173, 22);
+			this.PreviousMenuItem.Size = new System.Drawing.Size(214, 22);
 			this.PreviousMenuItem.Text = "Previous";
 			// 
 			// toolStripMenuItem2
 			// 
 			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-			this.toolStripMenuItem2.Size = new System.Drawing.Size(170, 6);
+			this.toolStripMenuItem2.Size = new System.Drawing.Size(211, 6);
 			// 
 			// ShuffleMenuItem
 			// 
@@ -240,7 +260,7 @@
             this.ShuffleOffMenuItem,
             this.ShuffleOnMenuItem});
 			this.ShuffleMenuItem.Name = "ShuffleMenuItem";
-			this.ShuffleMenuItem.Size = new System.Drawing.Size(173, 22);
+			this.ShuffleMenuItem.Size = new System.Drawing.Size(214, 22);
 			this.ShuffleMenuItem.Text = "Shuffle";
 			// 
 			// ShuffleOffMenuItem
@@ -262,7 +282,7 @@
             this.RepeatOneMenuItem,
             this.RepeatAllMenuItem});
 			this.RepeatMenuItem.Name = "RepeatMenuItem";
-			this.RepeatMenuItem.Size = new System.Drawing.Size(173, 22);
+			this.RepeatMenuItem.Size = new System.Drawing.Size(214, 22);
 			this.RepeatMenuItem.Text = "Repeat";
 			// 
 			// RepeatOffMenuItem
@@ -318,18 +338,18 @@
 			// 
 			this.HelpMenuItem.Name = "HelpMenuItem";
 			this.HelpMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-			this.HelpMenuItem.Size = new System.Drawing.Size(118, 22);
+			this.HelpMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.HelpMenuItem.Text = "Help";
 			// 
 			// toolStripMenuItem1
 			// 
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(115, 6);
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
 			// 
 			// AboutMenuItem
 			// 
 			this.AboutMenuItem.Name = "AboutMenuItem";
-			this.AboutMenuItem.Size = new System.Drawing.Size(118, 22);
+			this.AboutMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.AboutMenuItem.Text = "About";
 			// 
 			// TabControl
@@ -347,9 +367,15 @@
 			// 
 			// ActivePlaylistTab
 			// 
-			this.ActivePlaylistTab.Controls.Add(this.NewPlaylistCmd);
-			this.ActivePlaylistTab.Controls.Add(this.DeletePlaylistCmd);
-			this.ActivePlaylistTab.Controls.Add(this.PlaylistComb);
+			this.ActivePlaylistTab.Controls.Add(this.DelCmd);
+			this.ActivePlaylistTab.Controls.Add(this.ToBottomCmd);
+			this.ActivePlaylistTab.Controls.Add(this.DownCmd);
+			this.ActivePlaylistTab.Controls.Add(this.UpCmd);
+			this.ActivePlaylistTab.Controls.Add(this.ToTopCmd);
+			this.ActivePlaylistTab.Controls.Add(this.ActivePlaylistDGV);
+			this.ActivePlaylistTab.Controls.Add(this.NewPlaylistAPCmd);
+			this.ActivePlaylistTab.Controls.Add(this.DeletePlaylistAPCmd);
+			this.ActivePlaylistTab.Controls.Add(this.PlaylistAPComb);
 			this.ActivePlaylistTab.Location = new System.Drawing.Point(4, 22);
 			this.ActivePlaylistTab.Name = "ActivePlaylistTab";
 			this.ActivePlaylistTab.Padding = new System.Windows.Forms.Padding(3);
@@ -358,38 +384,43 @@
 			this.ActivePlaylistTab.Text = "Active Playlist";
 			this.ActivePlaylistTab.UseVisualStyleBackColor = true;
 			// 
-			// NewPlaylistCmd
+			// NewPlaylistAPCmd
 			// 
-			this.NewPlaylistCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.NewPlaylistCmd.Location = new System.Drawing.Point(575, 4);
-			this.NewPlaylistCmd.Name = "NewPlaylistCmd";
-			this.NewPlaylistCmd.Size = new System.Drawing.Size(85, 23);
-			this.NewPlaylistCmd.TabIndex = 10;
-			this.NewPlaylistCmd.Text = "New Playlist";
-			this.NewPlaylistCmd.UseVisualStyleBackColor = true;
+			this.NewPlaylistAPCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.NewPlaylistAPCmd.Location = new System.Drawing.Point(575, 4);
+			this.NewPlaylistAPCmd.Name = "NewPlaylistAPCmd";
+			this.NewPlaylistAPCmd.Size = new System.Drawing.Size(85, 23);
+			this.NewPlaylistAPCmd.TabIndex = 10;
+			this.NewPlaylistAPCmd.Text = "New Playlist";
+			this.NewPlaylistAPCmd.UseVisualStyleBackColor = true;
 			// 
-			// DeletePlaylistCmd
+			// DeletePlaylistAPCmd
 			// 
-			this.DeletePlaylistCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.DeletePlaylistCmd.Location = new System.Drawing.Point(484, 4);
-			this.DeletePlaylistCmd.Name = "DeletePlaylistCmd";
-			this.DeletePlaylistCmd.Size = new System.Drawing.Size(85, 23);
-			this.DeletePlaylistCmd.TabIndex = 9;
-			this.DeletePlaylistCmd.Text = "Delete Playlist";
-			this.DeletePlaylistCmd.UseVisualStyleBackColor = true;
+			this.DeletePlaylistAPCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.DeletePlaylistAPCmd.Location = new System.Drawing.Point(484, 4);
+			this.DeletePlaylistAPCmd.Name = "DeletePlaylistAPCmd";
+			this.DeletePlaylistAPCmd.Size = new System.Drawing.Size(85, 23);
+			this.DeletePlaylistAPCmd.TabIndex = 9;
+			this.DeletePlaylistAPCmd.Text = "Delete Playlist";
+			this.DeletePlaylistAPCmd.UseVisualStyleBackColor = true;
 			// 
-			// PlaylistComb
+			// PlaylistAPComb
 			// 
-			this.PlaylistComb.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			this.PlaylistAPComb.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.PlaylistComb.FormattingEnabled = true;
-			this.PlaylistComb.Location = new System.Drawing.Point(6, 6);
-			this.PlaylistComb.Name = "PlaylistComb";
-			this.PlaylistComb.Size = new System.Drawing.Size(472, 21);
-			this.PlaylistComb.TabIndex = 8;
+			this.PlaylistAPComb.FormattingEnabled = true;
+			this.PlaylistAPComb.Location = new System.Drawing.Point(6, 6);
+			this.PlaylistAPComb.Name = "PlaylistAPComb";
+			this.PlaylistAPComb.Size = new System.Drawing.Size(472, 21);
+			this.PlaylistAPComb.TabIndex = 8;
 			// 
 			// LibraryTab
 			// 
+			this.LibraryTab.Controls.Add(this.NewPlaylistMLComb);
+			this.LibraryTab.Controls.Add(this.DeletePlaylistMLCmd);
+			this.LibraryTab.Controls.Add(this.AddToPlaylistMLCmd);
+			this.LibraryTab.Controls.Add(this.PlaylistMLComb);
+			this.LibraryTab.Controls.Add(this.MusicLibraryDGV);
 			this.LibraryTab.Location = new System.Drawing.Point(4, 22);
 			this.LibraryTab.Name = "LibraryTab";
 			this.LibraryTab.Padding = new System.Windows.Forms.Padding(3);
@@ -422,11 +453,12 @@
 			this.SongTrack.AutoSize = false;
 			this.SongTrack.BackColor = System.Drawing.SystemColors.Control;
 			this.SongTrack.Location = new System.Drawing.Point(200, 40);
-			this.SongTrack.Maximum = 10000;
+			this.SongTrack.Maximum = 10000000;
 			this.SongTrack.Name = "SongTrack";
 			this.SongTrack.Size = new System.Drawing.Size(483, 23);
 			this.SongTrack.TabIndex = 20;
 			this.SongTrack.TickStyle = System.Windows.Forms.TickStyle.None;
+			this.SongTrack.Scroll += new System.EventHandler(this.SongTrack_Scroll);
 			// 
 			// VolumeTrack
 			// 
@@ -510,6 +542,137 @@
 			this.VolumeDownPicBox.TabIndex = 29;
 			this.VolumeDownPicBox.TabStop = false;
 			// 
+			// DelCmd
+			// 
+			this.DelCmd.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.DelCmd.Location = new System.Drawing.Point(625, 157);
+			this.DelCmd.Name = "DelCmd";
+			this.DelCmd.Size = new System.Drawing.Size(33, 40);
+			this.DelCmd.TabIndex = 18;
+			this.DelCmd.Text = "Del";
+			this.DelCmd.UseVisualStyleBackColor = true;
+			// 
+			// ToBottomCmd
+			// 
+			this.ToBottomCmd.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.ToBottomCmd.Location = new System.Drawing.Point(625, 264);
+			this.ToBottomCmd.Name = "ToBottomCmd";
+			this.ToBottomCmd.Size = new System.Drawing.Size(33, 56);
+			this.ToBottomCmd.TabIndex = 20;
+			this.ToBottomCmd.Text = "\\/ \\/";
+			this.ToBottomCmd.UseVisualStyleBackColor = true;
+			// 
+			// DownCmd
+			// 
+			this.DownCmd.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.DownCmd.Location = new System.Drawing.Point(625, 203);
+			this.DownCmd.Name = "DownCmd";
+			this.DownCmd.Size = new System.Drawing.Size(33, 56);
+			this.DownCmd.TabIndex = 19;
+			this.DownCmd.Text = "\\/";
+			this.DownCmd.UseVisualStyleBackColor = true;
+			// 
+			// UpCmd
+			// 
+			this.UpCmd.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.UpCmd.Location = new System.Drawing.Point(625, 95);
+			this.UpCmd.Name = "UpCmd";
+			this.UpCmd.Size = new System.Drawing.Size(33, 56);
+			this.UpCmd.TabIndex = 17;
+			this.UpCmd.Text = "/\\";
+			this.UpCmd.UseVisualStyleBackColor = true;
+			// 
+			// ToTopCmd
+			// 
+			this.ToTopCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.ToTopCmd.Location = new System.Drawing.Point(625, 33);
+			this.ToTopCmd.Name = "ToTopCmd";
+			this.ToTopCmd.Size = new System.Drawing.Size(33, 56);
+			this.ToTopCmd.TabIndex = 16;
+			this.ToTopCmd.Text = "/\\ /\\";
+			this.ToTopCmd.UseVisualStyleBackColor = true;
+			// 
+			// ActivePlaylistDGV
+			// 
+			this.ActivePlaylistDGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.ActivePlaylistDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.ActivePlaylistDGV.Location = new System.Drawing.Point(6, 33);
+			this.ActivePlaylistDGV.Name = "ActivePlaylistDGV";
+			this.ActivePlaylistDGV.Size = new System.Drawing.Size(613, 287);
+			this.ActivePlaylistDGV.TabIndex = 15;
+			// 
+			// VolumeUpMenuItem
+			// 
+			this.VolumeUpMenuItem.Name = "VolumeUpMenuItem";
+			this.VolumeUpMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Up)));
+			this.VolumeUpMenuItem.Size = new System.Drawing.Size(214, 22);
+			this.VolumeUpMenuItem.Text = "Volume Up";
+			// 
+			// VolumeDownMenuItem
+			// 
+			this.VolumeDownMenuItem.Name = "VolumeDownMenuItem";
+			this.VolumeDownMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Down)));
+			this.VolumeDownMenuItem.Size = new System.Drawing.Size(214, 22);
+			this.VolumeDownMenuItem.Text = "Volume Down";
+			// 
+			// toolStripMenuItem6
+			// 
+			this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+			this.toolStripMenuItem6.Size = new System.Drawing.Size(211, 6);
+			// 
+			// MusicLibraryDGV
+			// 
+			this.MusicLibraryDGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.MusicLibraryDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.MusicLibraryDGV.Location = new System.Drawing.Point(5, 6);
+			this.MusicLibraryDGV.Name = "MusicLibraryDGV";
+			this.MusicLibraryDGV.Size = new System.Drawing.Size(653, 287);
+			this.MusicLibraryDGV.TabIndex = 19;
+			// 
+			// NewPlaylistMLComb
+			// 
+			this.NewPlaylistMLComb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.NewPlaylistMLComb.Location = new System.Drawing.Point(574, 297);
+			this.NewPlaylistMLComb.Name = "NewPlaylistMLComb";
+			this.NewPlaylistMLComb.Size = new System.Drawing.Size(85, 23);
+			this.NewPlaylistMLComb.TabIndex = 23;
+			this.NewPlaylistMLComb.Text = "New Playlist";
+			this.NewPlaylistMLComb.UseVisualStyleBackColor = true;
+			// 
+			// DeletePlaylistMLCmd
+			// 
+			this.DeletePlaylistMLCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.DeletePlaylistMLCmd.Location = new System.Drawing.Point(483, 297);
+			this.DeletePlaylistMLCmd.Name = "DeletePlaylistMLCmd";
+			this.DeletePlaylistMLCmd.Size = new System.Drawing.Size(85, 23);
+			this.DeletePlaylistMLCmd.TabIndex = 22;
+			this.DeletePlaylistMLCmd.Text = "Delete Playlist";
+			this.DeletePlaylistMLCmd.UseVisualStyleBackColor = true;
+			// 
+			// AddToPlaylistMLCmd
+			// 
+			this.AddToPlaylistMLCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.AddToPlaylistMLCmd.Location = new System.Drawing.Point(392, 297);
+			this.AddToPlaylistMLCmd.Name = "AddToPlaylistMLCmd";
+			this.AddToPlaylistMLCmd.Size = new System.Drawing.Size(85, 23);
+			this.AddToPlaylistMLCmd.TabIndex = 21;
+			this.AddToPlaylistMLCmd.Text = "Add To Playlist";
+			this.AddToPlaylistMLCmd.UseVisualStyleBackColor = true;
+			// 
+			// PlaylistMLComb
+			// 
+			this.PlaylistMLComb.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.PlaylistMLComb.FormattingEnabled = true;
+			this.PlaylistMLComb.Location = new System.Drawing.Point(6, 299);
+			this.PlaylistMLComb.Name = "PlaylistMLComb";
+			this.PlaylistMLComb.Size = new System.Drawing.Size(380, 21);
+			this.PlaylistMLComb.TabIndex = 20;
+			// 
 			// MainFrm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -530,6 +693,7 @@
 			this.Controls.Add(this.StatusStrip);
 			this.Controls.Add(this.MenuStrip);
 			this.MainMenuStrip = this.MenuStrip;
+			this.MinimumSize = new System.Drawing.Size(420, 400);
 			this.Name = "MainFrm";
 			this.Text = "BooBox Client : Name";
 			this.Load += new System.EventHandler(this.MainFrm_Load);
@@ -540,10 +704,13 @@
 			this.MenuStrip.PerformLayout();
 			this.TabControl.ResumeLayout(false);
 			this.ActivePlaylistTab.ResumeLayout(false);
+			this.LibraryTab.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.SongTrack)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeTrack)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeUpPicBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeDownPicBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.ActivePlaylistDGV)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.MusicLibraryDGV)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -599,9 +766,23 @@
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.PictureBox VolumeDownPicBox;
 		private System.Windows.Forms.PictureBox VolumeUpPicBox;
-		private System.Windows.Forms.Button NewPlaylistCmd;
-		private System.Windows.Forms.Button DeletePlaylistCmd;
-		private System.Windows.Forms.ComboBox PlaylistComb;
+		private System.Windows.Forms.Button NewPlaylistAPCmd;
+		private System.Windows.Forms.Button DeletePlaylistAPCmd;
+		private System.Windows.Forms.ComboBox PlaylistAPComb;
+		private System.Windows.Forms.Button DelCmd;
+		private System.Windows.Forms.Button ToBottomCmd;
+		private System.Windows.Forms.Button DownCmd;
+		private System.Windows.Forms.Button UpCmd;
+		private System.Windows.Forms.Button ToTopCmd;
+		private System.Windows.Forms.DataGridView ActivePlaylistDGV;
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
+		private System.Windows.Forms.ToolStripMenuItem VolumeUpMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem VolumeDownMenuItem;
+		private System.Windows.Forms.Button NewPlaylistMLComb;
+		private System.Windows.Forms.Button DeletePlaylistMLCmd;
+		private System.Windows.Forms.Button AddToPlaylistMLCmd;
+		private System.Windows.Forms.ComboBox PlaylistMLComb;
+		private System.Windows.Forms.DataGridView MusicLibraryDGV;
 	}
 }
 
