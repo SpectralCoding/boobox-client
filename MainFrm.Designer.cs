@@ -69,11 +69,15 @@
 			this.PlayCmd = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
+			this.pictureBox2 = new System.Windows.Forms.PictureBox();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.StatusStrip.SuspendLayout();
 			this.MenuStrip.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.SongTrack)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeTrack)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// StatusStrip
@@ -349,7 +353,7 @@
 			this.LibraryTab.Location = new System.Drawing.Point(4, 22);
 			this.LibraryTab.Name = "LibraryTab";
 			this.LibraryTab.Padding = new System.Windows.Forms.Padding(3);
-			this.LibraryTab.Size = new System.Drawing.Size(728, 214);
+			this.LibraryTab.Size = new System.Drawing.Size(609, 214);
 			this.LibraryTab.TabIndex = 1;
 			this.LibraryTab.Text = "Music Library";
 			this.LibraryTab.UseVisualStyleBackColor = true;
@@ -385,10 +389,10 @@
 			this.VolumeTrack.AutoSize = false;
 			this.VolumeTrack.BackColor = System.Drawing.SystemColors.Control;
 			this.VolumeTrack.LargeChange = 1;
-			this.VolumeTrack.Location = new System.Drawing.Point(539, 24);
+			this.VolumeTrack.Location = new System.Drawing.Point(104, 53);
 			this.VolumeTrack.Maximum = 100;
 			this.VolumeTrack.Name = "VolumeTrack";
-			this.VolumeTrack.Size = new System.Drawing.Size(100, 23);
+			this.VolumeTrack.Size = new System.Drawing.Size(152, 23);
 			this.VolumeTrack.TabIndex = 26;
 			this.VolumeTrack.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.VolumeTrack.Value = 50;
@@ -396,7 +400,7 @@
 			// PreviousCmd
 			// 
 			this.PreviousCmd.Enabled = false;
-			this.PreviousCmd.Location = new System.Drawing.Point(258, 27);
+			this.PreviousCmd.Location = new System.Drawing.Point(87, 24);
 			this.PreviousCmd.Name = "PreviousCmd";
 			this.PreviousCmd.Size = new System.Drawing.Size(50, 23);
 			this.PreviousCmd.TabIndex = 25;
@@ -406,7 +410,7 @@
 			// NextCmd
 			// 
 			this.NextCmd.Enabled = false;
-			this.NextCmd.Location = new System.Drawing.Point(395, 27);
+			this.NextCmd.Location = new System.Drawing.Point(224, 24);
 			this.NextCmd.Name = "NextCmd";
 			this.NextCmd.Size = new System.Drawing.Size(50, 23);
 			this.NextCmd.TabIndex = 24;
@@ -416,7 +420,7 @@
 			// PlayCmd
 			// 
 			this.PlayCmd.Enabled = false;
-			this.PlayCmd.Location = new System.Drawing.Point(314, 27);
+			this.PlayCmd.Location = new System.Drawing.Point(143, 24);
 			this.PlayCmd.Name = "PlayCmd";
 			this.PlayCmd.Size = new System.Drawing.Size(75, 23);
 			this.PlayCmd.TabIndex = 23;
@@ -436,18 +440,38 @@
 			// button2
 			// 
 			this.button2.Enabled = false;
-			this.button2.Location = new System.Drawing.Point(87, 24);
+			this.button2.Location = new System.Drawing.Point(6, 53);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(75, 23);
 			this.button2.TabIndex = 28;
 			this.button2.Text = "Shuffle Off";
 			this.button2.UseVisualStyleBackColor = true;
 			// 
+			// pictureBox2
+			// 
+			this.pictureBox2.Image = global::BooBoxClient.Properties.Resources.VolumeUp;
+			this.pictureBox2.Location = new System.Drawing.Point(254, 52);
+			this.pictureBox2.Name = "pictureBox2";
+			this.pictureBox2.Size = new System.Drawing.Size(20, 20);
+			this.pictureBox2.TabIndex = 30;
+			this.pictureBox2.TabStop = false;
+			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.Image = global::BooBoxClient.Properties.Resources.VolumeDown;
+			this.pictureBox1.Location = new System.Drawing.Point(87, 52);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(20, 20);
+			this.pictureBox1.TabIndex = 29;
+			this.pictureBox1.TabStop = false;
+			// 
 			// MainFrm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(684, 421);
+			this.Controls.Add(this.pictureBox2);
+			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.VolumeTrack);
@@ -472,6 +496,8 @@
 			this.tabControl1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.SongTrack)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.VolumeTrack)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -525,6 +551,8 @@
 		private System.Windows.Forms.Button PlayCmd;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.PictureBox pictureBox1;
+		private System.Windows.Forms.PictureBox pictureBox2;
 	}
 }
 
