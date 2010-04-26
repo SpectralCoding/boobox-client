@@ -67,13 +67,6 @@ namespace BooBoxClient.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap NoAlbum128s {
-            get {
-                object obj = ResourceManager.GetObject("NoAlbum128s", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap Playing {
             get {
                 object obj = ResourceManager.GetObject("Playing", resourceCulture);
