@@ -28,7 +28,7 @@ namespace BooBoxClient {
 		}
 		#endregion
 
-		#region Form Methods
+		#region Form Event Handlers
 		public MainFrm() {
 			InitializeComponent();
 		}
@@ -76,12 +76,14 @@ namespace BooBoxClient {
 			}
 			PushSettingsToForm();
 		}
+		private void MainFrm_FormClosing(object sender, FormClosingEventArgs e) {
+			Config.Instance.Save();
+			Log.AddStatusText("BooBox Server close by user.");
+			Log.CloseLog();
+		}
 		#endregion
 
-		private void SongTrack_Scroll(object sender, EventArgs e) {
-			MoveTimeStamp();
-		}
-
+		#region Menu Item Event Handlers
 		private void Bytes512MenuItem_Click(object sender, EventArgs e) {
 			Log.AddStatusText("Changed Data Buffer Size from " + Config.Instance.DataBufferSize.ToString() + " bytes to 512 bytes.");
 			Config.Instance.DataBufferSize = 512;
@@ -150,5 +152,11 @@ namespace BooBoxClient {
 				Config.Instance.Load(OpenFilename);
 			}
 		}
+		#endregion
+
+		private void SongTrack_Scroll(object sender, EventArgs e) {
+			MoveTimeStamp();
+		}
+
 	}
 }
