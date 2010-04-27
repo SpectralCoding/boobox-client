@@ -11,7 +11,7 @@ using BooBox;
 namespace BooBoxClient {
 	public sealed class Config {
 		public Boolean Configured = false;
-		public List<ConnectionInfo> ConnectionList = new List<ConnectionInfo>();
+		public List<ConnectionInfo> ConnectionInfoList = new List<ConnectionInfo>();
 		public String ClientName = "";
 		public int DataBufferSize = 4096;
 		public double BufferAtPercent = 0.05;

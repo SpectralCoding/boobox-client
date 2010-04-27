@@ -12,8 +12,120 @@ namespace BooBoxClient {
 	public partial class MainFrm : Form {
 
 		#region Form Variables
-		private Boolean ConfigLoaded = false;
+
 		#endregion
+
+		#region Form Delegates
+		public delegate void PushSettingsToFormDelegate();
+		public void PushSettingsToForm() {
+			if (this.InvokeRequired) {
+				this.Invoke(new PushSettingsToFormDelegate(PushSettingsToForm));
+			} else {
+				this.Text = "BooBox Client : " + Config.Instance.ClientName;
+				#region LoadConnection
+				ToolStripDropDownItem ConnectToServerItem = (ToolStripDropDownItem)((ToolStripDropDownItem)MenuStrip.Items["FileMenuHeader"]).DropDownItems["ConnectToServerMenuItem"];
+				ToolStripDropDownItem EditServerItem = (ToolStripDropDownItem)((ToolStripDropDownItem)MenuStrip.Items["FileMenuHeader"]).DropDownItems["EditServerMenuItem"];
+				ToolStripDropDownItem DeleteServerItem = (ToolStripDropDownItem)((ToolStripDropDownItem)MenuStrip.Items["FileMenuHeader"]).DropDownItems["DeleteServerMenuItem"];
+				ConnectToServerItem.DropDownItems.Clear();
+				EditServerItem.DropDownItems.Clear();
+				DeleteServerItem.DropDownItems.Clear();
+				ToolStripMenuItem[] connectToServerItemArr = new ToolStripMenuItem[Config.Instance.ConnectionInfoList.Count];
+				ToolStripMenuItem[] editServerItemArr = new ToolStripMenuItem[Config.Instance.ConnectionInfoList.Count];
+				ToolStripMenuItem[] deleteServerItemArr = new ToolStripMenuItem[Config.Instance.ConnectionInfoList.Count];
+				ToolStripMenuItem tempTSMI = new ToolStripMenuItem();
+				tempTSMI.Name = "ConnectToServerItem0";
+				tempTSMI.Tag = "Connect To All";
+				tempTSMI.Text = "Connect To All";
+				tempTSMI.Click += new EventHandler(MenuConnectToAllItemClickHandler);
+				ConnectToServerItem.DropDownItems.Add(tempTSMI);
+				ConnectToServerItem.DropDownItems.Add(new ToolStripSeparator());
+				for (int x = 0; x < Config.Instance.ConnectionInfoList.Count; x++) {
+					connectToServerItemArr[x] = new ToolStripMenuItem();
+					connectToServerItemArr[x].Name = "ConnectToServerItem" + x;
+					connectToServerItemArr[x].Tag = Config.Instance.ConnectionInfoList[x];
+					connectToServerItemArr[x].Text = Config.Instance.ConnectionInfoList[x].Description;
+					connectToServerItemArr[x].Click += new EventHandler(MenuConnectToServerItemClickHandler);
+					editServerItemArr[x] = new ToolStripMenuItem();
+					editServerItemArr[x].Name = "EditServerItem" + x;
+					editServerItemArr[x].Tag = Config.Instance.ConnectionInfoList[x];
+					editServerItemArr[x].Text = "Edit \"" + Config.Instance.ConnectionInfoList[x].Description + "\"";
+					editServerItemArr[x].Click += new EventHandler(MenuEditServerItemClickHandler);
+					deleteServerItemArr[x] = new ToolStripMenuItem();
+					deleteServerItemArr[x].Name = "DeleteServerItem" + x;
+					deleteServerItemArr[x].Tag = Config.Instance.ConnectionInfoList[x];
+					deleteServerItemArr[x].Text = "Delete \"" + Config.Instance.ConnectionInfoList[x].Description + "\"";
+					deleteServerItemArr[x].Click += new EventHandler(MenuDeleteServerItemClickHandler);
+				}
+				ConnectToServerItem.DropDownItems.AddRange(connectToServerItemArr);
+				DeleteServerItem.DropDownItems.AddRange(deleteServerItemArr);
+				EditServerItem.DropDownItems.AddRange(editServerItemArr);
+				#endregion
+				#region DataBufferSize
+				if (Config.Instance.DataBufferSize == 512) {
+					Bytes512MenuItem.Checked = true; Bytes1024MenuItem.Checked = false; Bytes2048MenuItem.Checked = false; Bytes4096MenuItem.Checked = false; Bytes8192MenuItem.Checked = false;
+				} else if (Config.Instance.DataBufferSize == 1024) {
+					Bytes512MenuItem.Checked = false; Bytes1024MenuItem.Checked = true; Bytes2048MenuItem.Checked = false; Bytes4096MenuItem.Checked = false; Bytes8192MenuItem.Checked = false;
+				} else if (Config.Instance.DataBufferSize == 2048) {
+					Bytes512MenuItem.Checked = false; Bytes1024MenuItem.Checked = false; Bytes2048MenuItem.Checked = true; Bytes4096MenuItem.Checked = false; Bytes8192MenuItem.Checked = false;
+				} else if (Config.Instance.DataBufferSize == 4096) {
+					Bytes512MenuItem.Checked = false; Bytes1024MenuItem.Checked = false; Bytes2048MenuItem.Checked = false; Bytes4096MenuItem.Checked = true; Bytes8192MenuItem.Checked = false;
+				} else if (Config.Instance.DataBufferSize == 8192) {
+					Bytes512MenuItem.Checked = false; Bytes1024MenuItem.Checked = false; Bytes2048MenuItem.Checked = false; Bytes4096MenuItem.Checked = false; Bytes8192MenuItem.Checked = true;
+				}
+				#endregion
+				#region BufferAtPercent
+				if (Config.Instance.BufferAtPercent == 0.05) {
+					Percent5MenuItem.Checked = true; Percent10MenuItem.Checked = false; Percent25MenuItem.Checked = false; Percent50MenuItem.Checked = false; Percent100MenuItem.Checked = false;
+				} else if (Config.Instance.BufferAtPercent == 0.1) {
+					Percent5MenuItem.Checked = false; Percent10MenuItem.Checked = true; Percent25MenuItem.Checked = false; Percent50MenuItem.Checked = false; Percent100MenuItem.Checked = false;
+				} else if (Config.Instance.BufferAtPercent == 0.25) {
+					Percent5MenuItem.Checked = false; Percent10MenuItem.Checked = false; Percent25MenuItem.Checked = true; Percent50MenuItem.Checked = false; Percent100MenuItem.Checked = false;
+				} else if (Config.Instance.BufferAtPercent == 0.5) {
+					Percent5MenuItem.Checked = false; Percent10MenuItem.Checked = false; Percent25MenuItem.Checked = false; Percent50MenuItem.Checked = true; Percent100MenuItem.Checked = false;
+				} else if (Config.Instance.BufferAtPercent == 1.0) {
+					Percent5MenuItem.Checked = false; Percent10MenuItem.Checked = false; Percent25MenuItem.Checked = false; Percent50MenuItem.Checked = false; Percent100MenuItem.Checked = true;
+				}
+				#endregion
+				#region RepeatMode
+				if (Config.Instance.RepeatMode == RepeatMode.Off) {
+					RepeatOffMenuItem.Checked = true; RepeatOneMenuItem.Checked = false; RepeatAllMenuItem.Checked = false;
+				} else if (Config.Instance.RepeatMode == RepeatMode.One) {
+					RepeatOffMenuItem.Checked = false; RepeatOneMenuItem.Checked = true; RepeatAllMenuItem.Checked = false;
+				} else if (Config.Instance.RepeatMode == RepeatMode.All) {
+					RepeatOffMenuItem.Checked = false; RepeatOneMenuItem.Checked = false; RepeatAllMenuItem.Checked = true;
+				}
+				#endregion
+				#region ShuffleMode
+				if (Config.Instance.ShuffleMode == ShuffleMode.Off) {
+					ShuffleOffMenuItem.Checked = true; ShuffleOnMenuItem.Checked = false;
+				} else if (Config.Instance.ShuffleMode == ShuffleMode.On) {
+					ShuffleOffMenuItem.Checked = false; ShuffleOnMenuItem.Checked = true;
+				}
+				#endregion
+			}
+		}
+		#endregion
+
+		private void MenuConnectToAllItemClickHandler(object sender, EventArgs e) {
+			Console.WriteLine("Connect To All");
+			//CommInfo.ConnectToServer(Config.Instance.ConnectionList[Convert.ToInt32(clickedItem.Tag)], "Full", "");
+		}
+		private void MenuConnectToServerItemClickHandler(object sender, EventArgs e) {
+			ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+			Console.WriteLine("Connect: " + ((ConnectionInfo)clickedItem.Tag).Description);
+			//CommInfo.ConnectToServer(Config.Instance.ConnectionList[Convert.ToInt32(clickedItem.Tag)], "Full", "");
+		}
+		private void MenuEditServerItemClickHandler(object sender, EventArgs e) {
+			ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+			Console.WriteLine("Edit: " + ((ConnectionInfo)clickedItem.Tag).Description);
+			//CommInfo.ConnectToServer(Config.Instance.ConnectionList[Convert.ToInt32(clickedItem.Tag)], "Full", "");
+		}
+		private void MenuDeleteServerItemClickHandler(object sender, EventArgs e) {
+			ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+			Console.WriteLine("Delete: " + ((ConnectionInfo)clickedItem.Tag).Description);
+			//CommInfo.ConnectToServer(Config.Instance.ConnectionList[Convert.ToInt32(clickedItem.Tag)], "Full", "");
+		}
+
 
 		#region Custom Form Methods
 		private void MoveTimeStamp() {
@@ -22,51 +134,6 @@ namespace BooBoxClient {
 			int newX = startOffset + Convert.ToInt32((percentage * (SongTrack.Width - 27)));
 			if (newX < (SongTrack.Location.X + 5)) { newX = (SongTrack.Location.X + 5); } else if (newX > (SongTrack.Location.X + SongTrack.Width - 32)) { newX = (SongTrack.Location.X + SongTrack.Width - 32); }
 			CounterLbl.Location = new System.Drawing.Point(newX, CounterLbl.Location.Y);
-		}
-		private void PushSettingsToForm() {
-			this.Text = "BooBox Client : " + Config.Instance.ClientName;
-			#region DataBufferSize
-			if (Config.Instance.DataBufferSize == 512) {
-				Bytes512MenuItem.Checked = true; Bytes1024MenuItem.Checked = false; Bytes2048MenuItem.Checked = false; Bytes4096MenuItem.Checked = false; Bytes8192MenuItem.Checked = false;
-			} else if (Config.Instance.DataBufferSize == 1024) {
-				Bytes512MenuItem.Checked = false; Bytes1024MenuItem.Checked = true; Bytes2048MenuItem.Checked = false; Bytes4096MenuItem.Checked = false; Bytes8192MenuItem.Checked = false;
-			} else if (Config.Instance.DataBufferSize == 2048) {
-				Bytes512MenuItem.Checked = false; Bytes1024MenuItem.Checked = false; Bytes2048MenuItem.Checked = true; Bytes4096MenuItem.Checked = false; Bytes8192MenuItem.Checked = false;
-			} else if (Config.Instance.DataBufferSize == 4096) {
-				Bytes512MenuItem.Checked = false; Bytes1024MenuItem.Checked = false; Bytes2048MenuItem.Checked = false; Bytes4096MenuItem.Checked = true; Bytes8192MenuItem.Checked = false;
-			} else if (Config.Instance.DataBufferSize == 8192) {
-				Bytes512MenuItem.Checked = false; Bytes1024MenuItem.Checked = false; Bytes2048MenuItem.Checked = false; Bytes4096MenuItem.Checked = false; Bytes8192MenuItem.Checked = true;
-			}
-			#endregion
-			#region BufferAtPercent
-			if (Config.Instance.BufferAtPercent == 0.05) {
-				Percent5MenuItem.Checked = true; Percent10MenuItem.Checked = false; Percent25MenuItem.Checked = false; Percent50MenuItem.Checked = false; Percent100MenuItem.Checked = false;
-			} else if (Config.Instance.BufferAtPercent == 0.1) {
-				Percent5MenuItem.Checked = false; Percent10MenuItem.Checked = true; Percent25MenuItem.Checked = false; Percent50MenuItem.Checked = false; Percent100MenuItem.Checked = false;
-			} else if (Config.Instance.BufferAtPercent == 0.25) {
-				Percent5MenuItem.Checked = false; Percent10MenuItem.Checked = false; Percent25MenuItem.Checked = true; Percent50MenuItem.Checked = false; Percent100MenuItem.Checked = false;
-			} else if (Config.Instance.BufferAtPercent == 0.5) {
-				Percent5MenuItem.Checked = false; Percent10MenuItem.Checked = false; Percent25MenuItem.Checked = false; Percent50MenuItem.Checked = true; Percent100MenuItem.Checked = false;
-			} else if (Config.Instance.BufferAtPercent == 1.0) {
-				Percent5MenuItem.Checked = false; Percent10MenuItem.Checked = false; Percent25MenuItem.Checked = false; Percent50MenuItem.Checked = false; Percent100MenuItem.Checked = true;
-			}
-			#endregion
-			#region RepeatMode
-			if (Config.Instance.RepeatMode == RepeatMode.Off) {
-				RepeatOffMenuItem.Checked = true; RepeatOneMenuItem.Checked = false; RepeatAllMenuItem.Checked = false;
-			} else if (Config.Instance.RepeatMode == RepeatMode.One) {
-				RepeatOffMenuItem.Checked = false; RepeatOneMenuItem.Checked = true; RepeatAllMenuItem.Checked = false;
-			} else if (Config.Instance.RepeatMode == RepeatMode.All) {
-				RepeatOffMenuItem.Checked = false; RepeatOneMenuItem.Checked = false; RepeatAllMenuItem.Checked = true;
-			}
-			#endregion
-			#region ShuffleMode
-			if (Config.Instance.ShuffleMode == ShuffleMode.Off) {
-				ShuffleOffMenuItem.Checked = true; ShuffleOnMenuItem.Checked = false;
-			} else if (Config.Instance.ShuffleMode == ShuffleMode.On) {
-				ShuffleOffMenuItem.Checked = false; ShuffleOnMenuItem.Checked = true;
-			}
-			#endregion
 		}
 		#endregion
 
@@ -112,9 +179,6 @@ namespace BooBoxClient {
 						Config.Instance.Save();
 					}
 				}
-				ConfigLoaded = true;
-			} else {
-				ConfigLoaded = true;
 			}
 			PushSettingsToForm();
 		}
@@ -130,8 +194,16 @@ namespace BooBoxClient {
 		private void SaveSettingsMenuItem_Click(object sender, EventArgs e) {
 			Config.Instance.Save();
 		}
-		private void AddServerMenuItem_Click(object sender, EventArgs e) {
+		private void ConnectToServerMenuItem_Click(object sender, EventArgs e) {
 
+		}
+		private void ConnectToAllMenuItem_Click(object sender, EventArgs e) {
+
+		}
+		private void AddServerMenuItem_Click(object sender, EventArgs e) {
+			ConnectionFrm ConnectionFrm = new ConnectionFrm();
+			ConnectionFrm.SetMode("New");
+			ConnectionFrm.Show();
 		}
 		private void EditServerMenuItem_Click(object sender, EventArgs e) {
 
