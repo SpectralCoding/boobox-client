@@ -17,6 +17,7 @@ namespace BooBoxClient {
 		public double BufferAtPercent = 0.05;
 		public RepeatMode RepeatMode = RepeatMode.Off;
 		public ShuffleMode ShuffleMode = ShuffleMode.Off;
+		public String GUID = "";
 
 		#region Configuration Save/Load/Singleton Stuff
 		Config() { }

@@ -52,6 +52,7 @@
     <Compile Include="AboutFrm.Designer.cs">
       <DependentUpon>AboutFrm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CommInfo.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="ConnectionFrm.cs">
       <SubType>Form</SubType>
@@ -67,6 +68,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerInfo.cs" />
     <EmbeddedResource Include="AboutFrm.resx">
       <DependentUpon>AboutFrm.cs</DependentUpon>
     </EmbeddedResource>
