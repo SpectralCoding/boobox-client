@@ -36,7 +36,7 @@ namespace BooBoxClient {
 				tempTSMI.Name = "ConnectToServerItem0";
 				tempTSMI.Tag = "Connect To All";
 				tempTSMI.Text = "Connect To All";
-				tempTSMI.Click += new EventHandler(MenuConnectToAllItemClickHandler);
+				tempTSMI.Click += new EventHandler(ConnectToAllMenuItem_Click);
 				ConnectToServerItem.DropDownItems.Add(tempTSMI);
 				ConnectToServerItem.DropDownItems.Add(new ToolStripSeparator());
 				for (int x = 0; x < Config.Instance.ConnectionInfoList.Count; x++) {
@@ -44,17 +44,17 @@ namespace BooBoxClient {
 					connectToServerItemArr[x].Name = "ConnectToServerItem" + x;
 					connectToServerItemArr[x].Tag = Config.Instance.ConnectionInfoList[x];
 					connectToServerItemArr[x].Text = Config.Instance.ConnectionInfoList[x].Description;
-					connectToServerItemArr[x].Click += new EventHandler(MenuConnectToServerItemClickHandler);
+					connectToServerItemArr[x].Click += new EventHandler(ConnectToServerMenuItem_Click);
 					editServerItemArr[x] = new ToolStripMenuItem();
 					editServerItemArr[x].Name = "EditServerItem" + x;
 					editServerItemArr[x].Tag = Config.Instance.ConnectionInfoList[x];
 					editServerItemArr[x].Text = "Edit \"" + Config.Instance.ConnectionInfoList[x].Description + "\"";
-					editServerItemArr[x].Click += new EventHandler(MenuEditServerItemClickHandler);
+					editServerItemArr[x].Click += new EventHandler(EditServerMenuItem_Click);
 					deleteServerItemArr[x] = new ToolStripMenuItem();
 					deleteServerItemArr[x].Name = "DeleteServerItem" + x;
 					deleteServerItemArr[x].Tag = Config.Instance.ConnectionInfoList[x];
 					deleteServerItemArr[x].Text = "Delete \"" + Config.Instance.ConnectionInfoList[x].Description + "\"";
-					deleteServerItemArr[x].Click += new EventHandler(MenuDeleteServerItemClickHandler);
+					deleteServerItemArr[x].Click += new EventHandler(DeleteServerMenuItem_Click);
 				}
 				ConnectToServerItem.DropDownItems.AddRange(connectToServerItemArr);
 				DeleteServerItem.DropDownItems.AddRange(deleteServerItemArr);
@@ -105,27 +105,6 @@ namespace BooBoxClient {
 			}
 		}
 		#endregion
-
-		private void MenuConnectToAllItemClickHandler(object sender, EventArgs e) {
-			Console.WriteLine("Connect To All");
-			//CommInfo.ConnectToServer(Config.Instance.ConnectionList[Convert.ToInt32(clickedItem.Tag)], "Full", "");
-		}
-		private void MenuConnectToServerItemClickHandler(object sender, EventArgs e) {
-			ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
-			Console.WriteLine("Connect: " + ((ConnectionInfo)clickedItem.Tag).Description);
-			//CommInfo.ConnectToServer(Config.Instance.ConnectionList[Convert.ToInt32(clickedItem.Tag)], "Full", "");
-		}
-		private void MenuEditServerItemClickHandler(object sender, EventArgs e) {
-			ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
-			Console.WriteLine("Edit: " + ((ConnectionInfo)clickedItem.Tag).Description);
-			//CommInfo.ConnectToServer(Config.Instance.ConnectionList[Convert.ToInt32(clickedItem.Tag)], "Full", "");
-		}
-		private void MenuDeleteServerItemClickHandler(object sender, EventArgs e) {
-			ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
-			Console.WriteLine("Delete: " + ((ConnectionInfo)clickedItem.Tag).Description);
-			//CommInfo.ConnectToServer(Config.Instance.ConnectionList[Convert.ToInt32(clickedItem.Tag)], "Full", "");
-		}
-
 
 		#region Custom Form Methods
 		private void MoveTimeStamp() {
@@ -194,22 +173,32 @@ namespace BooBoxClient {
 		private void SaveSettingsMenuItem_Click(object sender, EventArgs e) {
 			Config.Instance.Save();
 		}
-		private void ConnectToServerMenuItem_Click(object sender, EventArgs e) {
-
-		}
 		private void ConnectToAllMenuItem_Click(object sender, EventArgs e) {
-
+			Console.WriteLine("Connect To All");
+			//CommInfo.ConnectToServer(Config.Instance.ConnectionList[Convert.ToInt32(clickedItem.Tag)], "Full", "");
+		}
+		private void ConnectToServerMenuItem_Click(object sender, EventArgs e) {
+			ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+			Console.WriteLine("Connect: " + ((ConnectionInfo)clickedItem.Tag).Description);
+			//CommInfo.ConnectToServer(Config.Instance.ConnectionList[Convert.ToInt32(clickedItem.Tag)], "Full", "");
+		}
+		private void EditServerMenuItem_Click(object sender, EventArgs e) {
+			ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+			ConnectionFrm ConnectionFrm = new ConnectionFrm();
+			ConnectionFrm.Show();
+			ConnectionFrm.SetMode("Edit", (ConnectionInfo)clickedItem.Tag);
+			Console.WriteLine("Edit: " + ((ConnectionInfo)clickedItem.Tag).Description);
+		}
+		private void DeleteServerMenuItem_Click(object sender, EventArgs e) {
+			ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+			Config.Instance.ConnectionInfoList.Remove((ConnectionInfo)clickedItem.Tag);
+			Console.WriteLine("Delete: " + ((ConnectionInfo)clickedItem.Tag).Description);
+			PushSettingsToForm();
 		}
 		private void AddServerMenuItem_Click(object sender, EventArgs e) {
 			ConnectionFrm ConnectionFrm = new ConnectionFrm();
 			ConnectionFrm.SetMode("New");
 			ConnectionFrm.Show();
-		}
-		private void EditServerMenuItem_Click(object sender, EventArgs e) {
-
-		}
-		private void DeleteServerMenuItem_Click(object sender, EventArgs e) {
-
 		}
 		private void ExportSettingsMenuItem_Click(object sender, EventArgs e) {
 			SaveFileDialog.ShowDialog();

@@ -23,8 +23,8 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.StatusStrip = new System.Windows.Forms.StatusStrip();
 			this.ProgressBarStatusStrip = new System.Windows.Forms.ToolStripProgressBar();
 			this.ProgressBarLblStatusStrip = new System.Windows.Forms.ToolStripStatusLabel();
@@ -33,6 +33,9 @@
 			this.SaveSettingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
 			this.AddServerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ConnectToServerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ConnectToAllMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
 			this.EditServerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.DeleteServerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
@@ -82,6 +85,7 @@
 			this.UpCmd = new System.Windows.Forms.Button();
 			this.ToTopCmd = new System.Windows.Forms.Button();
 			this.ActivePlaylistDGV = new System.Windows.Forms.DataGridView();
+			this.PlayingAPDGVColumn = new System.Windows.Forms.DataGridViewImageColumn();
 			this.TitleAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ArtistsAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.AlbumAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -98,6 +102,7 @@
 			this.PlaylistAPComb = new System.Windows.Forms.ComboBox();
 			this.LibraryTab = new System.Windows.Forms.TabPage();
 			this.MusicLibraryDGV = new System.Windows.Forms.DataGridView();
+			this.PlayingMLDGVColumn = new System.Windows.Forms.DataGridViewImageColumn();
 			this.TitleMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ArtistsMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.AlbumMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -129,11 +134,6 @@
 			this.AlbumArtPicBox = new System.Windows.Forms.PictureBox();
 			this.VolumeUpPicBox = new System.Windows.Forms.PictureBox();
 			this.VolumeDownPicBox = new System.Windows.Forms.PictureBox();
-			this.PlayingAPDGVColumn = new System.Windows.Forms.DataGridViewImageColumn();
-			this.PlayingMLDGVColumn = new System.Windows.Forms.DataGridViewImageColumn();
-			this.ConnectToServerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ConnectToAllMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
 			this.StatusStrip.SuspendLayout();
 			this.MenuStrip.SuspendLayout();
 			this.TabControl.SuspendLayout();
@@ -221,19 +221,38 @@
 			this.AddServerMenuItem.Text = "&Add Server...";
 			this.AddServerMenuItem.Click += new System.EventHandler(this.AddServerMenuItem_Click);
 			// 
+			// ConnectToServerMenuItem
+			// 
+			this.ConnectToServerMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ConnectToAllMenuItem,
+            this.toolStripMenuItem7});
+			this.ConnectToServerMenuItem.Name = "ConnectToServerMenuItem";
+			this.ConnectToServerMenuItem.Size = new System.Drawing.Size(192, 22);
+			this.ConnectToServerMenuItem.Text = "Connect To Server...";
+			// 
+			// ConnectToAllMenuItem
+			// 
+			this.ConnectToAllMenuItem.Name = "ConnectToAllMenuItem";
+			this.ConnectToAllMenuItem.Size = new System.Drawing.Size(153, 22);
+			this.ConnectToAllMenuItem.Text = "Connect To All";
+			this.ConnectToAllMenuItem.Click += new System.EventHandler(this.ConnectToAllMenuItem_Click);
+			// 
+			// toolStripMenuItem7
+			// 
+			this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+			this.toolStripMenuItem7.Size = new System.Drawing.Size(150, 6);
+			// 
 			// EditServerMenuItem
 			// 
 			this.EditServerMenuItem.Name = "EditServerMenuItem";
 			this.EditServerMenuItem.Size = new System.Drawing.Size(192, 22);
 			this.EditServerMenuItem.Text = "Edit Server...";
-			this.EditServerMenuItem.Click += new System.EventHandler(this.EditServerMenuItem_Click);
 			// 
 			// DeleteServerMenuItem
 			// 
 			this.DeleteServerMenuItem.Name = "DeleteServerMenuItem";
 			this.DeleteServerMenuItem.Size = new System.Drawing.Size(192, 22);
 			this.DeleteServerMenuItem.Text = "&Delete Server...";
-			this.DeleteServerMenuItem.Click += new System.EventHandler(this.DeleteServerMenuItem_Click);
 			// 
 			// toolStripMenuItem3
 			// 
@@ -623,8 +642,8 @@
 			this.ActivePlaylistDGV.AllowUserToDeleteRows = false;
 			this.ActivePlaylistDGV.AllowUserToResizeColumns = false;
 			this.ActivePlaylistDGV.AllowUserToResizeRows = false;
-			dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-			this.ActivePlaylistDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+			this.ActivePlaylistDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.ActivePlaylistDGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
@@ -648,6 +667,15 @@
 			this.ActivePlaylistDGV.RowHeadersVisible = false;
 			this.ActivePlaylistDGV.Size = new System.Drawing.Size(613, 287);
 			this.ActivePlaylistDGV.TabIndex = 15;
+			// 
+			// PlayingAPDGVColumn
+			// 
+			this.PlayingAPDGVColumn.HeaderText = "P";
+			this.PlayingAPDGVColumn.Image = global::BooBoxClient.Properties.Resources.Playing;
+			this.PlayingAPDGVColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+			this.PlayingAPDGVColumn.MinimumWidth = 20;
+			this.PlayingAPDGVColumn.Name = "PlayingAPDGVColumn";
+			this.PlayingAPDGVColumn.Width = 20;
 			// 
 			// TitleAPDGVColumn
 			// 
@@ -777,8 +805,8 @@
 			this.MusicLibraryDGV.AllowUserToDeleteRows = false;
 			this.MusicLibraryDGV.AllowUserToResizeColumns = false;
 			this.MusicLibraryDGV.AllowUserToResizeRows = false;
-			dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-			this.MusicLibraryDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+			this.MusicLibraryDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
 			this.MusicLibraryDGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
@@ -802,6 +830,15 @@
 			this.MusicLibraryDGV.RowHeadersVisible = false;
 			this.MusicLibraryDGV.Size = new System.Drawing.Size(653, 287);
 			this.MusicLibraryDGV.TabIndex = 24;
+			// 
+			// PlayingMLDGVColumn
+			// 
+			this.PlayingMLDGVColumn.HeaderText = "P";
+			this.PlayingMLDGVColumn.Image = global::BooBoxClient.Properties.Resources.Playing;
+			this.PlayingMLDGVColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+			this.PlayingMLDGVColumn.MinimumWidth = 20;
+			this.PlayingMLDGVColumn.Name = "PlayingMLDGVColumn";
+			this.PlayingMLDGVColumn.Width = 20;
 			// 
 			// TitleMLDGVColumn
 			// 
@@ -1066,46 +1103,6 @@
 			this.VolumeDownPicBox.Size = new System.Drawing.Size(20, 20);
 			this.VolumeDownPicBox.TabIndex = 29;
 			this.VolumeDownPicBox.TabStop = false;
-			// 
-			// PlayingAPDGVColumn
-			// 
-			this.PlayingAPDGVColumn.HeaderText = "P";
-			this.PlayingAPDGVColumn.Image = global::BooBoxClient.Properties.Resources.Playing;
-			this.PlayingAPDGVColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-			this.PlayingAPDGVColumn.MinimumWidth = 20;
-			this.PlayingAPDGVColumn.Name = "PlayingAPDGVColumn";
-			this.PlayingAPDGVColumn.Width = 20;
-			// 
-			// PlayingMLDGVColumn
-			// 
-			this.PlayingMLDGVColumn.HeaderText = "P";
-			this.PlayingMLDGVColumn.Image = global::BooBoxClient.Properties.Resources.Playing;
-			this.PlayingMLDGVColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-			this.PlayingMLDGVColumn.MinimumWidth = 20;
-			this.PlayingMLDGVColumn.Name = "PlayingMLDGVColumn";
-			this.PlayingMLDGVColumn.Width = 20;
-			// 
-			// ConnectToServerMenuItem
-			// 
-			this.ConnectToServerMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ConnectToAllMenuItem,
-            this.toolStripMenuItem7});
-			this.ConnectToServerMenuItem.Name = "ConnectToServerMenuItem";
-			this.ConnectToServerMenuItem.Size = new System.Drawing.Size(192, 22);
-			this.ConnectToServerMenuItem.Text = "Connect To Server...";
-			this.ConnectToServerMenuItem.Click += new System.EventHandler(this.ConnectToServerMenuItem_Click);
-			// 
-			// ConnectToAllMenuItem
-			// 
-			this.ConnectToAllMenuItem.Name = "ConnectToAllMenuItem";
-			this.ConnectToAllMenuItem.Size = new System.Drawing.Size(153, 22);
-			this.ConnectToAllMenuItem.Text = "Connect To All";
-			this.ConnectToAllMenuItem.Click += new System.EventHandler(this.ConnectToAllMenuItem_Click);
-			// 
-			// toolStripMenuItem7
-			// 
-			this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-			this.toolStripMenuItem7.Size = new System.Drawing.Size(150, 6);
 			// 
 			// MainFrm
 			// 
