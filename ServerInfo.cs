@@ -6,6 +6,7 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Windows.Forms;
 using BooBox;
 
 namespace BooBoxClient {
@@ -17,10 +18,10 @@ namespace BooBoxClient {
 		public ConnectionStatus ConnectionStatus;
 		public String DataBuffer;
 		public String[] ConnectionParams;
+		public String Version;
+		public List<ServerDetail> Details = new List<ServerDetail>();
 		//public List<SongInfo> LibraryList = new List<SongInfo>();
 		//public String Name;
-		//public String Version;
-		//public List<ServerDetail> Details = new List<ServerDetail>();
 		//public Boolean ReceivingData = false;
 		//public Boolean ReceivingSong = false;
 
@@ -69,7 +70,128 @@ namespace BooBoxClient {
 			} else {
 				Console.WriteLine("From ServerInfo " + Index + ":\t" + Data);
 			}
+			ParseMessage(Data);
 			DataBuffer = "";
+		}
+
+		public void ParseMessage(String Data) {
+			char[] spaceDelim = new char[] { ' ' };
+			String[] tokenData = Data.Split(spaceDelim, 2);
+			switch (tokenData[0]) {
+				case "HELLO":
+					#region HELLO
+					ConnectionInfo.Name = tokenData[1];
+					Log.AddServerText("Connected to \"" + ConnectionInfo.Name + "\".", Index);
+					Send(Protocol.CreateHELLOR(Config.Instance.ClientName));
+					break;
+					#endregion
+				case "VERSION":
+					#region VERSION
+					Version = tokenData[1];
+					Log.AddServerText("\"" + ConnectionInfo.Name + "\" running at version " + Version, Index);
+					Send(Protocol.CreateVERSIONR());
+					break;
+					#endregion
+				case "DETAILS":
+					#region DETAILS
+					Details = ParseDetails(tokenData[1]);
+					Log.AddServerText("\"" + ConnectionInfo.Name + "\" details: " + tokenData[1], Index);
+					String TempDetailValue = ContainsDetailsKey("GUID");
+					if (TempDetailValue != null) {
+						ConnectionInfo.GUID = TempDetailValue;
+					}
+					TempDetailValue = ContainsDetailsKey("STREAMPORT");
+					if (TempDetailValue != null) {
+						ConnectionInfo.StreamPort = Convert.ToInt32(TempDetailValue);
+					}
+					TempDetailValue = ContainsDetailsKey("PASS");
+					if (TempDetailValue == "1") {
+						if (ConnectionInfo.RequiresPassword == false) {
+							Log.AddServerText("\"" + ConnectionInfo.Name + "\" requires a password. None stored.", Index);
+							MessageBox.Show(ConnectionInfo.Name + " requires a password. No password has been specified in the server connection information. Please edit " + ConnectionInfo.Name + "'s connection information to correct this issue.", "Password Required");
+							Send(Protocol.CreateGOODBYE());
+						} else {
+							Log.AddServerText("Password Sent to \"" + ConnectionInfo.Name + "\"", Index);
+							Send(Protocol.CreatePASS(ConnectionInfo.Password));
+						}
+					}
+					break;
+					#endregion
+				case "PASSR":
+					#region PASSR
+					if (tokenData[1] == "PASS_ACCEPTED") {
+						Log.AddServerText("\"" + ConnectionInfo.Name + "\" accepted password.", Index);
+					} else if (tokenData[1] == "PASS_REJECTED") {
+						Log.AddServerText("\"" + ConnectionInfo.Name + "\" rejected password.", Index);
+						MessageBox.Show("The password you have specified for " + ConnectionInfo.Name + " has been rejected by the server. Please edit " + ConnectionInfo.Name + "'s connection information to correct this issue.", "Password Rejected");
+						Send(Protocol.CreateGOODBYE());
+						Log.AddServerText("Disconnected from \"" + ConnectionInfo.Name + "\"", Index);
+					} else if (tokenData[1] == "PASS_NOT_REQUIRED") {
+						Log.AddServerText("\"" + ConnectionInfo.Name + "\" did not require a password. Ignored.", Index);
+					}
+					break;
+					#endregion
+				case "OK":
+					#region OK
+					Log.AddServerText("Fully connected to \"" + ConnectionInfo.Name + "\"!", Index);
+					//ServerManager.AddServer(ConnectionInfo);
+					ConnectionStatus = ConnectionStatus.Connected;
+					if (ConnectionMode == ConnectionMode.LibraryRequest) {
+						Log.AddServerText("Requesting Library from \"" + ConnectionInfo.Name + "\".", Index);
+						//ServerInfo.Send(CreateREQUESTLIBRARY());
+					} else if (ConnectionMode == ConnectionMode.SongRequest) {
+						/*
+						if (ServerInfo.RequestSongFilename != null) {
+							Functions.Log = "[SI" + ServerInfo.Index + "] Requested song from \"" + ServerInfo.Name + "\"";
+							ServerInfo.Send("REQUEST SONG " + ServerInfo.RequestSongFilename);
+							Functions.StatusChange("Buffering");
+						}
+						*/
+					}
+					break;
+					#endregion
+				case "GOODBYE":
+					#region GOODBYE
+					Log.AddServerText("\"" + ConnectionInfo.Name + "\" sent GOODBYE. Disconnecting...", Index);
+					Socket.Close();
+					break;
+					#endregion
+			}
+		}
+
+		/// <summary>
+		/// Parses a DETAILS string sent by a Server.
+		/// </summary>
+		/// <param name="DetailsStr">DETAILS string sent by the Server.</param>
+		/// <returns>List of ServerDetail type containing Name/Value pairs.</returns>
+		private static List<ServerDetail> ParseDetails(String DetailsStr) {
+			List<ServerDetail> TempList = new List<ServerDetail>();
+			ServerDetail TempSD = new ServerDetail();
+			char[] spaceDelim = new char[] { ' ' };
+			char[] equalsDelim = new char[] { '=' };
+			String[] tokenData = DetailsStr.Split(spaceDelim);
+			String[] tokenSplit;
+			for (int i = 0; i < tokenData.Length; i++) {
+				tokenSplit = tokenData[i].Split(equalsDelim, 2);
+				TempSD.Name = tokenSplit[0];
+				TempSD.Value = tokenSplit[1];
+				TempList.Add(TempSD);
+			}
+			return TempList;
+		}
+
+		/// <summary>
+		/// Determines if Server details contains a specific details key.
+		/// </summary>
+		/// <param name="KeyName">Key name</param>
+		/// <returns>String containing the value corresponding to the key name.</returns>
+		public String ContainsDetailsKey(String KeyName) {
+			foreach (ServerDetail TempSD in Details) {
+				if (TempSD.Name == KeyName) {
+					return TempSD.Value;
+				}
+			}
+			return null;
 		}
 
 

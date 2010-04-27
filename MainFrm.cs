@@ -179,7 +179,8 @@ namespace BooBoxClient {
 		}
 		private void ConnectToServerMenuItem_Click(object sender, EventArgs e) {
 			ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
-			CommInfo.ConnectToServer((ConnectionInfo)clickedItem.Tag, ConnectionMode.LibraryRequest, null);
+			String[] emptyString = new String[0];
+			CommInfo.ConnectToServer((ConnectionInfo)clickedItem.Tag, ConnectionMode.LibraryRequest, emptyString);
 		}
 		private void EditServerMenuItem_Click(object sender, EventArgs e) {
 			ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
