@@ -24,7 +24,49 @@ namespace BooBoxClient {
 			CounterLbl.Location = new System.Drawing.Point(newX, CounterLbl.Location.Y);
 		}
 		private void PushSettingsToForm() {
-
+			this.Text = "BooBox Client : " + Config.Instance.ClientName;
+			#region DataBufferSize
+			if (Config.Instance.DataBufferSize == 512) {
+				Bytes512MenuItem.Checked = true; Bytes1024MenuItem.Checked = false; Bytes2048MenuItem.Checked = false; Bytes4096MenuItem.Checked = false; Bytes8192MenuItem.Checked = false;
+			} else if (Config.Instance.DataBufferSize == 1024) {
+				Bytes512MenuItem.Checked = false; Bytes1024MenuItem.Checked = true; Bytes2048MenuItem.Checked = false; Bytes4096MenuItem.Checked = false; Bytes8192MenuItem.Checked = false;
+			} else if (Config.Instance.DataBufferSize == 2048) {
+				Bytes512MenuItem.Checked = false; Bytes1024MenuItem.Checked = false; Bytes2048MenuItem.Checked = true; Bytes4096MenuItem.Checked = false; Bytes8192MenuItem.Checked = false;
+			} else if (Config.Instance.DataBufferSize == 4096) {
+				Bytes512MenuItem.Checked = false; Bytes1024MenuItem.Checked = false; Bytes2048MenuItem.Checked = false; Bytes4096MenuItem.Checked = true; Bytes8192MenuItem.Checked = false;
+			} else if (Config.Instance.DataBufferSize == 8192) {
+				Bytes512MenuItem.Checked = false; Bytes1024MenuItem.Checked = false; Bytes2048MenuItem.Checked = false; Bytes4096MenuItem.Checked = false; Bytes8192MenuItem.Checked = true;
+			}
+			#endregion
+			#region BufferAtPercent
+			if (Config.Instance.BufferAtPercent == 0.05) {
+				Percent5MenuItem.Checked = true; Percent10MenuItem.Checked = false; Percent25MenuItem.Checked = false; Percent50MenuItem.Checked = false; Percent100MenuItem.Checked = false;
+			} else if (Config.Instance.BufferAtPercent == 0.1) {
+				Percent5MenuItem.Checked = false; Percent10MenuItem.Checked = true; Percent25MenuItem.Checked = false; Percent50MenuItem.Checked = false; Percent100MenuItem.Checked = false;
+			} else if (Config.Instance.BufferAtPercent == 0.25) {
+				Percent5MenuItem.Checked = false; Percent10MenuItem.Checked = false; Percent25MenuItem.Checked = true; Percent50MenuItem.Checked = false; Percent100MenuItem.Checked = false;
+			} else if (Config.Instance.BufferAtPercent == 0.5) {
+				Percent5MenuItem.Checked = false; Percent10MenuItem.Checked = false; Percent25MenuItem.Checked = false; Percent50MenuItem.Checked = true; Percent100MenuItem.Checked = false;
+			} else if (Config.Instance.BufferAtPercent == 1.0) {
+				Percent5MenuItem.Checked = false; Percent10MenuItem.Checked = false; Percent25MenuItem.Checked = false; Percent50MenuItem.Checked = false; Percent100MenuItem.Checked = true;
+			}
+			#endregion
+			#region RepeatMode
+			if (Config.Instance.RepeatMode == RepeatMode.Off) {
+				RepeatOffMenuItem.Checked = true; RepeatOneMenuItem.Checked = false; RepeatAllMenuItem.Checked = false;
+			} else if (Config.Instance.RepeatMode == RepeatMode.One) {
+				RepeatOffMenuItem.Checked = false; RepeatOneMenuItem.Checked = true; RepeatAllMenuItem.Checked = false;
+			} else if (Config.Instance.RepeatMode == RepeatMode.All) {
+				RepeatOffMenuItem.Checked = false; RepeatOneMenuItem.Checked = false; RepeatAllMenuItem.Checked = true;
+			}
+			#endregion
+			#region ShuffleMode
+			if (Config.Instance.ShuffleMode == ShuffleMode.Off) {
+				ShuffleOffMenuItem.Checked = true; ShuffleOnMenuItem.Checked = false;
+			} else if (Config.Instance.ShuffleMode == ShuffleMode.On) {
+				ShuffleOffMenuItem.Checked = false; ShuffleOnMenuItem.Checked = true;
+			}
+			#endregion
 		}
 		#endregion
 
@@ -84,6 +126,94 @@ namespace BooBoxClient {
 		#endregion
 
 		#region Menu Item Event Handlers
+		// File Menu
+		private void SaveSettingsMenuItem_Click(object sender, EventArgs e) {
+			Config.Instance.Save();
+		}
+		private void AddServerMenuItem_Click(object sender, EventArgs e) {
+
+		}
+		private void EditServerMenuItem_Click(object sender, EventArgs e) {
+
+		}
+		private void DeleteServerMenuItem_Click(object sender, EventArgs e) {
+
+		}
+		private void ExportSettingsMenuItem_Click(object sender, EventArgs e) {
+			SaveFileDialog.ShowDialog();
+			String SaveFileAs = SaveFileDialog.FileName;
+			if (SaveFileAs != "") {
+				Config.Instance.Save(SaveFileAs);
+			}
+		}
+		private void ImportSettingsMenuItem_Click(object sender, EventArgs e) {
+			OpenFileDialog.ShowDialog();
+			String OpenFilename = OpenFileDialog.FileName;
+			if (OpenFilename != "") {
+				Config.Instance.Load(OpenFilename);
+			}
+		}
+		private void ExitMenuItem_Click(object sender, EventArgs e) {
+			this.Close();
+		}
+		// Controls Menu
+		private void PlayMenuItem_Click(object sender, EventArgs e) {
+
+		}
+		private void NextMenuItem_Click(object sender, EventArgs e) {
+
+		}
+		private void PreviousMenuItem_Click(object sender, EventArgs e) {
+
+		}
+		private void VolumeUpMenuItem_Click(object sender, EventArgs e) {
+
+		}
+		private void VolumeDownMenuItem_Click(object sender, EventArgs e) {
+
+		}
+		private void ShuffleOffMenuItem_Click(object sender, EventArgs e) {
+			Log.AddStatusText("Changed Shuffle Mode from " + Config.Instance.ShuffleMode.ToString() + " to Off.");
+			Config.Instance.ShuffleMode = ShuffleMode.Off;
+			PushSettingsToForm();
+		}
+		private void ShuffleOnMenuItem_Click(object sender, EventArgs e) {
+			Log.AddStatusText("Changed Shuffle Mode from " + Config.Instance.ShuffleMode.ToString() + " to On.");
+			Config.Instance.ShuffleMode = ShuffleMode.On;
+			PushSettingsToForm();
+		}
+		private void RepeatOffMenuItem_Click(object sender, EventArgs e) {
+			Log.AddStatusText("Changed Repeat Mode from " + Config.Instance.RepeatMode.ToString() + " to Off.");
+			Config.Instance.RepeatMode = RepeatMode.Off;
+			PushSettingsToForm();
+		}
+		private void RepeatOneMenuItem_Click(object sender, EventArgs e) {
+			Log.AddStatusText("Changed Repeat Mode from " + Config.Instance.RepeatMode.ToString() + " to One.");
+			Config.Instance.RepeatMode = RepeatMode.One;
+			PushSettingsToForm();
+		}
+		private void RepeatAllMenuItem_Click(object sender, EventArgs e) {
+			Log.AddStatusText("Changed Repeat Mode from " + Config.Instance.RepeatMode.ToString() + " to All.");
+			Config.Instance.RepeatMode = RepeatMode.All;
+			PushSettingsToForm();
+		}
+		// Options Menu
+		private void ChangeClientNameMenuItem_Click(object sender, EventArgs e) {
+			InputBoxResult ClientRequestBox = InputBox.Show(
+				"Enter a Client Name:\n\nThis will be used to uniquely identify you to a Server.",
+				"Client Name Entry"
+			);
+			if (ClientRequestBox.ReturnCode == DialogResult.OK) {
+				if (ClientRequestBox.Text.Length > 200) {
+					MessageBox.Show("Client name may not be longer than 200 characters. Client name has not been changed.");
+				} else {
+					Log.AddStatusText("Changed client name from \"" + Config.Instance + "\" to \"" + ClientRequestBox.Text + "\".");
+					Config.Instance.ClientName = ClientRequestBox.Text;
+					Config.Instance.Save();
+				}
+			}
+			PushSettingsToForm();
+		}
 		private void Bytes512MenuItem_Click(object sender, EventArgs e) {
 			Log.AddStatusText("Changed Data Buffer Size from " + Config.Instance.DataBufferSize.ToString() + " bytes to 512 bytes.");
 			Config.Instance.DataBufferSize = 512;
@@ -109,48 +239,38 @@ namespace BooBoxClient {
 			Config.Instance.DataBufferSize = 8192;
 			PushSettingsToForm();
 		}
-		private void ChangeClientNameMenuItem_Click(object sender, EventArgs e) {
-			InputBoxResult ClientRequestBox = InputBox.Show(
-				"Enter a Client Name:\n\nThis will be used to uniquely identify you to a Server.",
-				"Client Name Entry"
-			);
-			if (ClientRequestBox.ReturnCode == DialogResult.OK) {
-				if (ClientRequestBox.Text.Length > 200) {
-					MessageBox.Show("Client name may not be longer than 200 characters. Client name has not been changed.");
-				} else {
-					Log.AddStatusText("Changed client name from \"" + Config.Instance + "\" to \"" + ClientRequestBox.Text + "\".");
-					Config.Instance.ClientName = ClientRequestBox.Text;
-					Config.Instance.Save();
-				}
-			}
+		private void Percent5MenuItem_Click(object sender, EventArgs e) {
+			Log.AddStatusText("Changed Buffer at Percent from " + (Config.Instance.DataBufferSize * 100).ToString() + "% to 5%.");
+			Config.Instance.BufferAtPercent = 0.05;
 			PushSettingsToForm();
 		}
+		private void Percent10MenuItem_Click(object sender, EventArgs e) {
+			Log.AddStatusText("Changed Buffer at Percent from " + (Config.Instance.DataBufferSize * 100).ToString() + "% to 10%.");
+			Config.Instance.BufferAtPercent = 0.1;
+			PushSettingsToForm();
+		}
+		private void Percent25MenuItem_Click(object sender, EventArgs e) {
+			Log.AddStatusText("Changed Buffer at Percent from " + (Config.Instance.DataBufferSize * 100).ToString() + "% to 25%.");
+			Config.Instance.BufferAtPercent = 0.25;
+			PushSettingsToForm();
+		}
+		private void Percent50MenuItem_Click(object sender, EventArgs e) {
+			Log.AddStatusText("Changed Buffer at Percent from " + (Config.Instance.DataBufferSize * 100).ToString() + "% to 50%.");
+			Config.Instance.BufferAtPercent = 0.5;
+			PushSettingsToForm();
+		}
+		private void Percent100MenuItem_Click(object sender, EventArgs e) {
+			Log.AddStatusText("Changed Buffer at Percent from " + (Config.Instance.DataBufferSize * 100).ToString() + "% to 100%.");
+			Config.Instance.BufferAtPercent = 1.0;
+			PushSettingsToForm();
+		}
+		// Help Menu
 		private void AboutMenuItem_Click(object sender, EventArgs e) {
 			AboutFrm AboutFrm = new AboutFrm();
 			AboutFrm.Show();
 		}
 		private void HelpMenuItem_Click(object sender, EventArgs e) {
 			MessageBox.Show("Help not yet implemented.");
-		}
-		private void ExitMenuItem_Click(object sender, EventArgs e) {
-			this.Close();
-		}
-		private void SaveSettingsMenuItem_Click(object sender, EventArgs e) {
-			Config.Instance.Save();
-		}
-		private void ExportSettingsMenuItem_Click(object sender, EventArgs e) {
-			SaveFileDialog.ShowDialog();
-			String SaveFileAs = SaveFileDialog.FileName;
-			if (SaveFileAs != "") {
-				Config.Instance.Save(SaveFileAs);
-			}
-		}
-		private void ImportSettingsMenuItem_Click(object sender, EventArgs e) {
-			OpenFileDialog.ShowDialog();
-			String OpenFilename = OpenFileDialog.FileName;
-			if (OpenFilename != "") {
-				Config.Instance.Load(OpenFilename);
-			}
 		}
 		#endregion
 

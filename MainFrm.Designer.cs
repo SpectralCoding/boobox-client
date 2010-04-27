@@ -23,8 +23,8 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.StatusStrip = new System.Windows.Forms.StatusStrip();
 			this.ProgressBarStatusStrip = new System.Windows.Forms.ToolStripProgressBar();
 			this.ProgressBarLblStatusStrip = new System.Windows.Forms.ToolStripStatusLabel();
@@ -58,6 +58,18 @@
 			this.OptionsMenuHeader = new System.Windows.Forms.ToolStripMenuItem();
 			this.ChangeClientNameMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.RebuildLibraryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.DataBufferSizeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.Bytes512MenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.Bytes1024MenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.Bytes2048MenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.Bytes4096MenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.Bytes8192MenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.BufferAtPercentMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.Percent5MenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.Percent10MenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.Percent25MenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.Percent50MenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.Percent100MenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.HelpMenuHeader = new System.Windows.Forms.ToolStripMenuItem();
 			this.HelpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
@@ -70,6 +82,7 @@
 			this.UpCmd = new System.Windows.Forms.Button();
 			this.ToTopCmd = new System.Windows.Forms.Button();
 			this.ActivePlaylistDGV = new System.Windows.Forms.DataGridView();
+			this.PlayingAPDGVColumn = new System.Windows.Forms.DataGridViewImageColumn();
 			this.TitleAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ArtistsAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.AlbumAPDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -86,6 +99,7 @@
 			this.PlaylistAPComb = new System.Windows.Forms.ComboBox();
 			this.LibraryTab = new System.Windows.Forms.TabPage();
 			this.MusicLibraryDGV = new System.Windows.Forms.DataGridView();
+			this.PlayingMLDGVColumn = new System.Windows.Forms.DataGridViewImageColumn();
 			this.TitleMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.ArtistsMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.AlbumMLDGVColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -110,25 +124,11 @@
 			this.PlayCmd = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
-			this.DataBufferSizeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.BufferAtPercentMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.Bytes512MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.Bytes1024MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.Bytes2048MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.Bytes4096MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.Bytes8192MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.Percent5MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.Percent10MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.Percent25MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.Percent50MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.Percent100MenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
 			this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
 			this.AlbumArtPicBox = new System.Windows.Forms.PictureBox();
 			this.VolumeUpPicBox = new System.Windows.Forms.PictureBox();
 			this.VolumeDownPicBox = new System.Windows.Forms.PictureBox();
-			this.PlayingAPDGVColumn = new System.Windows.Forms.DataGridViewImageColumn();
-			this.PlayingMLDGVColumn = new System.Windows.Forms.DataGridViewImageColumn();
 			this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.StatusStrip.SuspendLayout();
@@ -215,18 +215,21 @@
 			this.AddServerMenuItem.Name = "AddServerMenuItem";
 			this.AddServerMenuItem.Size = new System.Drawing.Size(192, 22);
 			this.AddServerMenuItem.Text = "&Add Server...";
+			this.AddServerMenuItem.Click += new System.EventHandler(this.AddServerMenuItem_Click);
 			// 
 			// EditServerMenuItem
 			// 
 			this.EditServerMenuItem.Name = "EditServerMenuItem";
 			this.EditServerMenuItem.Size = new System.Drawing.Size(192, 22);
 			this.EditServerMenuItem.Text = "Edit Server...";
+			this.EditServerMenuItem.Click += new System.EventHandler(this.EditServerMenuItem_Click);
 			// 
 			// DeleteServerMenuItem
 			// 
 			this.DeleteServerMenuItem.Name = "DeleteServerMenuItem";
 			this.DeleteServerMenuItem.Size = new System.Drawing.Size(192, 22);
 			this.DeleteServerMenuItem.Text = "&Delete Server...";
+			this.DeleteServerMenuItem.Click += new System.EventHandler(this.DeleteServerMenuItem_Click);
 			// 
 			// toolStripMenuItem3
 			// 
@@ -282,6 +285,7 @@
 			this.PlayMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
 			this.PlayMenuItem.Size = new System.Drawing.Size(214, 22);
 			this.PlayMenuItem.Text = "Play";
+			this.PlayMenuItem.Click += new System.EventHandler(this.PlayMenuItem_Click);
 			// 
 			// NextMenuItem
 			// 
@@ -289,6 +293,7 @@
 			this.NextMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Right)));
 			this.NextMenuItem.Size = new System.Drawing.Size(214, 22);
 			this.NextMenuItem.Text = "Next";
+			this.NextMenuItem.Click += new System.EventHandler(this.NextMenuItem_Click);
 			// 
 			// PreviousMenuItem
 			// 
@@ -296,6 +301,7 @@
 			this.PreviousMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Left)));
 			this.PreviousMenuItem.Size = new System.Drawing.Size(214, 22);
 			this.PreviousMenuItem.Text = "Previous";
+			this.PreviousMenuItem.Click += new System.EventHandler(this.PreviousMenuItem_Click);
 			// 
 			// toolStripMenuItem6
 			// 
@@ -308,6 +314,7 @@
 			this.VolumeUpMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Up)));
 			this.VolumeUpMenuItem.Size = new System.Drawing.Size(214, 22);
 			this.VolumeUpMenuItem.Text = "Volume Up";
+			this.VolumeUpMenuItem.Click += new System.EventHandler(this.VolumeUpMenuItem_Click);
 			// 
 			// VolumeDownMenuItem
 			// 
@@ -315,6 +322,7 @@
 			this.VolumeDownMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Down)));
 			this.VolumeDownMenuItem.Size = new System.Drawing.Size(214, 22);
 			this.VolumeDownMenuItem.Text = "Volume Down";
+			this.VolumeDownMenuItem.Click += new System.EventHandler(this.VolumeDownMenuItem_Click);
 			// 
 			// toolStripMenuItem2
 			// 
@@ -333,14 +341,16 @@
 			// ShuffleOffMenuItem
 			// 
 			this.ShuffleOffMenuItem.Name = "ShuffleOffMenuItem";
-			this.ShuffleOffMenuItem.Size = new System.Drawing.Size(131, 22);
+			this.ShuffleOffMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.ShuffleOffMenuItem.Text = "Shuffle Off";
+			this.ShuffleOffMenuItem.Click += new System.EventHandler(this.ShuffleOffMenuItem_Click);
 			// 
 			// ShuffleOnMenuItem
 			// 
 			this.ShuffleOnMenuItem.Name = "ShuffleOnMenuItem";
-			this.ShuffleOnMenuItem.Size = new System.Drawing.Size(131, 22);
+			this.ShuffleOnMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.ShuffleOnMenuItem.Text = "Shuffle On";
+			this.ShuffleOnMenuItem.Click += new System.EventHandler(this.ShuffleOnMenuItem_Click);
 			// 
 			// RepeatMenuItem
 			// 
@@ -355,20 +365,23 @@
 			// RepeatOffMenuItem
 			// 
 			this.RepeatOffMenuItem.Name = "RepeatOffMenuItem";
-			this.RepeatOffMenuItem.Size = new System.Drawing.Size(135, 22);
+			this.RepeatOffMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.RepeatOffMenuItem.Text = "Repeat Off";
+			this.RepeatOffMenuItem.Click += new System.EventHandler(this.RepeatOffMenuItem_Click);
 			// 
 			// RepeatOneMenuItem
 			// 
 			this.RepeatOneMenuItem.Name = "RepeatOneMenuItem";
-			this.RepeatOneMenuItem.Size = new System.Drawing.Size(135, 22);
+			this.RepeatOneMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.RepeatOneMenuItem.Text = "Repeat One";
+			this.RepeatOneMenuItem.Click += new System.EventHandler(this.RepeatOneMenuItem_Click);
 			// 
 			// RepeatAllMenuItem
 			// 
 			this.RepeatAllMenuItem.Name = "RepeatAllMenuItem";
-			this.RepeatAllMenuItem.Size = new System.Drawing.Size(135, 22);
+			this.RepeatAllMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.RepeatAllMenuItem.Text = "Repeat All";
+			this.RepeatAllMenuItem.Click += new System.EventHandler(this.RepeatAllMenuItem_Click);
 			// 
 			// OptionsMenuHeader
 			// 
@@ -394,6 +407,100 @@
 			this.RebuildLibraryMenuItem.Size = new System.Drawing.Size(184, 22);
 			this.RebuildLibraryMenuItem.Text = "Rebuild Library";
 			// 
+			// DataBufferSizeMenuItem
+			// 
+			this.DataBufferSizeMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Bytes512MenuItem,
+            this.Bytes1024MenuItem,
+            this.Bytes2048MenuItem,
+            this.Bytes4096MenuItem,
+            this.Bytes8192MenuItem});
+			this.DataBufferSizeMenuItem.Name = "DataBufferSizeMenuItem";
+			this.DataBufferSizeMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.DataBufferSizeMenuItem.Text = "Data Buffer Size";
+			// 
+			// Bytes512MenuItem
+			// 
+			this.Bytes512MenuItem.Name = "Bytes512MenuItem";
+			this.Bytes512MenuItem.Size = new System.Drawing.Size(221, 22);
+			this.Bytes512MenuItem.Text = "512 Bytes";
+			this.Bytes512MenuItem.Click += new System.EventHandler(this.Bytes512MenuItem_Click);
+			// 
+			// Bytes1024MenuItem
+			// 
+			this.Bytes1024MenuItem.Name = "Bytes1024MenuItem";
+			this.Bytes1024MenuItem.Size = new System.Drawing.Size(221, 22);
+			this.Bytes1024MenuItem.Text = "1024 Bytes";
+			this.Bytes1024MenuItem.Click += new System.EventHandler(this.Bytes1024MenuItem_Click);
+			// 
+			// Bytes2048MenuItem
+			// 
+			this.Bytes2048MenuItem.Name = "Bytes2048MenuItem";
+			this.Bytes2048MenuItem.Size = new System.Drawing.Size(221, 22);
+			this.Bytes2048MenuItem.Text = "2048 Bytes";
+			this.Bytes2048MenuItem.Click += new System.EventHandler(this.Bytes2048MenuItem_Click);
+			// 
+			// Bytes4096MenuItem
+			// 
+			this.Bytes4096MenuItem.Name = "Bytes4096MenuItem";
+			this.Bytes4096MenuItem.Size = new System.Drawing.Size(221, 22);
+			this.Bytes4096MenuItem.Text = "4096 Bytes (Recommended)";
+			this.Bytes4096MenuItem.Click += new System.EventHandler(this.Bytes4096MenuItem_Click);
+			// 
+			// Bytes8192MenuItem
+			// 
+			this.Bytes8192MenuItem.Name = "Bytes8192MenuItem";
+			this.Bytes8192MenuItem.Size = new System.Drawing.Size(221, 22);
+			this.Bytes8192MenuItem.Text = "8192 Bytes";
+			this.Bytes8192MenuItem.Click += new System.EventHandler(this.Bytes8192MenuItem_Click);
+			// 
+			// BufferAtPercentMenuItem
+			// 
+			this.BufferAtPercentMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Percent5MenuItem,
+            this.Percent10MenuItem,
+            this.Percent25MenuItem,
+            this.Percent50MenuItem,
+            this.Percent100MenuItem});
+			this.BufferAtPercentMenuItem.Name = "BufferAtPercentMenuItem";
+			this.BufferAtPercentMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.BufferAtPercentMenuItem.Text = "Buffer at Percent";
+			// 
+			// Percent5MenuItem
+			// 
+			this.Percent5MenuItem.Name = "Percent5MenuItem";
+			this.Percent5MenuItem.Size = new System.Drawing.Size(188, 22);
+			this.Percent5MenuItem.Text = "5%";
+			this.Percent5MenuItem.Click += new System.EventHandler(this.Percent5MenuItem_Click);
+			// 
+			// Percent10MenuItem
+			// 
+			this.Percent10MenuItem.Name = "Percent10MenuItem";
+			this.Percent10MenuItem.Size = new System.Drawing.Size(188, 22);
+			this.Percent10MenuItem.Text = "10% (Recommended)";
+			this.Percent10MenuItem.Click += new System.EventHandler(this.Percent10MenuItem_Click);
+			// 
+			// Percent25MenuItem
+			// 
+			this.Percent25MenuItem.Name = "Percent25MenuItem";
+			this.Percent25MenuItem.Size = new System.Drawing.Size(188, 22);
+			this.Percent25MenuItem.Text = "25%";
+			this.Percent25MenuItem.Click += new System.EventHandler(this.Percent25MenuItem_Click);
+			// 
+			// Percent50MenuItem
+			// 
+			this.Percent50MenuItem.Name = "Percent50MenuItem";
+			this.Percent50MenuItem.Size = new System.Drawing.Size(188, 22);
+			this.Percent50MenuItem.Text = "50%";
+			this.Percent50MenuItem.Click += new System.EventHandler(this.Percent50MenuItem_Click);
+			// 
+			// Percent100MenuItem
+			// 
+			this.Percent100MenuItem.Name = "Percent100MenuItem";
+			this.Percent100MenuItem.Size = new System.Drawing.Size(188, 22);
+			this.Percent100MenuItem.Text = "100%";
+			this.Percent100MenuItem.Click += new System.EventHandler(this.Percent100MenuItem_Click);
+			// 
 			// HelpMenuHeader
 			// 
 			this.HelpMenuHeader.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -408,19 +515,19 @@
 			// 
 			this.HelpMenuItem.Name = "HelpMenuItem";
 			this.HelpMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-			this.HelpMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.HelpMenuItem.Size = new System.Drawing.Size(118, 22);
 			this.HelpMenuItem.Text = "Help";
 			this.HelpMenuItem.Click += new System.EventHandler(this.HelpMenuItem_Click);
 			// 
 			// toolStripMenuItem1
 			// 
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(115, 6);
 			// 
 			// AboutMenuItem
 			// 
 			this.AboutMenuItem.Name = "AboutMenuItem";
-			this.AboutMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.AboutMenuItem.Size = new System.Drawing.Size(118, 22);
 			this.AboutMenuItem.Text = "About";
 			this.AboutMenuItem.Click += new System.EventHandler(this.AboutMenuItem_Click);
 			// 
@@ -512,8 +619,8 @@
 			this.ActivePlaylistDGV.AllowUserToDeleteRows = false;
 			this.ActivePlaylistDGV.AllowUserToResizeColumns = false;
 			this.ActivePlaylistDGV.AllowUserToResizeRows = false;
-			dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-			this.ActivePlaylistDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+			dataGridViewCellStyle35.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+			this.ActivePlaylistDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle35;
 			this.ActivePlaylistDGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
@@ -537,6 +644,15 @@
 			this.ActivePlaylistDGV.RowHeadersVisible = false;
 			this.ActivePlaylistDGV.Size = new System.Drawing.Size(613, 287);
 			this.ActivePlaylistDGV.TabIndex = 15;
+			// 
+			// PlayingAPDGVColumn
+			// 
+			this.PlayingAPDGVColumn.HeaderText = "P";
+			this.PlayingAPDGVColumn.Image = global::BooBoxClient.Properties.Resources.Playing;
+			this.PlayingAPDGVColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+			this.PlayingAPDGVColumn.MinimumWidth = 20;
+			this.PlayingAPDGVColumn.Name = "PlayingAPDGVColumn";
+			this.PlayingAPDGVColumn.Width = 20;
 			// 
 			// TitleAPDGVColumn
 			// 
@@ -666,8 +782,8 @@
 			this.MusicLibraryDGV.AllowUserToDeleteRows = false;
 			this.MusicLibraryDGV.AllowUserToResizeColumns = false;
 			this.MusicLibraryDGV.AllowUserToResizeRows = false;
-			dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-			this.MusicLibraryDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+			dataGridViewCellStyle36.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+			this.MusicLibraryDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle36;
 			this.MusicLibraryDGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
@@ -691,6 +807,15 @@
 			this.MusicLibraryDGV.RowHeadersVisible = false;
 			this.MusicLibraryDGV.Size = new System.Drawing.Size(653, 287);
 			this.MusicLibraryDGV.TabIndex = 24;
+			// 
+			// PlayingMLDGVColumn
+			// 
+			this.PlayingMLDGVColumn.HeaderText = "P";
+			this.PlayingMLDGVColumn.Image = global::BooBoxClient.Properties.Resources.Playing;
+			this.PlayingMLDGVColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+			this.PlayingMLDGVColumn.MinimumWidth = 20;
+			this.PlayingMLDGVColumn.Name = "PlayingMLDGVColumn";
+			this.PlayingMLDGVColumn.Width = 20;
 			// 
 			// TitleMLDGVColumn
 			// 
@@ -902,95 +1027,6 @@
 			this.button2.Text = "Shuffle Off";
 			this.button2.UseVisualStyleBackColor = true;
 			// 
-			// DataBufferSizeMenuItem
-			// 
-			this.DataBufferSizeMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Bytes512MenuItem,
-            this.Bytes1024MenuItem,
-            this.Bytes2048MenuItem,
-            this.Bytes4096MenuItem,
-            this.Bytes8192MenuItem});
-			this.DataBufferSizeMenuItem.Name = "DataBufferSizeMenuItem";
-			this.DataBufferSizeMenuItem.Size = new System.Drawing.Size(184, 22);
-			this.DataBufferSizeMenuItem.Text = "Data Buffer Size";
-			// 
-			// BufferAtPercentMenuItem
-			// 
-			this.BufferAtPercentMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Percent5MenuItem,
-            this.Percent10MenuItem,
-            this.Percent25MenuItem,
-            this.Percent50MenuItem,
-            this.Percent100MenuItem});
-			this.BufferAtPercentMenuItem.Name = "BufferAtPercentMenuItem";
-			this.BufferAtPercentMenuItem.Size = new System.Drawing.Size(184, 22);
-			this.BufferAtPercentMenuItem.Text = "Buffer at Percent";
-			// 
-			// Bytes512MenuItem
-			// 
-			this.Bytes512MenuItem.Name = "Bytes512MenuItem";
-			this.Bytes512MenuItem.Size = new System.Drawing.Size(221, 22);
-			this.Bytes512MenuItem.Text = "512 Bytes";
-			this.Bytes512MenuItem.Click += new System.EventHandler(this.Bytes512MenuItem_Click);
-			// 
-			// Bytes1024MenuItem
-			// 
-			this.Bytes1024MenuItem.Name = "Bytes1024MenuItem";
-			this.Bytes1024MenuItem.Size = new System.Drawing.Size(221, 22);
-			this.Bytes1024MenuItem.Text = "1024 Bytes";
-			this.Bytes1024MenuItem.Click += new System.EventHandler(this.Bytes1024MenuItem_Click);
-			// 
-			// Bytes2048MenuItem
-			// 
-			this.Bytes2048MenuItem.Name = "Bytes2048MenuItem";
-			this.Bytes2048MenuItem.Size = new System.Drawing.Size(221, 22);
-			this.Bytes2048MenuItem.Text = "2048 Bytes";
-			this.Bytes2048MenuItem.Click += new System.EventHandler(this.Bytes2048MenuItem_Click);
-			// 
-			// Bytes4096MenuItem
-			// 
-			this.Bytes4096MenuItem.Name = "Bytes4096MenuItem";
-			this.Bytes4096MenuItem.Size = new System.Drawing.Size(221, 22);
-			this.Bytes4096MenuItem.Text = "4096 Bytes (Recommended)";
-			this.Bytes4096MenuItem.Click += new System.EventHandler(this.Bytes4096MenuItem_Click);
-			// 
-			// Bytes8192MenuItem
-			// 
-			this.Bytes8192MenuItem.Name = "Bytes8192MenuItem";
-			this.Bytes8192MenuItem.Size = new System.Drawing.Size(221, 22);
-			this.Bytes8192MenuItem.Text = "8192 Bytes";
-			this.Bytes8192MenuItem.Click += new System.EventHandler(this.Bytes8192MenuItem_Click);
-			// 
-			// Percent5MenuItem
-			// 
-			this.Percent5MenuItem.Name = "Percent5MenuItem";
-			this.Percent5MenuItem.Size = new System.Drawing.Size(188, 22);
-			this.Percent5MenuItem.Text = "5%";
-			// 
-			// Percent10MenuItem
-			// 
-			this.Percent10MenuItem.Name = "Percent10MenuItem";
-			this.Percent10MenuItem.Size = new System.Drawing.Size(188, 22);
-			this.Percent10MenuItem.Text = "10% (Recommended)";
-			// 
-			// Percent25MenuItem
-			// 
-			this.Percent25MenuItem.Name = "Percent25MenuItem";
-			this.Percent25MenuItem.Size = new System.Drawing.Size(188, 22);
-			this.Percent25MenuItem.Text = "25%";
-			// 
-			// Percent50MenuItem
-			// 
-			this.Percent50MenuItem.Name = "Percent50MenuItem";
-			this.Percent50MenuItem.Size = new System.Drawing.Size(188, 22);
-			this.Percent50MenuItem.Text = "50%";
-			// 
-			// Percent100MenuItem
-			// 
-			this.Percent100MenuItem.Name = "Percent100MenuItem";
-			this.Percent100MenuItem.Size = new System.Drawing.Size(188, 22);
-			this.Percent100MenuItem.Text = "100%";
-			// 
 			// dataGridViewImageColumn1
 			// 
 			this.dataGridViewImageColumn1.HeaderText = "Playing";
@@ -1040,24 +1076,6 @@
 			this.VolumeDownPicBox.Size = new System.Drawing.Size(20, 20);
 			this.VolumeDownPicBox.TabIndex = 29;
 			this.VolumeDownPicBox.TabStop = false;
-			// 
-			// PlayingAPDGVColumn
-			// 
-			this.PlayingAPDGVColumn.HeaderText = "P";
-			this.PlayingAPDGVColumn.Image = global::BooBoxClient.Properties.Resources.Playing;
-			this.PlayingAPDGVColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-			this.PlayingAPDGVColumn.MinimumWidth = 20;
-			this.PlayingAPDGVColumn.Name = "PlayingAPDGVColumn";
-			this.PlayingAPDGVColumn.Width = 20;
-			// 
-			// PlayingMLDGVColumn
-			// 
-			this.PlayingMLDGVColumn.HeaderText = "P";
-			this.PlayingMLDGVColumn.Image = global::BooBoxClient.Properties.Resources.Playing;
-			this.PlayingMLDGVColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-			this.PlayingMLDGVColumn.MinimumWidth = 20;
-			this.PlayingMLDGVColumn.Name = "PlayingMLDGVColumn";
-			this.PlayingMLDGVColumn.Width = 20;
 			// 
 			// OpenFileDialog
 			// 
