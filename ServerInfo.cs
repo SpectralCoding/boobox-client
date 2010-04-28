@@ -20,6 +20,7 @@ namespace BooBoxClient {
 		public String[] ConnectionParams;
 		public String Version;
 		public List<ServerDetail> Details = new List<ServerDetail>();
+		public int SongCount;
 		//public List<SongInfo> LibraryList = new List<SongInfo>();
 		//public String Name;
 		//public Boolean ReceivingData = false;
@@ -115,6 +116,7 @@ namespace BooBoxClient {
 							Send(Protocol.CreatePASS(ConnectionInfo.Password));
 						}
 					}
+					Config.Instance.ConnectionInfoList[Functions.ConnectionInfoInternalGUIDToIndex(Config.Instance.ConnectionInfoList, ConnectionInfo.InternalGUID)] = ConnectionInfo;
 					break;
 					#endregion
 				case "PASSR":
@@ -138,7 +140,7 @@ namespace BooBoxClient {
 					ConnectionStatus = ConnectionStatus.Connected;
 					if (ConnectionMode == ConnectionMode.LibraryRequest) {
 						Log.AddServerText("Requesting Library from \"" + ConnectionInfo.Name + "\".", Index);
-						//ServerInfo.Send(CreateREQUESTLIBRARY());
+						Send(Protocol.CreateREQUESTLIBRARY(ConnectionInfo.LastLibraryQuery));
 					} else if (ConnectionMode == ConnectionMode.SongRequest) {
 						/*
 						if (ServerInfo.RequestSongFilename != null) {
@@ -150,6 +152,72 @@ namespace BooBoxClient {
 					}
 					break;
 					#endregion
+				case "REQUESTR":
+                    #region REQUESTR
+                    if (ConnectionStatus == ConnectionStatus.Connected) {
+                        String[] requestData = tokenData[1].Split(spaceDelim, 2);
+                        switch (requestData[0]) {
+                            case "LIBRARYMETA":
+                                #region LIBRARYMETA
+                                requestData = tokenData[1].Split(spaceDelim);
+								Log.AddServerText("Receiving Library Meta Data From \"" + ConnectionInfo.Name + "\". Library is " + requestData[1] + " Bytes in " + requestData[2] + " songs (last updated " + requestData[3] + " UTC).", Index);
+								Forms.MainFrm.UpdateStatusLabel("Receiving Library Data From \"" + ConnectionInfo.Name + "\". " + requestData[1] + " Bytes in " + requestData[2] + " songs (last updated " + requestData[3] + " UTC).");
+                                SongCount = Convert.ToInt32(requestData[2]);
+								ConnectionInfo.LastLibraryQuery = Convert.ToDateTime(requestData[3]).ToUniversalTime();
+								Config.Instance.ConnectionInfoList[Functions.ConnectionInfoInternalGUIDToIndex(Config.Instance.ConnectionInfoList, ConnectionInfo.InternalGUID)] = ConnectionInfo;
+                                Forms.MainFrm.UpdateStatusProgressBar("SetMax", Convert.ToInt32(requestData[1]));
+                                break;
+                                #endregion
+                            case "LIBRARY":
+                                #region LIBRARY
+								/*
+                                Functions.MainFrm.UpdateLibraryProgressBar("Reset", 0);
+                                Functions.StatusChange("Processing Library Data... " + ServerInfo.SongCount + " Songs.");
+                                Functions.MainFrm.UpdateLibraryProgressBar("SetMax", ServerInfo.SongCount);
+								FileStream file = new FileStream("library.txt", FileMode.OpenOrCreate, FileAccess.Write);
+								StreamWriter sw = new StreamWriter(file);
+								sw.Write(requestData[1]);
+								sw.Close();
+								file.Close();
+                                Library.AddXMLStringToLibrary(requestData[1], ServerInfo.GUID);
+                                Functions.MainFrm.UpdateLibraryProgressBar("Reset", 0);
+                                Functions.StatusChange("Idle");
+								ServerInfo.Send(CreateGOODBYE());
+								*/
+                                break;
+                                #endregion
+							case "LIBRARYUPTODATE":
+								#region LIBRARYUPTODATE
+								Forms.MainFrm.UpdateStatusProgressBar("Reset", 0);
+								Log.AddServerText("Library already up to date.", Index);
+								break;
+								#endregion
+							case "SONGINFO":
+								#region SONGINFO
+								/*
+								ActiveSong.ImportXMLData(requestData[1]);
+								Functions.Log = "[SI" + ServerInfo.Index + "] Received XML Data for \"" + ActiveSong.SongInfo.Title + "\"";
+								*/
+								break;
+								#endregion
+							case "SONGKEY":
+								#region SONGKEY
+								/*
+								Functions.MainFrm.UpdateFileBufferingProgressBar("SetMax", Convert.ToInt32(ActiveSong.SongInfo.FileLength));
+								Functions.MainFrm.UpdateSongBufferingProgressBar("SetMin", ActiveSong.SongInfo.StartByte);
+								Functions.MainFrm.UpdateSongBufferingProgressBar("SetMax", ActiveSong.SongInfo.EndByte);
+								Functions.MainFrm.UpdateSongBufferingProgressBar("Value", ActiveSong.SongInfo.StartByte);
+								CommStream.ConnectToServerStream(ServerInfo.GUID, requestData[1], ActiveSong.SongInfo.FileName);
+								*/
+								break;
+								#endregion
+						}
+                    } else {
+						Log.AddServerText("Responded to data request before fully connected. Terminating connection.", Index);
+						Send(Protocol.CreateGOODBYE());
+                    }
+                    break;
+                    #endregion
 				case "GOODBYE":
 					#region GOODBYE
 					Log.AddServerText("\"" + ConnectionInfo.Name + "\" sent GOODBYE. Disconnecting...", Index);

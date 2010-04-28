@@ -104,6 +104,30 @@ namespace BooBoxClient {
 				#endregion
 			}
 		}
+		public delegate void UpdateStatusProgressBarDelegate(String Mode, int Param);
+		public void UpdateStatusProgressBar(String Mode, int Param) {
+			if (this.InvokeRequired) {
+				this.Invoke(new UpdateStatusProgressBarDelegate(UpdateStatusProgressBar), Mode, Param);
+			} else {
+				if (Mode == "SetMax") {
+					ProgressBarStatusStrip.Maximum = Param;
+				} else if (Mode == "SetMin") {
+					ProgressBarStatusStrip.Minimum = Param;
+				} else if (Mode == "Increment") {
+					ProgressBarStatusStrip.Increment(Param);
+				} else if (Mode == "Reset") {
+					ProgressBarStatusStrip.Value = 0;
+				}
+			}
+		}
+		public delegate void UpdateStatusLabelDelegate(String StatusText);
+		public void UpdateStatusLabel(String StatusText) {
+			if (this.InvokeRequired) {
+				this.Invoke(new UpdateStatusLabelDelegate(UpdateStatusLabel), StatusText);
+			} else {
+				ProgressBarLblStatusStrip.Text = StatusText;
+			}
+		}
 		#endregion
 
 		#region Custom Form Methods

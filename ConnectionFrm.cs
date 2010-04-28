@@ -60,10 +60,10 @@ namespace BooBoxClient {
 		}
 
 		private void OKCmd_Click(object sender, EventArgs e) {
-			if (Mode == "Edit") {
-				Config.Instance.ConnectionInfoList.Remove(OrgConnInfo);
-			}
 			ConnectionInfo tempConnInfo = new ConnectionInfo();
+			if (Mode == "Edit") {
+				tempConnInfo = OrgConnInfo;
+			}
 			UriHostNameType hostnameType = Uri.CheckHostName(IPHostnameTxt.Text);
 			if (hostnameType == UriHostNameType.IPv4) {
 				tempConnInfo.IPAddress = IPHostnameTxt.Text; tempConnInfo.Hostname = "";
@@ -72,11 +72,17 @@ namespace BooBoxClient {
 			} else {
 				MessageBox.Show("IP Address or Hostname appears to be invalid. Please choose a valid hostname to continue."); return;
 			}
+			if (Mode == "Edit") {
+				Config.Instance.ConnectionInfoList.Remove(OrgConnInfo);
+			}
 			tempConnInfo.IPAddress = IPHostnameTxt.Text;
 			tempConnInfo.InfoPort = Convert.ToInt32(PortTxt.Text);
 			tempConnInfo.Description = DescriptionTxt.Text;
 			tempConnInfo.RequiresPassword = ServerPasswordChk.Checked;
 			tempConnInfo.Password = PasswordTxt.Text;
+			if (tempConnInfo.InternalGUID == null) {
+				tempConnInfo.InternalGUID = Guid.NewGuid().ToString();
+			}
 			Config.Instance.ConnectionInfoList.Add(tempConnInfo);
 			Config.Instance.Save();
 			Forms.MainFrm.PushSettingsToForm();
