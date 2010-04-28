@@ -21,10 +21,6 @@ namespace BooBoxClient {
 		public String Version;
 		public List<ServerDetail> Details = new List<ServerDetail>();
 		public int SongCount;
-		//public List<SongInfo> LibraryList = new List<SongInfo>();
-		//public String Name;
-		//public Boolean ReceivingData = false;
-		//public Boolean ReceivingSong = false;
 
 		/// <summary>
 		/// Public constructor for createing a Server object
@@ -66,8 +62,8 @@ namespace BooBoxClient {
 		/// </summary>
 		/// <param name="Data">Contains data sent from the Server</param>
 		public void OnReceiveData(String Data) {
-			if (Data.Length > 1000) {
-				Console.WriteLine("From ServerInfo " + Index + ":\t" + Data.Substring(0, 1000) + "...");
+			if (Data.Length > 100) {
+				Console.WriteLine("From ServerInfo " + Index + ":\t" + Data.Substring(0, 100) + "...");
 			} else {
 				Console.WriteLine("From ServerInfo " + Index + ":\t" + Data);
 			}
@@ -136,7 +132,7 @@ namespace BooBoxClient {
 				case "OK":
 					#region OK
 					Log.AddServerText("Fully connected to \"" + ConnectionInfo.Name + "\"!", Index);
-					//ServerManager.AddServer(ConnectionInfo);
+					ServerManager.ConfirmOnline(ConnectionInfo.InternalGUID, ConnectionInfo.GUID);
 					ConnectionStatus = ConnectionStatus.Connected;
 					if (ConnectionMode == ConnectionMode.LibraryRequest) {
 						Log.AddServerText("Requesting Library from \"" + ConnectionInfo.Name + "\".", Index);
@@ -149,6 +145,8 @@ namespace BooBoxClient {
 							Functions.StatusChange("Buffering");
 						}
 						*/
+					} else if (ConnectionMode == ConnectionMode.OnlineTest) {
+						Send(Protocol.CreateGOODBYE());
 					}
 					break;
 					#endregion
@@ -157,41 +155,36 @@ namespace BooBoxClient {
                     if (ConnectionStatus == ConnectionStatus.Connected) {
                         String[] requestData = tokenData[1].Split(spaceDelim, 2);
                         switch (requestData[0]) {
-                            case "LIBRARYMETA":
-                                #region LIBRARYMETA
-                                requestData = tokenData[1].Split(spaceDelim);
-								Log.AddServerText("Receiving Library Meta Data From \"" + ConnectionInfo.Name + "\". Library is " + requestData[1] + " Bytes in " + requestData[2] + " songs (last updated " + requestData[3] + " UTC).", Index);
-								Forms.MainFrm.UpdateStatusLabel("Receiving Library Data From \"" + ConnectionInfo.Name + "\". " + requestData[1] + " Bytes in " + requestData[2] + " songs (last updated " + requestData[3] + " UTC).");
-                                SongCount = Convert.ToInt32(requestData[2]);
-								ConnectionInfo.LastLibraryQuery = Convert.ToDateTime(requestData[3]).ToUniversalTime();
-								Config.Instance.ConnectionInfoList[Functions.ConnectionInfoInternalGUIDToIndex(Config.Instance.ConnectionInfoList, ConnectionInfo.InternalGUID)] = ConnectionInfo;
-                                Forms.MainFrm.UpdateStatusProgressBar("SetMax", Convert.ToInt32(requestData[1]));
-                                break;
-                                #endregion
-                            case "LIBRARY":
-                                #region LIBRARY
-								/*
-                                Functions.MainFrm.UpdateLibraryProgressBar("Reset", 0);
-                                Functions.StatusChange("Processing Library Data... " + ServerInfo.SongCount + " Songs.");
-                                Functions.MainFrm.UpdateLibraryProgressBar("SetMax", ServerInfo.SongCount);
-								FileStream file = new FileStream("library.txt", FileMode.OpenOrCreate, FileAccess.Write);
-								StreamWriter sw = new StreamWriter(file);
-								sw.Write(requestData[1]);
-								sw.Close();
-								file.Close();
-                                Library.AddXMLStringToLibrary(requestData[1], ServerInfo.GUID);
-                                Functions.MainFrm.UpdateLibraryProgressBar("Reset", 0);
-                                Functions.StatusChange("Idle");
-								ServerInfo.Send(CreateGOODBYE());
-								*/
-                                break;
-                                #endregion
 							case "LIBRARYUPTODATE":
 								#region LIBRARYUPTODATE
 								Forms.MainFrm.UpdateStatusProgressBar("Reset", 0);
 								Log.AddServerText("Library already up to date.", Index);
 								break;
 								#endregion
+							case "LIBRARYMETA":
+                                #region LIBRARYMETA
+                                requestData = tokenData[1].Split(spaceDelim);
+                                SongCount = Convert.ToInt32(requestData[2]);
+								int tempByteCount = Convert.ToInt32(requestData[1]);
+								ConnectionInfo.LastLibraryQuery = Convert.ToDateTime(requestData[3]).ToUniversalTime();
+								String tempStr = "Receiving Library Data: " + Functions.BytesToHumanReadable(tempByteCount, 2) + " in " + requestData[2] + " songs (last updated " + ConnectionInfo.LastLibraryQuery.ToLocalTime().ToString() + ").";
+								Forms.MainFrm.UpdateStatusLabel(tempStr);
+								Log.AddServerText(tempStr, Index);
+								//Config.Instance.ConnectionInfoList[Functions.ConnectionInfoInternalGUIDToIndex(Config.Instance.ConnectionInfoList, ConnectionInfo.InternalGUID)] = ConnectionInfo;
+								Forms.MainFrm.UpdateStatusProgressBar("SetMax", tempByteCount);
+                                break;
+                                #endregion
+                            case "LIBRARY":
+                                #region LIBRARY
+								Forms.MainFrm.UpdateStatusProgressBar("Reset", 0);
+								Forms.MainFrm.UpdateStatusLabel("Processing Library Data... " + SongCount + " Songs.");
+								Forms.MainFrm.UpdateStatusProgressBar("SetMax", SongCount);
+								Library.AddXMLStringToLibrary(Functions.DecompressString(requestData[1]), ConnectionInfo.GUID);
+								Forms.MainFrm.UpdateStatusProgressBar("Reset", 0);
+								Forms.MainFrm.UpdateStatusLabel("Ready");
+								Send(Protocol.CreateGOODBYE());
+                                break;
+                                #endregion
 							case "SONGINFO":
 								#region SONGINFO
 								/*

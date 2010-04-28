@@ -59,6 +59,7 @@ namespace BooBoxClient {
 				Socket = iServer.Socket;
 				ServerInfoIndex = iServer.Index;
 				ServerInfo = iServer;
+				Forms.MainFrm.UpdateStatusProgressBar("Increment", DataBuffer.Length);
 			}
 		}
 
