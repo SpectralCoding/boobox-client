@@ -175,6 +175,7 @@ namespace BooBoxClient {
 						albumCount++;
 						albumList.Add(SongList[i].Album);
 					}
+					MusicLibraryDGV.Rows[newRowNum].Tag = SongList[i];
 				}
 				MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[0], System.ComponentModel.ListSortDirection.Ascending);
 				MusicLibraryDGV.Columns[0].HeaderText = "Title (" + SongList.Count + ")";
@@ -186,62 +187,61 @@ namespace BooBoxClient {
 
 		#region MusicLibraryDGV Event Handlers
 		private void MusicLibraryDGV_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) {
+			MusicLibraryDGV.Columns[3].HeaderCell.SortGlyphDirection = SortOrder.None;
+			MusicLibraryDGV.Columns[4].HeaderCell.SortGlyphDirection = SortOrder.None;
+			MusicLibraryDGV.Columns[5].HeaderCell.SortGlyphDirection = SortOrder.None;
+			MusicLibraryDGV.Columns[7].HeaderCell.SortGlyphDirection = SortOrder.None;
+			MusicLibraryDGV.Columns[8].HeaderCell.SortGlyphDirection = SortOrder.None;
 			if (e.ColumnIndex == 3) {
 				#region Play Length Column
 				if (MusicLibraryDGV.SortOrder == SortOrder.Ascending) {
-					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[12], ListSortDirection.Descending);
+					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[11], ListSortDirection.Descending);
 					MusicLibraryDGV.Columns[3].HeaderCell.SortGlyphDirection = SortOrder.Descending;
 				} else if (MusicLibraryDGV.SortOrder == SortOrder.Descending) {
-					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[12], ListSortDirection.Ascending);
+					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[11], ListSortDirection.Ascending);
 					MusicLibraryDGV.Columns[3].HeaderCell.SortGlyphDirection = SortOrder.Ascending;
 				}
 				#endregion
 			} else if (e.ColumnIndex == 4) {
 				#region File Length Column
 				if (MusicLibraryDGV.SortOrder == SortOrder.Ascending) {
-					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[13], ListSortDirection.Descending);
+					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[12], ListSortDirection.Descending);
 					MusicLibraryDGV.Columns[4].HeaderCell.SortGlyphDirection = SortOrder.Descending;
 				} else if (MusicLibraryDGV.SortOrder == SortOrder.Descending) {
-					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[13], ListSortDirection.Ascending);
+					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[12], ListSortDirection.Ascending);
 					MusicLibraryDGV.Columns[4].HeaderCell.SortGlyphDirection = SortOrder.Ascending;
 				}
 				#endregion
 			} else if (e.ColumnIndex == 5) {
 				#region Play Count Column
 				if (MusicLibraryDGV.SortOrder == SortOrder.Ascending) {
-					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[14], ListSortDirection.Descending);
+					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[13], ListSortDirection.Descending);
 					MusicLibraryDGV.Columns[5].HeaderCell.SortGlyphDirection = SortOrder.Descending;
 				} else if (MusicLibraryDGV.SortOrder == SortOrder.Descending) {
-					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[14], ListSortDirection.Ascending);
+					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[13], ListSortDirection.Ascending);
 					MusicLibraryDGV.Columns[5].HeaderCell.SortGlyphDirection = SortOrder.Ascending;
 				}
 				#endregion
 			} else if (e.ColumnIndex == 7) {
 				#region Track Column
 				if (MusicLibraryDGV.SortOrder == SortOrder.Ascending) {
-					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[15], ListSortDirection.Descending);
+					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[14], ListSortDirection.Descending);
 					MusicLibraryDGV.Columns[7].HeaderCell.SortGlyphDirection = SortOrder.Descending;
 				} else if (MusicLibraryDGV.SortOrder == SortOrder.Descending) {
-					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[15], ListSortDirection.Ascending);
+					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[14], ListSortDirection.Ascending);
 					MusicLibraryDGV.Columns[7].HeaderCell.SortGlyphDirection = SortOrder.Ascending;
 				}
 				#endregion
 			} else if (e.ColumnIndex == 8) {
 				#region Year Column
 				if (MusicLibraryDGV.SortOrder == SortOrder.Ascending) {
-					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[16], ListSortDirection.Descending);
+					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[15], ListSortDirection.Descending);
 					MusicLibraryDGV.Columns[8].HeaderCell.SortGlyphDirection = SortOrder.Descending;
 				} else if (MusicLibraryDGV.SortOrder == SortOrder.Descending) {
-					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[16], ListSortDirection.Ascending);
+					MusicLibraryDGV.Sort(MusicLibraryDGV.Columns[15], ListSortDirection.Ascending);
 					MusicLibraryDGV.Columns[8].HeaderCell.SortGlyphDirection = SortOrder.Ascending;
 				}
 				#endregion
-			} else {
-				MusicLibraryDGV.Columns[3].HeaderCell.SortGlyphDirection = SortOrder.None;
-				MusicLibraryDGV.Columns[4].HeaderCell.SortGlyphDirection = SortOrder.None;
-				MusicLibraryDGV.Columns[5].HeaderCell.SortGlyphDirection = SortOrder.None;
-				MusicLibraryDGV.Columns[7].HeaderCell.SortGlyphDirection = SortOrder.None;
-				MusicLibraryDGV.Columns[8].HeaderCell.SortGlyphDirection = SortOrder.None;
 			}
 		}
 		#endregion
