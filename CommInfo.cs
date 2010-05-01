@@ -17,6 +17,12 @@ namespace BooBoxClient {
 		private static AsyncCallback asyncCallBack;
 		private static ArrayList ServerInfoList = ArrayList.Synchronized(new ArrayList());
 
+		/// <summary>
+		/// Connect to a server.
+		/// </summary>
+		/// <param name="ConnectionInfo">ConnectionInfo object containing connection information</param>
+		/// <param name="ConnectionMode">Mode describing the type of connection</param>
+		/// <param name="Params">Optional params to be passed to the ServerInfo object</param>
 		public static void ConnectToServer(ConnectionInfo ConnectionInfo, ConnectionMode ConnectionMode, String[] Params) {
 			Log.AddStatusText("Connecting to server (" + ConnectionMode.ToString() + " mode): " + ConnectionInfo.Description);
 			if (ConnectionInfo.Hostname != "") {

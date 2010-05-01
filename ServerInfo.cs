@@ -71,6 +71,10 @@ namespace BooBoxClient {
 			DataBuffer = "";
 		}
 
+		/// <summary>
+		/// Parses a line of incomming data.
+		/// </summary>
+		/// <param name="Data">Data to parse and execute</param>
 		public void ParseMessage(String Data) {
 			char[] spaceDelim = new char[] { ' ' };
 			String[] tokenData = Data.Split(spaceDelim, 2);
@@ -254,7 +258,6 @@ namespace BooBoxClient {
 			}
 			return null;
 		}
-
 
 	}
 }

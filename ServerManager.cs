@@ -9,6 +9,9 @@ namespace BooBoxClient {
 	public static class ServerManager {
 		private static List<ServerStatus> ServerStatusList = new List<ServerStatus>();
 
+		/// <summary>
+		/// Initiats CommInfo.ConnectToServer() to test which servers are currently online.
+		/// </summary>
 		public static void TestServers() {
 			ServerStatusList.Clear();
 			String[] emptyString = new String[0];
@@ -22,6 +25,11 @@ namespace BooBoxClient {
 			}
 		}
 
+		/// <summary>
+		/// Marks a server as online based on the InternalGUID of that server, and its actual GUID.
+		/// </summary>
+		/// <param name="InternalGUID">InternalGUID of the server</param>
+		/// <param name="GUID">Actual GUID of the server</param>
 		public static void ConfirmOnline(String InternalGUID, String GUID) {
 			Boolean tempBool;
 			ServerStatus tempSS = new ServerStatus();
@@ -40,6 +48,11 @@ namespace BooBoxClient {
 			}
 		}
 
+		/// <summary>
+		/// Checks to see whether or not a server is online based on the Server's GUID.
+		/// </summary>
+		/// <param name="ServerGUID">GUID of server to check</param>
+		/// <returns>Boolean revealing whether or not the server is online</returns>
 		public static Boolean ServerOnline(String ServerGUID) {
 			for (int i = 0; i < ServerStatusList.Count; i++) {
 				if (ServerStatusList[i].GUID == ServerGUID) {

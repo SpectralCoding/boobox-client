@@ -11,16 +11,25 @@ namespace BooBoxClient {
 	public static class Library {
 		private static List<SongInfo> SongList = new List<SongInfo>();
 
+		/// <summary>
+		/// Saves settings to the Config object.
+		/// </summary>
 		public static void SaveSettings() {
 			Config.Instance.LibrarySongList = SongList;
 			Config.Instance.Save();
 		}
 
+		/// <summary>
+		/// Loads Library from the Config object.
+		/// </summary>
 		public static void LoadSettings() {
 			SongList = Config.Instance.LibrarySongList;
 			UpdateMainFrmDGV();
 		}
 
+		/// <summary>
+		/// Updates the MainFrm Library DataGridView.
+		/// </summary>
 		public static void UpdateMainFrmDGV() {
 			Forms.MainFrm.UpdateMusicLibraryDGV(SongList);
 		}
@@ -116,6 +125,10 @@ namespace BooBoxClient {
 			UpdateMainFrmDGV();
 		}
 
+		/// <summary>
+		/// Removes all songs from the library related to a specific Server GUID.
+		/// </summary>
+		/// <param name="GUID">GUID to remove</param>
 		public static void RemoveSongsByGUID(String GUID) {
 			for (int i = 0; i < SongList.Count; i++) {
 				if (SongList[i].ServerGUID == GUID) {
