@@ -6,11 +6,15 @@ using System.Text;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Windows.Forms;
 using BooBox;
 
 namespace BooBoxClient {
 	public sealed class Config {
 		public Boolean Configured = false;
+		public FormWindowState MainFrmWindowState = FormWindowState.Normal;
+		public int MainFrmWindowSizeWidth = 700;
+		public int MainFrmWindowSizeHeight = 500;
 		public List<ConnectionInfo> ConnectionInfoList = new List<ConnectionInfo>();
 		public String ClientName = "";
 		public int DataBufferSize = 4096;

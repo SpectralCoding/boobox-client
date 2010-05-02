@@ -279,6 +279,9 @@ namespace BooBoxClient {
 			#endregion
 		}
 		private void MainFrm_Load(object sender, EventArgs e) {
+			this.WindowState = Config.Instance.MainFrmWindowState;
+			this.Width = Config.Instance.MainFrmWindowSizeWidth;
+			this.Height = Config.Instance.MainFrmWindowSizeHeight;
 			Forms.MainFrm = this;
 			Log.AddStatusText("BooBox Client started.");
 			ToolStripManager.Renderer = new ToolStripProfessionalRenderer(new MenuStripNoGradient());
@@ -304,6 +307,9 @@ namespace BooBoxClient {
 			PushSettingsToForm();
 		}
 		private void MainFrm_FormClosing(object sender, FormClosingEventArgs e) {
+			Config.Instance.MainFrmWindowState = this.WindowState;
+			Config.Instance.MainFrmWindowSizeWidth = this.Width;
+			Config.Instance.MainFrmWindowSizeHeight = this.Height;
 			Config.Instance.Save();
 			Log.AddStatusText("BooBox Server close by user.");
 			Log.CloseLog();
