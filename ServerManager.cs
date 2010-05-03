@@ -12,7 +12,7 @@ namespace BooBoxClient {
 		/// <summary>
 		/// Initiats CommInfo.ConnectToServer() to test which servers are currently online.
 		/// </summary>
-		public static void TestServers() {
+		public static void VerifyUpToDate() {
 			ServerStatusList.Clear();
 			String[] emptyString = new String[0];
 			ServerStatus tempSS = new ServerStatus();
@@ -21,7 +21,7 @@ namespace BooBoxClient {
 				tempSS.GUID = Config.Instance.ConnectionInfoList[i].GUID;
 				tempSS.Online = false;
 				ServerStatusList.Add(tempSS);
-				CommInfo.ConnectToServer(Config.Instance.ConnectionInfoList[i], ConnectionMode.OnlineTest, emptyString);
+				CommInfo.ConnectToServer(Config.Instance.ConnectionInfoList[i], ConnectionMode.FirstConnect, emptyString);
 			}
 		}
 

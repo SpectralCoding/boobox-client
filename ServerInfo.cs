@@ -138,9 +138,15 @@ namespace BooBoxClient {
 					Log.AddServerText("Fully connected to \"" + ConnectionInfo.Name + "\"!", Index);
 					ServerManager.ConfirmOnline(ConnectionInfo.InternalGUID, ConnectionInfo.GUID);
 					ConnectionStatus = ConnectionStatus.Connected;
-					if (ConnectionMode == ConnectionMode.LibraryRequest) {
+					if (ConnectionMode == ConnectionMode.FirstConnect) {
+						Log.AddServerText("Connection is in FirstConnect modve, verifying Client data is up to date with \"" + ConnectionInfo.Name + "\".", Index);
 						Log.AddServerText("Requesting Library from \"" + ConnectionInfo.Name + "\".", Index);
 						Send(Protocol.CreateREQUESTLIBRARY(ConnectionInfo.LastLibraryQuery));
+						Log.AddServerText("Requesting Playlist List from \"" + ConnectionInfo.Name + "\".", Index);
+						Send(Protocol.CreateREQUESTPLAYLISTLIST(ConnectionInfo.LastPlaylistListQuery));
+					} else if (ConnectionMode == ConnectionMode.LibraryRequest) {
+						Log.AddServerText("Requesting Library from \"" + ConnectionInfo.Name + "\".", Index);
+						Send(Protocol.CreateREQUESTLIBRARY(DateTime.Parse("1/1/1990")));
 					} else if (ConnectionMode == ConnectionMode.SongRequest) {
 						/*
 						if (ServerInfo.RequestSongFilename != null) {
@@ -156,7 +162,7 @@ namespace BooBoxClient {
 						//Send(Protocol.CreateREQUESTLIBRARY(ConnectionInfo.LastLibraryQuery));
 					} else if (ConnectionMode == ConnectionMode.PlaylistListRequest) {
 						Log.AddServerText("Requesting Playlist List from \"" + ConnectionInfo.Name + "\".", Index);
-						Send(Protocol.CreateREQUESTPLAYLISTLIST());
+						Send(Protocol.CreateREQUESTPLAYLISTLIST(DateTime.Parse("1/1/1990")));
 					}
 					break;
 					#endregion
@@ -180,7 +186,7 @@ namespace BooBoxClient {
 								String tempStr = "Receiving Library Data: " + Functions.BytesToHumanReadable(tempByteCount, 2) + " in " + requestData[2] + " songs (last updated " + ConnectionInfo.LastLibraryQuery.ToLocalTime().ToString() + ").";
 								Forms.MainFrm.UpdateStatusLabel(tempStr);
 								Log.AddServerText(tempStr, Index);
-								//Config.Instance.ConnectionInfoList[Functions.ConnectionInfoInternalGUIDToIndex(Config.Instance.ConnectionInfoList, ConnectionInfo.InternalGUID)] = ConnectionInfo;
+								Config.Instance.ConnectionInfoList[Functions.ConnectionInfoInternalGUIDToIndex(Config.Instance.ConnectionInfoList, ConnectionInfo.InternalGUID)] = ConnectionInfo;
 								Forms.MainFrm.UpdateStatusProgressBar("SetMax", tempByteCount);
                                 break;
                                 #endregion

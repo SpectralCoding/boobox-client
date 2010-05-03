@@ -308,7 +308,7 @@ namespace BooBoxClient {
 					}
 				}
 			}
-			ServerManager.TestServers();
+			ServerManager.VerifyUpToDate();
 			Library.LoadSettings();
 			PushSettingsToForm();
 		}
