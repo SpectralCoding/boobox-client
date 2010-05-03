@@ -140,7 +140,6 @@
 			this.VolumeUpPicBox = new System.Windows.Forms.PictureBox();
 			this.VolumeDownPicBox = new System.Windows.Forms.PictureBox();
 			this.DebugCmd = new System.Windows.Forms.Button();
-			this.button3 = new System.Windows.Forms.Button();
 			this.StatusStrip.SuspendLayout();
 			this.MenuStrip.SuspendLayout();
 			this.TabControl.SuspendLayout();
@@ -791,6 +790,7 @@
 			this.PlaylistAPComb.Name = "PlaylistAPComb";
 			this.PlaylistAPComb.Size = new System.Drawing.Size(472, 21);
 			this.PlaylistAPComb.TabIndex = 8;
+			this.PlaylistAPComb.SelectedIndexChanged += new System.EventHandler(this.PlaylistAPComb_SelectedIndexChanged);
 			// 
 			// LibraryTab
 			// 
@@ -1168,23 +1168,11 @@
 			this.DebugCmd.UseVisualStyleBackColor = true;
 			this.DebugCmd.Click += new System.EventHandler(this.DebugCmd_Click);
 			// 
-			// button3
-			// 
-			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button3.Location = new System.Drawing.Point(293, 0);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(75, 23);
-			this.button3.TabIndex = 33;
-			this.button3.Text = "Debug";
-			this.button3.UseVisualStyleBackColor = true;
-			this.button3.Click += new System.EventHandler(this.button3_Click);
-			// 
 			// MainFrm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(684, 462);
-			this.Controls.Add(this.button3);
 			this.Controls.Add(this.DebugCmd);
 			this.Controls.Add(this.AlbumArtPicBox);
 			this.Controls.Add(this.VolumeUpPicBox);
@@ -1344,7 +1332,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn TrackHiddenMLDGVColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn YearHiddenMLDGVColumn;
 		private System.Windows.Forms.Button DebugCmd;
-		private System.Windows.Forms.Button button3;
 	}
 }
 

@@ -13,6 +13,10 @@ using BooBox;
 namespace BooBoxClient {
 	public partial class MainFrm : Form {
 
+		// TODO: Avoid server name collisions by putting duplicate server names in the format of "Server Name (IP:Port)"
+		// TODO: Prevent "Server Connection Error" box from popping up during a InitialConnection/TestOnline startup.
+		// TODO: Disable Playlist manipulation buttons for remote playlists.
+
 		#region Form Variables
 		
 		#endregion
@@ -183,6 +187,22 @@ namespace BooBoxClient {
 				MusicLibraryDGV.Columns[2].HeaderText = "Album (" + albumCount + ")";
 			}
 		}
+		public delegate void PopulatePlaylistCombDelegate();
+		public void PopulatePlaylistComb() {
+			if (this.InvokeRequired) {
+				this.Invoke(new PopulatePlaylistCombDelegate(PopulatePlaylistComb));
+			} else {
+				PlaylistAPComb.Items.Clear();
+				PlaylistMLComb.Items.Clear();
+				for (int i = 0; i < PlaylistManager.PlaylistList.Count; i++) {
+					PlaylistAPComb.Items.Add(PlaylistManager.PlaylistList[i]);
+					PlaylistMLComb.Items.Add(PlaylistManager.PlaylistList[i]);
+				}
+				for (int i = 0; i < PlaylistManager.RemotePlaylistList.Count; i++) {
+					PlaylistAPComb.Items.Add(PlaylistManager.RemotePlaylistList[i]);
+				}
+			}
+		}
 		#endregion
 
 		#region MusicLibraryDGV Event Handlers
@@ -252,7 +272,7 @@ namespace BooBoxClient {
 		}
 		#endregion
 
-		#region Custom Form Methods
+		#region Form Functions
 		private void MoveTimeStamp() {
 			int startOffset = SongTrack.Location.X;
 			double percentage = SongTrack.Value / Convert.ToDouble(SongTrack.Maximum);
@@ -502,11 +522,34 @@ namespace BooBoxClient {
 		}
 
 		private void DebugCmd_Click(object sender, EventArgs e) {
-			ServerManager.RefreshPlaylistLists();
+			//ServerManager.RefreshPlaylistLists();
+			//PlaylistManager.PrintPlaylistTree();
+			Console.WriteLine("i++:");
+			for (int i = 0; i < 10; i++) {
+				Console.Write(i + " ");
+			}
+			Console.WriteLine("\n++i:");
+			for (int i = 0; i < 10; ++i) {
+				Console.Write(i + " ");
+			}
 		}
 
 		private void button3_Click(object sender, EventArgs e) {
 			PlaylistManager.PrintPlaylistTree();
+		}
+
+		private void PlaylistAPComb_SelectedIndexChanged(object sender, EventArgs e) {
+			if (PlaylistAPComb.SelectedIndex != -1) {
+				if (PlaylistAPComb.SelectedItem.GetType().Name == "RemotePlaylist") {
+					RemotePlaylist tempRP = (RemotePlaylist)PlaylistAPComb.SelectedItem;
+					String[] paramsString = new String[1];
+					paramsString[0] = tempRP.GUID;
+					CommInfo.ConnectToServer(tempRP.ConnectionInfo, ConnectionMode.PlaylistRequest, paramsString);
+				} else if (PlaylistAPComb.SelectedItem.GetType().Name == "LocalPlaylist") {
+					LocalPlaylist tempRP = (LocalPlaylist)PlaylistAPComb.SelectedItem;
+					Console.WriteLine("Local");
+				}
+			}
 		}
 
 	}

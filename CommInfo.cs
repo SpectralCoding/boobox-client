@@ -40,7 +40,9 @@ namespace BooBoxClient {
 			} catch (SocketException Se) {
 				if (Se.ErrorCode == 10061) {
 					Log.AddStatusText("Info server @ " + ConnectionInfo.IPAddress + ":" + ConnectionInfo.InfoPort + " refused connection.");
-					MessageBox.Show("The Info Server refused connection. Is the server running? Are ports forwarded?");
+					if ((ConnectionMode != ConnectionMode.FirstConnect) && (ConnectionMode != ConnectionMode.OnlineTest)) {
+						MessageBox.Show("The Info Server refused connection. Is the server running? Are ports forwarded?");
+					}
 				}
 			}
 			if (serverConnection.Connected) {

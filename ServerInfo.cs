@@ -143,10 +143,10 @@ namespace BooBoxClient {
 						Log.AddServerText("Requesting Library from \"" + ConnectionInfo.Name + "\".", Index);
 						Send(Protocol.CreateREQUESTLIBRARY(ConnectionInfo.LastLibraryQuery));
 						Log.AddServerText("Requesting Playlist List from \"" + ConnectionInfo.Name + "\".", Index);
-						Send(Protocol.CreateREQUESTPLAYLISTLIST(ConnectionInfo.LastPlaylistListQuery));
+						Send(Protocol.CreateREQUESTPLAYLISTLIST());
 					} else if (ConnectionMode == ConnectionMode.LibraryRequest) {
 						Log.AddServerText("Requesting Library from \"" + ConnectionInfo.Name + "\".", Index);
-						Send(Protocol.CreateREQUESTLIBRARY(DateTime.Parse("1/1/1990")));
+						Send(Protocol.CreateREQUESTLIBRARY(DateTime.Parse("1/1/1900")));
 					} else if (ConnectionMode == ConnectionMode.SongRequest) {
 						/*
 						if (ServerInfo.RequestSongFilename != null) {
@@ -159,10 +159,10 @@ namespace BooBoxClient {
 						Send(Protocol.CreateGOODBYE());
 					} else if (ConnectionMode == ConnectionMode.PlaylistRequest) {
 						Log.AddServerText("Requesting Playlist from \"" + ConnectionInfo.Name + "\".", Index);
-						//Send(Protocol.CreateREQUESTLIBRARY(ConnectionInfo.LastLibraryQuery));
+						Send(Protocol.CreateREQUESTPLAYLIST(ConnectionParams[0]));
 					} else if (ConnectionMode == ConnectionMode.PlaylistListRequest) {
 						Log.AddServerText("Requesting Playlist List from \"" + ConnectionInfo.Name + "\".", Index);
-						Send(Protocol.CreateREQUESTPLAYLISTLIST(DateTime.Parse("1/1/1990")));
+						Send(Protocol.CreateREQUESTPLAYLISTLIST());
 					}
 					break;
 					#endregion
@@ -201,10 +201,17 @@ namespace BooBoxClient {
 								Send(Protocol.CreateGOODBYE());
                                 break;
                                 #endregion
+							case "PLAYLISTLISTFINISHED":
+								#region PLAYLISTLISTFINISHED
+								Log.AddServerText("Finished download playlist listing.", Index);
+								Forms.MainFrm.PopulatePlaylistComb();
+								break;
+								#endregion
 							case "PLAYLISTLIST":
 								#region PLAYLISTLIST
-								requestData = tokenData[1].Split(spaceDelim, 3);
-								PlaylistManager.AddRemotePlaylist(ConnectionInfo.GUID, requestData[2], Convert.ToInt32(requestData[1]));
+								requestData = tokenData[1].Split(spaceDelim, 4);
+								PlaylistManager.AddRemotePlaylist(ConnectionInfo.GUID, requestData[3], Convert.ToInt32(requestData[1]), requestData[2]);
+								Config.Instance.ConnectionInfoList[Functions.ConnectionInfoInternalGUIDToIndex(Config.Instance.ConnectionInfoList, ConnectionInfo.InternalGUID)] = ConnectionInfo;
 								break;
 								#endregion
 							case "SONGINFO":
