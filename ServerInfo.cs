@@ -68,7 +68,7 @@ namespace BooBoxClient {
 				Console.WriteLine("From ServerInfo " + Index + ":\t" + Data);
 			}
 			ParseMessage(Data);
-			DataBuffer = "";
+			//DataBuffer = "";
 		}
 
 		/// <summary>
@@ -151,6 +151,12 @@ namespace BooBoxClient {
 						*/
 					} else if (ConnectionMode == ConnectionMode.OnlineTest) {
 						Send(Protocol.CreateGOODBYE());
+					} else if (ConnectionMode == ConnectionMode.PlaylistRequest) {
+						Log.AddServerText("Requesting Playlist from \"" + ConnectionInfo.Name + "\".", Index);
+						//Send(Protocol.CreateREQUESTLIBRARY(ConnectionInfo.LastLibraryQuery));
+					} else if (ConnectionMode == ConnectionMode.PlaylistListRequest) {
+						Log.AddServerText("Requesting Playlist List from \"" + ConnectionInfo.Name + "\".", Index);
+						Send(Protocol.CreateREQUESTPLAYLISTLIST());
 					}
 					break;
 					#endregion
@@ -189,6 +195,12 @@ namespace BooBoxClient {
 								Send(Protocol.CreateGOODBYE());
                                 break;
                                 #endregion
+							case "PLAYLISTLIST":
+								#region PLAYLISTLIST
+								requestData = tokenData[1].Split(spaceDelim, 3);
+								PlaylistManager.AddRemotePlaylist(ConnectionInfo.GUID, requestData[2], Convert.ToInt32(requestData[1]));
+								break;
+								#endregion
 							case "SONGINFO":
 								#region SONGINFO
 								/*

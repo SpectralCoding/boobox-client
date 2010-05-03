@@ -25,6 +25,14 @@ namespace BooBoxClient {
 			}
 		}
 
+		public static void RefreshPlaylistLists() {
+			PlaylistManager.ClearRemotePlaylistList();
+			String[] emptyString = new String[0];
+			for (int i = 0; i < Config.Instance.ConnectionInfoList.Count; i++) {
+				CommInfo.ConnectToServer(Config.Instance.ConnectionInfoList[i], ConnectionMode.PlaylistListRequest, emptyString);
+			}
+		}
+
 		/// <summary>
 		/// Marks a server as online based on the InternalGUID of that server, and its actual GUID.
 		/// </summary>

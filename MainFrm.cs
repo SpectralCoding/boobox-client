@@ -244,6 +244,12 @@ namespace BooBoxClient {
 				#endregion
 			}
 		}
+		private void MusicLibraryDGV_SelectionChanged(object sender, EventArgs e) {
+			if (PlaylistMLComb.SelectedIndex != -1) { AddToPlaylistMLCmd.Enabled = true; }
+		}
+		private void MusicLibraryDGV_MouseUp(object sender, MouseEventArgs e) {
+
+		}
 		#endregion
 
 		#region Custom Form Methods
@@ -496,6 +502,11 @@ namespace BooBoxClient {
 		}
 
 		private void DebugCmd_Click(object sender, EventArgs e) {
+			ServerManager.RefreshPlaylistLists();
+		}
+
+		private void button3_Click(object sender, EventArgs e) {
+			PlaylistManager.PrintPlaylistTree();
 		}
 
 	}

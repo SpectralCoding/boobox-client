@@ -23,8 +23,8 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.StatusStrip = new System.Windows.Forms.StatusStrip();
 			this.ProgressBarStatusStrip = new System.Windows.Forms.ToolStripProgressBar();
 			this.ProgressBarLblStatusStrip = new System.Windows.Forms.ToolStripStatusLabel();
@@ -140,6 +140,7 @@
 			this.VolumeUpPicBox = new System.Windows.Forms.PictureBox();
 			this.VolumeDownPicBox = new System.Windows.Forms.PictureBox();
 			this.DebugCmd = new System.Windows.Forms.Button();
+			this.button3 = new System.Windows.Forms.Button();
 			this.StatusStrip.SuspendLayout();
 			this.MenuStrip.SuspendLayout();
 			this.TabControl.SuspendLayout();
@@ -649,8 +650,8 @@
 			this.ActivePlaylistDGV.AllowUserToDeleteRows = false;
 			this.ActivePlaylistDGV.AllowUserToResizeColumns = false;
 			this.ActivePlaylistDGV.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-			this.ActivePlaylistDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+			this.ActivePlaylistDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
 			this.ActivePlaylistDGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
@@ -811,8 +812,8 @@
 			this.MusicLibraryDGV.AllowUserToAddRows = false;
 			this.MusicLibraryDGV.AllowUserToDeleteRows = false;
 			this.MusicLibraryDGV.AllowUserToResizeRows = false;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-			this.MusicLibraryDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+			this.MusicLibraryDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
 			this.MusicLibraryDGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
@@ -846,6 +847,8 @@
 			this.MusicLibraryDGV.Size = new System.Drawing.Size(653, 287);
 			this.MusicLibraryDGV.TabIndex = 26;
 			this.MusicLibraryDGV.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.MusicLibraryDGV_ColumnHeaderMouseClick);
+			this.MusicLibraryDGV.SelectionChanged += new System.EventHandler(this.MusicLibraryDGV_SelectionChanged);
+			this.MusicLibraryDGV.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MusicLibraryDGV_MouseUp);
 			// 
 			// TitleMLDGVColumn
 			// 
@@ -1165,11 +1168,23 @@
 			this.DebugCmd.UseVisualStyleBackColor = true;
 			this.DebugCmd.Click += new System.EventHandler(this.DebugCmd_Click);
 			// 
+			// button3
+			// 
+			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.button3.Location = new System.Drawing.Point(293, 0);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(75, 23);
+			this.button3.TabIndex = 33;
+			this.button3.Text = "Debug";
+			this.button3.UseVisualStyleBackColor = true;
+			this.button3.Click += new System.EventHandler(this.button3_Click);
+			// 
 			// MainFrm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(684, 462);
+			this.Controls.Add(this.button3);
 			this.Controls.Add(this.DebugCmd);
 			this.Controls.Add(this.AlbumArtPicBox);
 			this.Controls.Add(this.VolumeUpPicBox);
@@ -1329,6 +1344,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn TrackHiddenMLDGVColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn YearHiddenMLDGVColumn;
 		private System.Windows.Forms.Button DebugCmd;
+		private System.Windows.Forms.Button button3;
 	}
 }
 

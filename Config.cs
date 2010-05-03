@@ -22,6 +22,7 @@ namespace BooBoxClient {
 		public RepeatMode RepeatMode = RepeatMode.Off;
 		public ShuffleMode ShuffleMode = ShuffleMode.Off;
 		public List<SongInfo> LibrarySongList = new List<SongInfo>();
+		public List<Playlist> LocalPlaylistList = new List<Playlist>();
 
 		#region Configuration Save/Load/Singleton Stuff
 		Config() { }
