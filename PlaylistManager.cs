@@ -105,6 +105,15 @@ namespace BooBoxClient {
 			return new List<SongInfo>();
 		}
 
+		public static LocalPlaylist GetPlaylistByName(String PlaylistName) {
+			for (int i = 0; i < LocalPlaylistList.Count; i++) {
+				if (LocalPlaylistList[i].Name == PlaylistName) {
+					return LocalPlaylistList[i];
+				}
+			}
+			return new LocalPlaylist();
+		}
+
 		/// <summary>
 		/// Overwrited the playlist related to PlaylistName with SongInfoList's contents.
 		/// </summary>
