@@ -14,6 +14,13 @@ namespace BooBoxClient {
 		public int SongCount;
 		public String GUID;
 
+		/// <summary>
+		/// RemotePlaylist constructor. Sets various internal variables.
+		/// </summary>
+		/// <param name="iServerGUID">GUID of server hosting the playlist</param>
+		/// <param name="iPlaylistName">Name of the playlist</param>
+		/// <param name="iSongCount">Number of songs in the playlist</param>
+		/// <param name="PlaylistGUID">GUID of the playlist</param>
 		public RemotePlaylist(String iServerGUID, String iName, int iSongCount, String PlaylistGUID) {
 			Name = iName;
 			SongCount = iSongCount;
@@ -21,10 +28,18 @@ namespace BooBoxClient {
 			GUID = PlaylistGUID;
 		}
 
+		/// <summary>
+		/// Returns a string describing the playlist.
+		/// </summary>
+		/// <returns>[Server Name] Playlist Name (Song Count)</returns>
 		public override String ToString() {
 			return "[" + ConnectionInfo.Name + "] " + Name + " (" + SongCount.ToString() + ")";
 		}
 
+		/// <summary>
+		/// Parses an XML String and adds the appropriate songs to the playlist's SongList.
+		/// </summary>
+		/// <param name="XMLString">XML String to parse</param>
 		public void ImportXMLString(String XMLString) {
 			SongList.Clear();
 			XmlTextReader XmlReader = new XmlTextReader(new StringReader(XMLString));

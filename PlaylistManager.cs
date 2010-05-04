@@ -30,23 +30,45 @@ namespace BooBoxClient {
 		}
 
 		/// <summary>
-		/// Lists all playlists by name and song count in a String Array.
+		/// Adds a new Remote Playlist object based on various parameters.
 		/// </summary>
-		/// <returns>String[] containing list of Playlists and their song counts</returns>
-		public static String[] ListPlaylists() {
-			String[] tempReturnStr = new String[LocalPlaylistList.Count + RemotePlaylistList.Count];
-			int tempCount = 0;
-			for (int i = 0; i < LocalPlaylistList.Count; i++) {
-				tempReturnStr[tempCount] = "[Local] " + LocalPlaylistList[i].Name + " (" + LocalPlaylistList[i].SongList.Count + ")";
-				tempCount++;
-			}
-			for (int i = 0; i < RemotePlaylistList.Count; i++) {
-				tempReturnStr[tempCount] = "[" + RemotePlaylistList[i].ConnectionInfo.Name + "] " + RemotePlaylistList[i].Name + " (" + RemotePlaylistList[i].SongCount + ")";
-				tempCount++;
-			}
-			return tempReturnStr;
+		/// <param name="ServerGUID">GUID of server hosting the playlist</param>
+		/// <param name="PlaylistName">Name of the playlist</param>
+		/// <param name="SongCount">Number of songs in the playlist</param>
+		/// <param name="PlaylistGUID">GUID of the playlist</param>
+		public static void AddRemotePlaylist(String ServerGUID, String PlaylistName, int SongCount, String PlaylistGUID) {
+			RemotePlaylist tempRPI = new RemotePlaylist(ServerGUID, PlaylistName, SongCount, PlaylistGUID);
+			RemotePlaylistList.Add(tempRPI);
 		}
 
+		/// <summary>
+		/// Gets a Playlist's SongInfo list from the playlist name.
+		/// </summary>
+		/// <param name="PlaylistName">Name of playlist sought</param>
+		/// <returns>List of SongInfo objects inside the playlist</returns>
+		public static List<SongInfo> GetPlaylistListByName(String PlaylistName) {
+			for (int i = 0; i < LocalPlaylistList.Count; i++) {
+				if (LocalPlaylistList[i].Name == PlaylistName) {
+					return LocalPlaylistList[i].SongList;
+				}
+			}
+			return new List<SongInfo>();
+		}
+
+		/// <summary>
+		/// Returns a LocalPlaylist object given its name.
+		/// </summary>
+		/// <param name="PlaylistName">Name of LocalPlaylist to return.</param>
+		/// <returns>LocalPlaylist object</returns>
+		public static LocalPlaylist GetPlaylistByName(String PlaylistName) {
+			for (int i = 0; i < LocalPlaylistList.Count; i++) {
+				if (LocalPlaylistList[i].Name == PlaylistName) {
+					return LocalPlaylistList[i];
+				}
+			}
+			return new LocalPlaylist();
+		}
+		
 		/// <summary>
 		/// Deletes a playlist by name.
 		/// </summary>
@@ -54,6 +76,26 @@ namespace BooBoxClient {
 		public static void DeletePlaylistByName(String PlaylistName) {
 			for (int i = 0; i < LocalPlaylistList.Count; i++) {
 				if (LocalPlaylistList[i].Name == PlaylistName) {
+					LocalPlaylistList.RemoveAt(i);
+					return;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Erases all Remote Playlists.
+		/// </summary>
+		public static void ClearRemotePlaylistList() {
+			RemotePlaylistList.Clear();
+		}
+
+		/// <summary>
+		/// Deletes a playlist by GUID.
+		/// </summary>
+		/// <param name="PlaylistGUID">GUID of playlist to delete</param>
+		public static void DeleteLocalPlaylist(String PlaylistGUID) {
+			for (int i = 0; i < LocalPlaylistList.Count; i++) {
+				if (LocalPlaylistList[i].GUID == PlaylistGUID) {
 					LocalPlaylistList.RemoveAt(i);
 					return;
 				}
@@ -79,39 +121,6 @@ namespace BooBoxClient {
 				if (LocalPlaylistList[indexToEdit].AddSongToList(SongInfoList[i])) { successfulCount++; }
 			}
 			return successfulCount;
-		}
-		
-		/// <summary>
-		/// Prints the playlist tree to the Console.
-		/// </summary>
-		public static void PrintPlaylistTree() {
-			String[] temp = ListPlaylists();
-			for (int i = 0; i < temp.Length; i++) {
-				Console.WriteLine(temp[i]);
-			}
-		}
-
-		/// <summary>
-		/// Gets a Playlist's SongInfo list from the playlist name.
-		/// </summary>
-		/// <param name="PlaylistName">Name of playlist sought</param>
-		/// <returns>List of SongInfo objects inside the playlist</returns>
-		public static List<SongInfo> GetPlaylistListByName(String PlaylistName) {
-			for (int i = 0; i < LocalPlaylistList.Count; i++) {
-				if (LocalPlaylistList[i].Name == PlaylistName) {
-					return LocalPlaylistList[i].SongList;
-				}
-			}
-			return new List<SongInfo>();
-		}
-
-		public static LocalPlaylist GetPlaylistByName(String PlaylistName) {
-			for (int i = 0; i < LocalPlaylistList.Count; i++) {
-				if (LocalPlaylistList[i].Name == PlaylistName) {
-					return LocalPlaylistList[i];
-				}
-			}
-			return new LocalPlaylist();
 		}
 
 		/// <summary>
@@ -142,29 +151,6 @@ namespace BooBoxClient {
 			int[] tempReturn = { 0, 0, 0 };
 			return tempReturn;
 		}
-
-		public static void ClearRemotePlaylistList() {
-			RemotePlaylistList.Clear();
-		}
-
-		public static void AddRemotePlaylist(String ServerGUID, String PlaylistName, int SongCount, String PlaylistGUID) {
-			RemotePlaylist tempRPI = new RemotePlaylist(ServerGUID, PlaylistName, SongCount, PlaylistGUID);
-			RemotePlaylistList.Add(tempRPI);
-		}
-
-		/// <summary>
-		/// Deletes a playlist by GUID.
-		/// </summary>
-		/// <param name="PlaylistGUID">GUID of playlist to delete</param>
-		public static void DeleteLocalPlaylist(String PlaylistGUID) {
-			for (int i = 0; i < LocalPlaylistList.Count; i++) {
-				if (LocalPlaylistList[i].GUID == PlaylistGUID) {
-					LocalPlaylistList.RemoveAt(i);
-					return;
-				}
-			}
-		}
-
 
 	}
 }
