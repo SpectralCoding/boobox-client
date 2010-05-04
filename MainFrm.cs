@@ -14,6 +14,9 @@ namespace BooBoxClient {
 	public partial class MainFrm : Form {
 
 		// TODO: Avoid server name collisions by putting duplicate server names in the format of "Server Name (IP:Port)"
+		// TODO: Duplicate servers appears when you edit a server.
+		// TODO: First connection to a server shows all songs in red. Server not marked as "online".
+		// TODO: Trim() hostname on Add/Edit Connection.
 
 		#region Form Variables
 		private Boolean DisablePlaylistButtonUpdating = false;
@@ -661,14 +664,17 @@ namespace BooBoxClient {
 			);
 		}
 		private void AddBySongMLCMMI_Click(object sender, EventArgs e) {
+			// TODO: System.NullReferenceException: Object reference not set to an instance of an object.
 			String playlistName = ((MenuItem)sender).Text;
 			List<SongInfo> tempSIL = new List<SongInfo>();
 			for (int i = 0; i < MusicLibraryDGV.SelectedRows.Count; i++) {
 				tempSIL.Add((SongInfo)MusicLibraryDGV.SelectedRows[i].Tag);
 			}
 			int successfulCount = PlaylistManager.AddSongInfoListToPlaylist(tempSIL, PlaylistManager.GetPlaylistByName(playlistName).GUID);
-			if (((LocalPlaylist)PlaylistAPComb.SelectedItem).Name == playlistName) {
-				UpdateActivePlaylistDGV(PlaylistManager.GetPlaylistListByName(playlistName));
+			if (PlaylistAPComb.SelectedIndex != -1) {
+				if (((LocalPlaylist)PlaylistAPComb.SelectedItem).Name == playlistName) {
+					UpdateActivePlaylistDGV(PlaylistManager.GetPlaylistListByName(playlistName));
+				}
 			}
 			UpdateStatusLabel("Added " + successfulCount + " songs (" + (tempSIL.Count - successfulCount) + " duplicates skipped) to the \"" + playlistName + "\" playlist.");
 		}
