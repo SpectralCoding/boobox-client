@@ -7,7 +7,7 @@ using BooBox;
 
 namespace BooBoxClient {
 	public static class PlaylistManager {
-		public static List<LocalPlaylist> PlaylistList = new List<LocalPlaylist>();
+		public static List<LocalPlaylist> LocalPlaylistList = new List<LocalPlaylist>();
 		public static List<RemotePlaylist> RemotePlaylistList = new List<RemotePlaylist>();
 
 		/// <summary>
@@ -16,8 +16,8 @@ namespace BooBoxClient {
 		/// <param name="Name">Name of new Playlist</param>
 		/// <returns>Boolean revealing whether or not the Playlist was successfully created</returns>
 		public static Boolean CreatePlaylist(String Name) {
-			for (int i = 0; i < PlaylistList.Count; i++) {
-				if (PlaylistList[i].Name == Name) {
+			for (int i = 0; i < LocalPlaylistList.Count; i++) {
+				if (LocalPlaylistList[i].Name == Name) {
 					MessageBox.Show("A playlist with the name \"" + Name + "\" already exists. New playlist not added.");
 					return false;
 				}
@@ -25,7 +25,7 @@ namespace BooBoxClient {
 			LocalPlaylist tempPlaylist = new LocalPlaylist();
 			tempPlaylist.Name = Name;
 			tempPlaylist.GUID = Guid.NewGuid().ToString();
-			PlaylistList.Add(tempPlaylist);
+			LocalPlaylistList.Add(tempPlaylist);
 			return true;
 		}
 
@@ -34,10 +34,10 @@ namespace BooBoxClient {
 		/// </summary>
 		/// <returns>String[] containing list of Playlists and their song counts</returns>
 		public static String[] ListPlaylists() {
-			String[] tempReturnStr = new String[PlaylistList.Count + RemotePlaylistList.Count];
+			String[] tempReturnStr = new String[LocalPlaylistList.Count + RemotePlaylistList.Count];
 			int tempCount = 0;
-			for (int i = 0; i < PlaylistList.Count; i++) {
-				tempReturnStr[tempCount] = "[Local] " + PlaylistList[i].Name + " (" + PlaylistList[i].SongList.Count + ")";
+			for (int i = 0; i < LocalPlaylistList.Count; i++) {
+				tempReturnStr[tempCount] = "[Local] " + LocalPlaylistList[i].Name + " (" + LocalPlaylistList[i].SongList.Count + ")";
 				tempCount++;
 			}
 			for (int i = 0; i < RemotePlaylistList.Count; i++) {
@@ -52,9 +52,9 @@ namespace BooBoxClient {
 		/// </summary>
 		/// <param name="PlaylistName">Name of playlist to delete</param>
 		public static void DeletePlaylistByName(String PlaylistName) {
-			for (int i = 0; i < PlaylistList.Count; i++) {
-				if (PlaylistList[i].Name == PlaylistName) {
-					PlaylistList.RemoveAt(i);
+			for (int i = 0; i < LocalPlaylistList.Count; i++) {
+				if (LocalPlaylistList[i].Name == PlaylistName) {
+					LocalPlaylistList.RemoveAt(i);
 					return;
 				}
 			}
@@ -64,17 +64,19 @@ namespace BooBoxClient {
 		/// Adds a list of SongInfo objects to a playlist by playlist name.
 		/// </summary>
 		/// <param name="SongInfoList">List of SongInfo objects</param>
-		/// <param name="PlaylistName">Name of playlist to add songs to</param>
+		/// <param name="PlaylistGUID">GUID of playlist to add songs to</param>
 		/// <returns>Integer revealing number of songs successfully added to the playlist.</returns>
-		public static int AddSongInfoListToPlaylist(List<SongInfo> SongInfoList, String PlaylistName) {
+		public static int AddSongInfoListToPlaylist(List<SongInfo> SongInfoList, String PlaylistGUID) {
 			int successfulCount = 0;
-			for (int i = 0; i < PlaylistList.Count; i++) {
-				if (PlaylistList[i].Name == PlaylistName) {
-					for (int x = 0; x < SongInfoList.Count; x++) {
-						if (PlaylistList[i].AddSongToList(SongInfoList[x])) { successfulCount++; }
-					}
-					return successfulCount;
+			int indexToEdit = -1;
+			for (int i = 0; i < LocalPlaylistList.Count; i++) {
+				if (LocalPlaylistList[i].GUID == PlaylistGUID) {
+					indexToEdit = i;
+					break;
 				}
+			}
+			for (int i = 0; i < SongInfoList.Count; i++) {
+				if (LocalPlaylistList[indexToEdit].AddSongToList(SongInfoList[i])) { successfulCount++; }
 			}
 			return successfulCount;
 		}
@@ -95,9 +97,9 @@ namespace BooBoxClient {
 		/// <param name="PlaylistName">Name of playlist sought</param>
 		/// <returns>List of SongInfo objects inside the playlist</returns>
 		public static List<SongInfo> GetPlaylistListByName(String PlaylistName) {
-			for (int i = 0; i < PlaylistList.Count; i++) {
-				if (PlaylistList[i].Name == PlaylistName) {
-					return PlaylistList[i].SongList;
+			for (int i = 0; i < LocalPlaylistList.Count; i++) {
+				if (LocalPlaylistList[i].Name == PlaylistName) {
+					return LocalPlaylistList[i].SongList;
 				}
 			}
 			return new List<SongInfo>();
@@ -109,9 +111,9 @@ namespace BooBoxClient {
 		/// <param name="SongInfoList">List of SongInfo objects to populate the playlist with</param>
 		/// <param name="PlaylistName">Name of playlist to overwrite</param>
 		public static void OverwritePlaylistByName(List<SongInfo> SongInfoList, String PlaylistName) {
-			for (int i = 0; i < PlaylistList.Count; i++) {
-				if (PlaylistList[i].Name == PlaylistName) {
-					PlaylistList[i].SongList = SongInfoList;
+			for (int i = 0; i < LocalPlaylistList.Count; i++) {
+				if (LocalPlaylistList[i].Name == PlaylistName) {
+					LocalPlaylistList[i].SongList = SongInfoList;
 					return;
 				}
 			}
@@ -123,9 +125,9 @@ namespace BooBoxClient {
 		/// <param name="PlaylistName">Name of playlist to search for</param>
 		/// <returns>int[0] = Total Songs, int[1] = Unique Artists, int[2] = Unique Albums</returns>
 		public static int[] GetAttributeCountByName(String PlaylistName) {
-			for (int i = 0; i < PlaylistList.Count; i++) {
-				if (PlaylistList[i].Name == PlaylistName) {
-					return PlaylistList[i].GetAttributeCount();
+			for (int i = 0; i < LocalPlaylistList.Count; i++) {
+				if (LocalPlaylistList[i].Name == PlaylistName) {
+					return LocalPlaylistList[i].GetAttributeCount();
 				}
 			}
 			int[] tempReturn = { 0, 0, 0 };
@@ -140,6 +142,20 @@ namespace BooBoxClient {
 			RemotePlaylist tempRPI = new RemotePlaylist(ServerGUID, PlaylistName, SongCount, PlaylistGUID);
 			RemotePlaylistList.Add(tempRPI);
 		}
+
+		/// <summary>
+		/// Deletes a playlist by GUID.
+		/// </summary>
+		/// <param name="PlaylistGUID">GUID of playlist to delete</param>
+		public static void DeleteLocalPlaylist(String PlaylistGUID) {
+			for (int i = 0; i < LocalPlaylistList.Count; i++) {
+				if (LocalPlaylistList[i].GUID == PlaylistGUID) {
+					LocalPlaylistList.RemoveAt(i);
+					return;
+				}
+			}
+		}
+
 
 	}
 }

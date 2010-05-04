@@ -214,6 +214,18 @@ namespace BooBoxClient {
 								Config.Instance.ConnectionInfoList[Functions.ConnectionInfoInternalGUIDToIndex(Config.Instance.ConnectionInfoList, ConnectionInfo.InternalGUID)] = ConnectionInfo;
 								break;
 								#endregion
+							case "PLAYLIST":
+								#region PLAYLIST
+								String tempGUID = requestData[1].Substring((requestData[1].IndexOf("<guid>") + 6), (requestData[1].IndexOf("</guid>") - requestData[1].IndexOf("<guid>") - 6));
+								for (int i = 0; i < PlaylistManager.RemotePlaylistList.Count; i++) {
+									if (PlaylistManager.RemotePlaylistList[i].GUID == tempGUID) {
+										PlaylistManager.RemotePlaylistList[i].ImportXMLString(requestData[1]);
+										Forms.MainFrm.UpdateActivePlaylistDGV(PlaylistManager.RemotePlaylistList[i].SongList);
+										break;
+									}
+								}
+								break;
+								#endregion
 							case "SONGINFO":
 								#region SONGINFO
 								/*

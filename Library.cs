@@ -139,5 +139,14 @@ namespace BooBoxClient {
 			UpdateMainFrmDGV();
 		}
 
+		public static SongInfo MD5ToSongInfo(String MD5Hash) {
+			for (int i = 0; i < SongList.Count; i++) {
+				if (SongList[i].MD5 == MD5Hash) {
+					return SongList[i];
+				}
+			}
+			return new SongInfo();
+		}
+
 	}
 }
