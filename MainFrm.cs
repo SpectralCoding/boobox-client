@@ -298,6 +298,26 @@ namespace BooBoxClient {
 			PlaylistManager.OverwritePlaylistByName(tempSIL, ((LocalPlaylist)PlaylistAPComb.SelectedItem).Name);
 			PlaylistAPComb.Text = ((LocalPlaylist)PlaylistAPComb.SelectedItem).ToString();
 		}
+		private void ScrollActivePlaylistDGV(int IndexToAlwaysShow) {
+			int displayTopIndex = ActivePlaylistDGV.FirstDisplayedScrollingRowIndex;
+			int displayBottomIndex = ActivePlaylistDGV.FirstDisplayedScrollingRowIndex + ActivePlaylistDGV.DisplayedRowCount(false) - 1;
+			int newFirstRowIndex = 0;
+			if (displayBottomIndex < IndexToAlwaysShow) {
+				newFirstRowIndex = IndexToAlwaysShow - ActivePlaylistDGV.DisplayedRowCount(false) + 1;
+				if (newFirstRowIndex < ActivePlaylistDGV.Rows.Count) {
+					ActivePlaylistDGV.FirstDisplayedScrollingRowIndex = newFirstRowIndex;
+				} else {
+					ActivePlaylistDGV.FirstDisplayedScrollingRowIndex = ActivePlaylistDGV.Rows.Count - 1;
+				}
+			} else if (displayTopIndex > IndexToAlwaysShow - 1) {
+				newFirstRowIndex = IndexToAlwaysShow - 1;
+				if (newFirstRowIndex >= 0) {
+					ActivePlaylistDGV.FirstDisplayedScrollingRowIndex = newFirstRowIndex;
+				} else {
+					ActivePlaylistDGV.FirstDisplayedScrollingRowIndex = 0;
+				}
+			}
+		}
 		#endregion
 
 		#region Form Event Handlers
@@ -1061,6 +1081,93 @@ namespace BooBoxClient {
 			for (int i = 0; i < 10; ++i) {
 				Console.Write(i + " ");
 			}
+		}
+
+		private void ToTopCmd_Click(object sender, EventArgs e) {
+			ArrayList SelectionAL = new ArrayList();
+			for (int i = 0; i < ActivePlaylistDGV.SelectedRows.Count; i++) { SelectionAL.Add(ActivePlaylistDGV.SelectedRows[i].Index); }
+			SelectionAL.Sort();
+			DataGridViewRow tempDGVR;
+			for (int i = SelectionAL.Count - 1; i > -1; i--) {
+				tempDGVR = ActivePlaylistDGV.Rows[(int)SelectionAL[i]];
+				ActivePlaylistDGV.Rows.RemoveAt((int)SelectionAL[i]);
+				ActivePlaylistDGV.Rows.Insert(0, tempDGVR);
+			}
+			ActivePlaylistDGV.ClearSelection();
+			for (int i = 0; i < SelectionAL.Count; i++) { ActivePlaylistDGV.Rows[i].Selected = true; }
+			SaveCurrentPlaylist();
+			ScrollActivePlaylistDGV(0);
+		}
+		private void UpCmd_Click(object sender, EventArgs e) {
+			ArrayList SelectionAL = new ArrayList();
+			for (int i = 0; i < ActivePlaylistDGV.SelectedRows.Count; i++) { SelectionAL.Add(ActivePlaylistDGV.SelectedRows[i].Index); }
+			SelectionAL.Sort();
+			DataGridViewRow tempDGVR;
+			for (int i = 0; i < SelectionAL.Count; i++) {
+				tempDGVR = ActivePlaylistDGV.Rows[(int)SelectionAL[i]];
+				ActivePlaylistDGV.Rows.RemoveAt((int)SelectionAL[i]);
+				ActivePlaylistDGV.Rows.Insert((int)SelectionAL[i] - 1, tempDGVR);
+			}
+			ActivePlaylistDGV.ClearSelection();
+			for (int i = 0; i < SelectionAL.Count; i++) { ActivePlaylistDGV.Rows[(int)SelectionAL[i] - 1].Selected = true; }
+			SaveCurrentPlaylist();
+			ScrollActivePlaylistDGV((int)SelectionAL[0]);
+		}
+		private void DelCmd_Click(object sender, EventArgs e) {
+			DisablePlaylistButtonUpdating = true;
+			ArrayList SelectionAL = new ArrayList();
+			for (int i = 0; i < ActivePlaylistDGV.SelectedRows.Count; i++) { SelectionAL.Add(ActivePlaylistDGV.SelectedRows[i].Index); }
+			SelectionAL.Sort();
+			int topIndex = (int)SelectionAL[0];
+			for (int i = SelectionAL.Count - 1; i > -1; i--) { ActivePlaylistDGV.Rows.RemoveAt((int)SelectionAL[i]); }
+			SaveCurrentPlaylist();
+			int[] tempAttributeCount = PlaylistManager.GetAttributeCountByName(((LocalPlaylist)PlaylistAPComb.SelectedItem).Name);
+			ActivePlaylistDGV.Columns[1].HeaderText = "Title (" + tempAttributeCount[0] + ")";
+			ActivePlaylistDGV.Columns[2].HeaderText = "Artists (" + tempAttributeCount[1] + ")";
+			ActivePlaylistDGV.Columns[3].HeaderText = "Album (" + tempAttributeCount[2] + ")";
+			if (ActivePlaylistDGV.Rows.Count > 0) {
+				if (topIndex == 0) {
+					ActivePlaylistDGV.CurrentCell = ActivePlaylistDGV.Rows[0].Cells[0];
+				} else if (topIndex == ActivePlaylistDGV.Rows.Count) {
+					ActivePlaylistDGV.CurrentCell = ActivePlaylistDGV.Rows[topIndex - 1].Cells[0];
+				} else {
+					ActivePlaylistDGV.CurrentCell = ActivePlaylistDGV.Rows[topIndex].Cells[0];
+				}
+			} else {
+				DelCmd.Enabled = false;
+			}
+			DisablePlaylistButtonUpdating = false;
+		}
+		private void DownCmd_Click(object sender, EventArgs e) {
+			ArrayList SelectionAL = new ArrayList();
+			for (int i = 0; i < ActivePlaylistDGV.SelectedRows.Count; i++) { SelectionAL.Add(ActivePlaylistDGV.SelectedRows[i].Index); }
+			SelectionAL.Sort();
+			DataGridViewRow tempDGVR;
+			for (int i = SelectionAL.Count - 1; i > -1; i--) {
+				tempDGVR = ActivePlaylistDGV.Rows[(int)SelectionAL[i]];
+				ActivePlaylistDGV.Rows.RemoveAt((int)SelectionAL[i]);
+				ActivePlaylistDGV.Rows.Insert((int)SelectionAL[i] + 1, tempDGVR);
+			}
+			ActivePlaylistDGV.ClearSelection();
+			for (int i = 0; i < SelectionAL.Count; i++) { ActivePlaylistDGV.Rows[(int)SelectionAL[i] + 1].Selected = true; }
+			SaveCurrentPlaylist();
+			ScrollActivePlaylistDGV((int)SelectionAL[SelectionAL.Count - 1] + 1);
+		}
+		private void ToBottomCmd_Click(object sender, EventArgs e) {
+			ArrayList SelectionAL = new ArrayList();
+			for (int i = 0; i < ActivePlaylistDGV.SelectedRows.Count; i++) { SelectionAL.Add(ActivePlaylistDGV.SelectedRows[i].Index); }
+			SelectionAL.Sort();
+			int topIndex = (int)SelectionAL[0];
+			DataGridViewRow tempDGVR;
+			for (int i = 0; i < SelectionAL.Count; i++) {
+				tempDGVR = ActivePlaylistDGV.Rows[(int)SelectionAL[i] - i];
+				ActivePlaylistDGV.Rows.RemoveAt((int)SelectionAL[i] - i);
+				ActivePlaylistDGV.Rows.Insert(ActivePlaylistDGV.Rows.Count, tempDGVR);
+			}
+			ActivePlaylistDGV.ClearSelection();
+			for (int i = 0; i < SelectionAL.Count; i++) { ActivePlaylistDGV.Rows[ActivePlaylistDGV.Rows.Count - 1 - i].Selected = true; }
+			SaveCurrentPlaylist();
+			ScrollActivePlaylistDGV(ActivePlaylistDGV.Rows.Count - 1);
 		}
 
 

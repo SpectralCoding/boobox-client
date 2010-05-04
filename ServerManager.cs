@@ -13,6 +13,7 @@ namespace BooBoxClient {
 		/// Initiats CommInfo.ConnectToServer() to test which servers are currently online.
 		/// </summary>
 		public static void VerifyUpToDate() {
+			Forms.MainFrm.UpdateStatusLabel("Attempting to connect to all servers (" + Config.Instance.ConnectionInfoList.Count.ToString() + ")");
 			ServerStatusList.Clear();
 			String[] emptyString = new String[0];
 			ServerStatus tempSS = new ServerStatus();

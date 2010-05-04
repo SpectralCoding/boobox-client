@@ -24,6 +24,9 @@ namespace BooBoxClient {
 		/// <param name="ConnectionMode">Mode describing the type of connection</param>
 		/// <param name="Params">Optional params to be passed to the ServerInfo object</param>
 		public static void ConnectToServer(ConnectionInfo ConnectionInfo, ConnectionMode ConnectionMode, String[] Params) {
+			if (ConnectionMode != ConnectionMode.FirstConnect) {
+				Forms.MainFrm.UpdateStatusLabel("Connecting to \"" + ConnectionInfo.Description + "\" (" + ConnectionMode.ToString() + " mode).");
+			}
 			Log.AddStatusText("Connecting to server (" + ConnectionMode.ToString() + " mode): " + ConnectionInfo.Description);
 			if (ConnectionInfo.Hostname != "") {
 				Log.AddStatusText("Attempting to resolve hostname: " + ConnectionInfo.Hostname);
@@ -51,6 +54,8 @@ namespace BooBoxClient {
 				ServerInfoList.Add(tempServerInfo);
 				WaitForData(tempServerInfo);
 				Interlocked.Increment(ref SocketCounter);
+			} else {
+				Forms.MainFrm.UpdateStatusLabel("Ready");
 			}
 		}
 

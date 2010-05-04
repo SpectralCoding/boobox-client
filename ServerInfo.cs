@@ -81,6 +81,7 @@ namespace BooBoxClient {
 			switch (tokenData[0]) {
 				case "HELLO":
 					#region HELLO
+					Forms.MainFrm.UpdateStatusLabel("Exchanging information with \"" + ConnectionInfo.Description + "\" (" + ConnectionMode.ToString() + " mode).");
 					ConnectionInfo.Name = tokenData[1];
 					Log.AddServerText("Connected to \"" + ConnectionInfo.Name + "\".", Index);
 					Send(Protocol.CreateHELLOR(Config.Instance.ClientName));
@@ -139,12 +140,14 @@ namespace BooBoxClient {
 					ServerManager.ConfirmOnline(ConnectionInfo.InternalGUID, ConnectionInfo.GUID);
 					ConnectionStatus = ConnectionStatus.Connected;
 					if (ConnectionMode == ConnectionMode.FirstConnect) {
-						Log.AddServerText("Connection is in FirstConnect modve, verifying Client data is up to date with \"" + ConnectionInfo.Name + "\".", Index);
+						Log.AddServerText("Connection is in FirstConnect mode, verifying Client data is up to date with \"" + ConnectionInfo.Name + "\".", Index);
 						Log.AddServerText("Requesting Library from \"" + ConnectionInfo.Name + "\".", Index);
 						Send(Protocol.CreateREQUESTLIBRARY(ConnectionInfo.LastLibraryQuery));
 						Log.AddServerText("Requesting Playlist List from \"" + ConnectionInfo.Name + "\".", Index);
+						Forms.MainFrm.UpdateStatusLabel("Verifying Library and Playlist congruency with \"" + ConnectionInfo.Name + "\".");
 						Send(Protocol.CreateREQUESTPLAYLISTLIST());
 					} else if (ConnectionMode == ConnectionMode.LibraryRequest) {
+						Forms.MainFrm.UpdateStatusLabel("Verifying Library congruency with \"" + ConnectionInfo.Name + "\".");
 						Log.AddServerText("Requesting Library from \"" + ConnectionInfo.Name + "\".", Index);
 						Send(Protocol.CreateREQUESTLIBRARY(DateTime.Parse("1/1/1900")));
 					} else if (ConnectionMode == ConnectionMode.SongRequest) {
@@ -156,11 +159,14 @@ namespace BooBoxClient {
 						}
 						*/
 					} else if (ConnectionMode == ConnectionMode.OnlineTest) {
+						Forms.MainFrm.UpdateStatusLabel("Ready");
 						Send(Protocol.CreateGOODBYE());
 					} else if (ConnectionMode == ConnectionMode.PlaylistRequest) {
+						Forms.MainFrm.UpdateStatusLabel("Requesting playlist from \"" + ConnectionInfo.Name + "\".");
 						Log.AddServerText("Requesting Playlist from \"" + ConnectionInfo.Name + "\".", Index);
 						Send(Protocol.CreateREQUESTPLAYLIST(ConnectionParams[0]));
 					} else if (ConnectionMode == ConnectionMode.PlaylistListRequest) {
+						Forms.MainFrm.UpdateStatusLabel("Requesting playlist list from \"" + ConnectionInfo.Name + "\".");
 						Log.AddServerText("Requesting Playlist List from \"" + ConnectionInfo.Name + "\".", Index);
 						Send(Protocol.CreateREQUESTPLAYLISTLIST());
 					}
@@ -205,6 +211,7 @@ namespace BooBoxClient {
 								#region PLAYLISTLISTFINISHED
 								Log.AddServerText("Finished download playlist listing.", Index);
 								Forms.MainFrm.PopulatePlaylistComb();
+								Forms.MainFrm.UpdateStatusLabel("Ready");
 								break;
 								#endregion
 							case "PLAYLISTLIST":
@@ -216,6 +223,7 @@ namespace BooBoxClient {
 								#endregion
 							case "PLAYLIST":
 								#region PLAYLIST
+								Forms.MainFrm.UpdateStatusLabel("Ready");
 								String tempGUID = requestData[1].Substring((requestData[1].IndexOf("<guid>") + 6), (requestData[1].IndexOf("</guid>") - requestData[1].IndexOf("<guid>") - 6));
 								for (int i = 0; i < PlaylistManager.RemotePlaylistList.Count; i++) {
 									if (PlaylistManager.RemotePlaylistList[i].GUID == tempGUID) {
