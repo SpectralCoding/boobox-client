@@ -21,6 +21,7 @@ namespace BooBoxClient {
 		public double BufferAtPercent = 0.05;
 		public RepeatMode RepeatMode = RepeatMode.Off;
 		public ShuffleMode ShuffleMode = ShuffleMode.Off;
+		public int Volume = 50;
 		public List<LocalPlaylist> LocalPlaylistList = new List<LocalPlaylist>();
 		public List<SongInfo> LibrarySongList = new List<SongInfo>();
 

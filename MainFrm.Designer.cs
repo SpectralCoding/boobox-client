@@ -23,6 +23,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.StatusStrip = new System.Windows.Forms.StatusStrip();
@@ -141,6 +142,7 @@
 			this.VolumeUpPicBox = new System.Windows.Forms.PictureBox();
 			this.VolumeDownPicBox = new System.Windows.Forms.PictureBox();
 			this.DebugCmd = new System.Windows.Forms.Button();
+			this.PlayTimer = new System.Windows.Forms.Timer(this.components);
 			this.StatusStrip.SuspendLayout();
 			this.MenuStrip.SuspendLayout();
 			this.TabControl.SuspendLayout();
@@ -901,6 +903,7 @@
 			this.MusicLibraryDGV.ShowEditingIcon = false;
 			this.MusicLibraryDGV.Size = new System.Drawing.Size(653, 287);
 			this.MusicLibraryDGV.TabIndex = 17;
+			this.MusicLibraryDGV.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.MusicLibraryDGV_CellMouseDoubleClick);
 			this.MusicLibraryDGV.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.MusicLibraryDGV_ColumnHeaderMouseClick);
 			this.MusicLibraryDGV.SelectionChanged += new System.EventHandler(this.MusicLibraryDGV_SelectionChanged);
 			this.MusicLibraryDGV.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MusicLibraryDGV_MouseUp);
@@ -1081,6 +1084,9 @@
 			this.SongTrack.TabIndex = 5;
 			this.SongTrack.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.SongTrack.Scroll += new System.EventHandler(this.SongTrack_Scroll);
+			this.SongTrack.ValueChanged += new System.EventHandler(this.SongTrack_ValueChanged);
+			this.SongTrack.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SongTrack_MouseDown);
+			this.SongTrack.MouseUp += new System.Windows.Forms.MouseEventHandler(this.SongTrack_MouseUp);
 			// 
 			// VolumeTrack
 			// 
@@ -1095,6 +1101,8 @@
 			this.VolumeTrack.TabIndex = 6;
 			this.VolumeTrack.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.VolumeTrack.Value = 50;
+			this.VolumeTrack.Scroll += new System.EventHandler(this.VolumeTrack_Scroll);
+			this.VolumeTrack.MouseUp += new System.Windows.Forms.MouseEventHandler(this.VolumeTrack_MouseUp);
 			// 
 			// PreviousCmd
 			// 
@@ -1105,6 +1113,7 @@
 			this.PreviousCmd.TabIndex = 0;
 			this.PreviousCmd.Text = "< <";
 			this.PreviousCmd.UseVisualStyleBackColor = true;
+			this.PreviousCmd.Click += new System.EventHandler(this.PreviousCmd_Click);
 			// 
 			// NextCmd
 			// 
@@ -1115,6 +1124,7 @@
 			this.NextCmd.TabIndex = 2;
 			this.NextCmd.Text = "> >";
 			this.NextCmd.UseVisualStyleBackColor = true;
+			this.NextCmd.Click += new System.EventHandler(this.NextCmd_Click);
 			// 
 			// PlayCmd
 			// 
@@ -1125,6 +1135,7 @@
 			this.PlayCmd.TabIndex = 1;
 			this.PlayCmd.Text = "Play";
 			this.PlayCmd.UseVisualStyleBackColor = true;
+			this.PlayCmd.Click += new System.EventHandler(this.PlayCmd_Click);
 			// 
 			// RepeatToggleCmd
 			// 
@@ -1210,6 +1221,11 @@
 			this.DebugCmd.Text = "Debug";
 			this.DebugCmd.UseVisualStyleBackColor = true;
 			this.DebugCmd.Click += new System.EventHandler(this.DebugCmd_Click);
+			// 
+			// PlayTimer
+			// 
+			this.PlayTimer.Interval = 250;
+			this.PlayTimer.Tick += new System.EventHandler(this.PlayTimer_Tick);
 			// 
 			// MainFrm
 			// 
@@ -1376,6 +1392,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn FilesizeHiddenAPDGVColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn TrackHiddenAPDGVColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn YearHiddenAPDGVColumn;
+		private System.Windows.Forms.Timer PlayTimer;
 	}
 }
 

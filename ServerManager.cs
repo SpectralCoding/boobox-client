@@ -94,6 +94,11 @@ namespace BooBoxClient {
 
 		public static Boolean RequestSong(SongInfo inputSongInfo) {
 			if (ServerOnline(inputSongInfo.ServerGUID)) {
+				if (ActiveSong.Playing == true) {
+					ActiveSong.EndSong();
+					CommStream.CloseServerStreamConnection();
+					ActiveSong.ClearSongData();
+				}
 				String[] inputStr = new String[1];
 				inputStr[0] = inputSongInfo.MD5;
 				Forms.MainFrm.UpdateStatusLabel("Requesting \"" + inputSongInfo.Title + "\" from \"" + Functions.ServerGUIDToConnectionInfo(Config.Instance.ConnectionInfoList, inputSongInfo.ServerGUID).Description + "\".");

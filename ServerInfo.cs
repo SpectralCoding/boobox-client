@@ -247,14 +247,12 @@ namespace BooBoxClient {
 								#endregion
 							case "SONGKEY":
 								#region SONGKEY
-								/*
-								Functions.MainFrm.UpdateFileBufferingProgressBar("SetMax", Convert.ToInt32(ActiveSong.SongInfo.FileLength));
-								Functions.MainFrm.UpdateSongBufferingProgressBar("SetMin", ActiveSong.SongInfo.StartByte);
-								Functions.MainFrm.UpdateSongBufferingProgressBar("SetMax", ActiveSong.SongInfo.EndByte);
-								Functions.MainFrm.UpdateSongBufferingProgressBar("Value", ActiveSong.SongInfo.StartByte);
-								*/
 								requestData = tokenData[1].Split(spaceDelim, 3);
 								ActiveSong.SongInfo = Library.MD5ToSongInfo(requestData[1]);
+								Forms.MainFrm.UpdateStatusLabel("Starting to buffer \"" + ActiveSong.SongInfo.Title + "\" from \"" + ConnectionInfo.Name + "\".");
+								Forms.MainFrm.UpdateBufferingProgressBar("SetMin", Convert.ToInt32(ActiveSong.SongInfo.StartByte));
+								Forms.MainFrm.UpdateBufferingProgressBar("SetMax", Convert.ToInt32(ActiveSong.SongInfo.EndByte));
+								Forms.MainFrm.UpdateBufferingProgressBar("Value", Convert.ToInt32(ActiveSong.SongInfo.StartByte));
 								String[] inputString = new String[1];
 								inputString[0] = requestData[2];
 								CommStream.ConnectToServer(ConnectionInfo, ConnectionMode.SongRequest, inputString);

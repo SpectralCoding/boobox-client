@@ -89,6 +89,9 @@ namespace BooBoxClient {
 								case "playlength":
 									tempSI.PlayLength = Convert.ToInt64(XmlReader.Value);
 									break;
+								case "startbyte":
+									tempSI.StartByte = Convert.ToInt64(XmlReader.Value);
+									break;
 								case "title":
 									tempSI.Title = XmlReader.Value;
 									break;

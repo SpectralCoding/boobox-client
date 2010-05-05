@@ -9,19 +9,25 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using BooBox;
+using Un4seen.Bass;
 
 namespace BooBoxClient {
 	public partial class MainFrm : Form {
 
 		// TODO: Avoid server name collisions by putting duplicate server names in the format of "Server Name (IP:Port)"
 		// TODO: Duplicate servers appears when you edit a server.
-		// TODO: (Fixed?) First connection to a server shows all songs in red. Server not marked as "online".
+		// TODO: First connection to a server shows all songs in red. Server not marked as "online".
 
 		#region Form Variables
 		private Boolean DisablePlaylistButtonUpdating = false;
 		private Boolean CurrentPlaylistIsLocal = false;
 		private ContextMenu MusicLibraryCM = new ContextMenu();
 		private ContextMenu PlaylistCM = new ContextMenu();
+		private Boolean CurrentlySeeking = false;
+		private Boolean BufferingMidPlay = false;
+		private SongInfo LastSelectedSong;
+		private Boolean LastSelectedSongFromPlaylist;
+		private Boolean PlayingFromPlaylist;
 		#endregion
 
 		#region Form Delegates
@@ -268,6 +274,74 @@ namespace BooBoxClient {
 				UpdatePlaylistButtons();
 			}
 		}
+		public delegate void UpdateBufferingProgressBarDelegate(String Mode, int Param);
+		public void UpdateBufferingProgressBar(String Mode, int Param) {
+			if (this.InvokeRequired) {
+				this.Invoke(new UpdateBufferingProgressBarDelegate(UpdateBufferingProgressBar), Mode, Param);
+			} else {
+				if (Mode == "Value") {
+					SongBufferingProgressBar.Value = Param;
+				} else if (Mode == "SetMax") {
+					SongBufferingProgressBar.Maximum = Param;
+				} else if (Mode == "SetMin") {
+					SongBufferingProgressBar.Minimum = Param;
+				} else if (Mode == "Increment") {
+					if (SongBufferingProgressBar.Maximum > 0) {
+						SongBufferingProgressBar.Increment(Param);
+					}
+				} else if (Mode == "Reset") {
+					SongBufferingProgressBar.Minimum = 0;
+					SongBufferingProgressBar.Value = 0;
+					SongBufferingProgressBar.Maximum = 0;
+				}
+			}
+		}
+		public delegate void UpdatePlayTimerDelegate(String Mode, int Param);
+		public void UpdatePlayTimer(String Mode, int Param) {
+			if (this.InvokeRequired) {
+				this.Invoke(new UpdatePlayTimerDelegate(UpdatePlayTimer), Mode, Param);
+			} else {
+				if (Mode == "Start") {
+					PlayTimer.Enabled = true;
+				} else if (Mode == "Interval") {
+					PlayTimer.Interval = Param;
+				} else if (Mode == "Stop") {
+					PlayTimer.Enabled = false;
+				}
+			}
+		}
+		public delegate void UpdateTrackBarDelegate(String Mode);
+		public void UpdateTrackBar(String Mode) {
+			if (this.InvokeRequired) {
+				this.Invoke(new UpdateTrackBarDelegate(UpdateTrackBar), Mode);
+			} else {
+				if (Mode == "Reset") {
+					SongTrack.Value = 0;
+					SongTrack.Maximum = 100;
+				}
+			}
+		}
+		public delegate void CheckNextSongDelegate();
+		public void CheckNextSong() {
+			if (this.InvokeRequired) {
+				this.Invoke(new CheckNextSongDelegate(CheckNextSong));
+			} else {
+				EventArgs e = new EventArgs();
+				NextCmd_Click(this, e);
+			}
+		}
+		public delegate void UpdatePlayButtonelegate(String Mode);
+		public void UpdatePlayButton(String Mode) {
+			if (this.InvokeRequired) {
+				this.Invoke(new UpdatePlayButtonelegate(UpdatePlayButton), Mode);
+			} else {
+				if (Mode == "ChangeToPlay") {
+					PlayCmd.Text = "Play";
+				} else if (Mode == "ChangeToPause") {
+					PlayCmd.Text = "Pause";
+				}
+			}
+		}
 		#endregion
 
 		#region Form Functions
@@ -289,6 +363,9 @@ namespace BooBoxClient {
 					DownCmd.Enabled = true;
 					ToBottomCmd.Enabled = true;
 					DelCmd.Enabled = true;
+					PlayCmd.Enabled = true;
+					NextCmd.Enabled = true;
+					PreviousCmd.Enabled = true;
 					if ((int)SelectionAL[0] == 0) {
 						UpCmd.Enabled = false;
 						ToTopCmd.Enabled = false;
@@ -298,6 +375,9 @@ namespace BooBoxClient {
 						ToBottomCmd.Enabled = false;
 					}
 				} else {
+					PlayCmd.Enabled = false;
+					NextCmd.Enabled = false;
+					PreviousCmd.Enabled = false;
 					UpCmd.Enabled = false;
 					ToTopCmd.Enabled = false;
 					DownCmd.Enabled = false;
@@ -335,6 +415,26 @@ namespace BooBoxClient {
 				}
 			}
 		}
+		private void ScrollMusicLibraryDGV(int IndexToAlwaysShow) {
+			int displayTopIndex = MusicLibraryDGV.FirstDisplayedScrollingRowIndex;
+			int displayBottomIndex = MusicLibraryDGV.FirstDisplayedScrollingRowIndex + MusicLibraryDGV.DisplayedRowCount(false) - 1;
+			int newFirstRowIndex = 0;
+			if (displayBottomIndex < IndexToAlwaysShow) {
+				newFirstRowIndex = IndexToAlwaysShow - MusicLibraryDGV.DisplayedRowCount(false) + 1;
+				if (newFirstRowIndex < MusicLibraryDGV.Rows.Count) {
+					MusicLibraryDGV.FirstDisplayedScrollingRowIndex = newFirstRowIndex;
+				} else {
+					MusicLibraryDGV.FirstDisplayedScrollingRowIndex = MusicLibraryDGV.Rows.Count - 1;
+				}
+			} else if (displayTopIndex > IndexToAlwaysShow - 1) {
+				newFirstRowIndex = IndexToAlwaysShow - 1;
+				if (newFirstRowIndex >= 0) {
+					MusicLibraryDGV.FirstDisplayedScrollingRowIndex = newFirstRowIndex;
+				} else {
+					MusicLibraryDGV.FirstDisplayedScrollingRowIndex = 0;
+				}
+			}
+		}
 		#endregion
 
 		#region Form Event Handlers
@@ -367,6 +467,7 @@ namespace BooBoxClient {
 			ToBottomCmd.Top = DownCmd.Top + DownCmd.Height + 6;
 		}
 		private void MainFrm_Load(object sender, EventArgs e) {
+			Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, this.Handle);
 			this.WindowState = Config.Instance.MainFrmWindowState;
 			this.Width = Config.Instance.MainFrmWindowSizeWidth;
 			this.Height = Config.Instance.MainFrmWindowSizeHeight;
@@ -633,7 +734,18 @@ namespace BooBoxClient {
 			}
 		}
 		private void MusicLibraryDGV_SelectionChanged(object sender, EventArgs e) {
-			if (PlaylistMLComb.SelectedIndex != -1) { AddToPlaylistMLCmd.Enabled = true; }
+			if (PlaylistMLComb.SelectedIndex != -1) {
+				AddToPlaylistMLCmd.Enabled = true;
+			}
+			if (MusicLibraryDGV.SelectedRows.Count > 0) {
+				if (MusicLibraryDGV.SelectedRows[0].Tag != null) {
+					LastSelectedSong = (SongInfo)MusicLibraryDGV.SelectedRows[0].Tag;
+					PlayCmd.Enabled = true;
+					NextCmd.Enabled = true;
+					PreviousCmd.Enabled = true;
+					LastSelectedSongFromPlaylist = false;
+				}
+			}
 		}
 		private void MusicLibraryDGV_MouseUp(object sender, MouseEventArgs e) {
 			if (e.Button == MouseButtons.Right) {
@@ -677,6 +789,11 @@ namespace BooBoxClient {
 				}
 				MusicLibraryDGV.ContextMenu = MusicLibraryCM;
 				MusicLibraryCM.Show(MusicLibraryDGV, new Point(e.X, e.Y));
+			}
+		}
+		private void MusicLibraryDGV_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
+			if (ServerManager.RequestSong((SongInfo)MusicLibraryDGV.Rows[e.RowIndex].Tag)) {
+				PlayingFromPlaylist = false;
 			}
 		}
 		private void ViewExtendedSongInfoMLCMMI_Click(object sender, EventArgs e) {
@@ -878,6 +995,15 @@ namespace BooBoxClient {
 			}
 		}
 		private void ActivePlaylistDGV_SelectionChanged(object sender, EventArgs e) {
+			if (ActivePlaylistDGV.SelectedRows.Count > 0) {
+				if (ActivePlaylistDGV.SelectedRows[0].Tag != null) {
+					LastSelectedSong = (SongInfo)ActivePlaylistDGV.SelectedRows[0].Tag;
+					PlayCmd.Enabled = true;
+					NextCmd.Enabled = true;
+					PreviousCmd.Enabled = true;
+					LastSelectedSongFromPlaylist = true;
+				}
+			}
 			UpdatePlaylistButtons();
 		}
 		private void ActivePlaylistDGV_MouseUp(object sender, MouseEventArgs e) {
@@ -913,6 +1039,11 @@ namespace BooBoxClient {
 				}
 				ActivePlaylistDGV.ContextMenu = PlaylistCM;
 				PlaylistCM.Show(ActivePlaylistDGV, new Point(e.X, e.Y));
+			}
+		}
+		private void ActivePlaylistDGV_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
+			if (ServerManager.RequestSong((SongInfo)ActivePlaylistDGV.Rows[e.RowIndex].Tag)) {
+				PlayingFromPlaylist = true;
 			}
 		}
 		private void ViewExtendedSongInfoPLCMMI_Click(object sender, EventArgs e) {
@@ -1000,9 +1131,6 @@ namespace BooBoxClient {
 		private void ClearSelectionPLCMMI_Click(object sender, EventArgs e) {
 			ActivePlaylistDGV.ClearSelection();
 		}
-		private void ActivePlaylistDGV_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
-			ServerManager.RequestSong((SongInfo)ActivePlaylistDGV.Rows[e.RowIndex].Tag);
-		}
 		#endregion
 
 		#region Active Playlist Tab
@@ -1023,6 +1151,7 @@ namespace BooBoxClient {
 					CopyToLocalAPCmd.Enabled = false; DeletePlaylistAPCmd.Enabled = true;
 					LocalPlaylist tempRP = (LocalPlaylist)PlaylistAPComb.SelectedItem;
 					UpdateActivePlaylistDGV(tempRP.SongList);
+					ActivePlaylistDGV.ClearSelection();
 					UpdatePlaylistButtons();
 				}
 			}
@@ -1190,15 +1319,160 @@ namespace BooBoxClient {
 			}
 			PushSettingsToForm();
 		}
-		#endregion
-
 		private void SongTrack_Scroll(object sender, EventArgs e) {
+			if (ActiveSong.Playing == false) {
+				SongTrack.Value = 0;
+			}
+		}
+		private void SongTrack_ValueChanged(object sender, EventArgs e) {
+			if (ActiveSong.Playing == true) {
+				TimeSpan tempTS = new TimeSpan(0, 0, 0, ActiveSong.GetSecondsAtByte(SongTrack.Value), 0);
+				if (tempTS.Hours > 0) {
+					CounterLbl.Text = tempTS.Hours.ToString() + ":" + tempTS.Minutes.ToString("00") + ":" + tempTS.Seconds.ToString("00");
+				} else {
+					CounterLbl.Text = tempTS.Minutes.ToString() + ":" + tempTS.Seconds.ToString("00");
+				}
+			} else {
+				CounterLbl.Text = "0:00";
+			}
 			MoveTimeStamp();
 		}
+		private void SongTrack_MouseUp(object sender, MouseEventArgs e) {
+			CurrentlySeeking = false;
+			double SongTrackPct = ((double)SongTrack.Value / SongTrack.Maximum);
+			double BufferingPct = ActiveSong.PctOfSongDataBuffered;
+			if (BufferingPct == 1) {
+				ActiveSong.SetBytePosition(SongTrack.Value);
+			} else if (SongTrackPct > (BufferingPct - Config.Instance.BufferAtPercent)) {
+				ActiveSong.SetBytePosition(Convert.ToInt32(SongTrack.Maximum * (BufferingPct - Config.Instance.BufferAtPercent)));
+			} else {
+				ActiveSong.SetBytePosition(SongTrack.Value);
+			}
+		}
+		private void SongTrack_MouseDown(object sender, MouseEventArgs e) {
+			CurrentlySeeking = true;
+			double dblValue;
+			dblValue = (((double)e.X - 8.5) / ((double)SongTrack.Width - 17)) * (SongTrack.Maximum - SongTrack.Minimum);
+			if (dblValue < SongTrack.Minimum) { dblValue = SongTrack.Minimum; } else if (dblValue > SongTrack.Maximum) { dblValue = SongTrack.Maximum; }
+			SongTrack.Value = Convert.ToInt32(dblValue);
+		}
+		private void VolumeTrack_MouseUp(object sender, MouseEventArgs e) {
+			Config.Instance.Volume = VolumeTrack.Value;
+		}
+		private void VolumeTrack_Scroll(object sender, EventArgs e) {
+			ActiveSong.Volume = VolumeTrack.Value / 100.0;
+		}
+		private void PreviousCmd_Click(object sender, EventArgs e) {
+			BufferingMidPlay = false;
+			if (ActiveSong.Playing == true) { ActiveSong.EndSong(); }
+			if (PlayingFromPlaylist == true) {
+				if (ActivePlaylistDGV.Rows.Count > 1) {
+					int oldSelection = ActivePlaylistDGV.SelectedRows[0].Index;
+					ActivePlaylistDGV.ClearSelection();
+					if (oldSelection == 0) {
+						ActivePlaylistDGV.Rows[ActivePlaylistDGV.Rows.Count - 1].Selected = true;
+					} else {
+						ActivePlaylistDGV.Rows[oldSelection - 1].Selected = true;
+					}
+					ScrollActivePlaylistDGV(ActivePlaylistDGV.SelectedRows[0].Index);
+				}
+			} else {
+				if (MusicLibraryDGV.Rows.Count > 1) {
+					int oldSelection = MusicLibraryDGV.SelectedRows[0].Index;
+					MusicLibraryDGV.ClearSelection();
+					if (oldSelection == 0) {
+						MusicLibraryDGV.Rows[MusicLibraryDGV.Rows.Count - 1].Selected = true;
+					} else {
+						MusicLibraryDGV.Rows[oldSelection - 1].Selected = true;
+					}
+					ScrollMusicLibraryDGV(MusicLibraryDGV.SelectedRows[0].Index);
+				}
+
+			}
+			ServerManager.RequestSong(LastSelectedSong);
+			PlayingFromPlaylist = LastSelectedSongFromPlaylist;
+		}
+		private void PlayCmd_Click(object sender, EventArgs e) {
+			if (PlayCmd.Text == "Play") {
+				if (ActiveSong.Playing == false) {
+					if (ServerManager.RequestSong(LastSelectedSong)) {
+						PlayingFromPlaylist = LastSelectedSongFromPlaylist;
+					}
+				} else {
+					UpdateStatusLabel("Paused");
+					PlayCmd.Text = "Pause";
+					Bass.BASS_Start();
+				}
+			} else if (PlayCmd.Text == "Pause") {
+				if (ActiveSong.Playing == true) {
+					UpdateStatusLabel("Paused");
+					PlayCmd.Text = "Play";
+					Bass.BASS_Pause();
+				}
+			}
+
+		}
+		private void NextCmd_Click(object sender, EventArgs e) {
+			BufferingMidPlay = false;
+			if (ActiveSong.Playing == true) { ActiveSong.EndSong(); }
+			if (PlayingFromPlaylist == true) {
+				if (ActivePlaylistDGV.Rows.Count > 1) {
+					int oldSelection = ActivePlaylistDGV.SelectedRows[0].Index;
+					ActivePlaylistDGV.ClearSelection();
+					if (oldSelection == ActivePlaylistDGV.Rows.Count - 1) {
+						ActivePlaylistDGV.Rows[0].Selected = true;
+					} else {
+						ActivePlaylistDGV.Rows[oldSelection + 1].Selected = true;
+					}
+					ScrollActivePlaylistDGV(ActivePlaylistDGV.SelectedRows[0].Index);
+				}
+			} else {
+				if (MusicLibraryDGV.Rows.Count > 1) {
+					int oldSelection = MusicLibraryDGV.SelectedRows[0].Index;
+					MusicLibraryDGV.ClearSelection();
+					if (oldSelection == MusicLibraryDGV.Rows.Count - 1) {
+						MusicLibraryDGV.Rows[0].Selected = true;
+					} else {
+						MusicLibraryDGV.Rows[oldSelection + 1].Selected = true;
+					}
+					ScrollMusicLibraryDGV(MusicLibraryDGV.SelectedRows[0].Index);
+				}
+			}
+			ServerManager.RequestSong(LastSelectedSong);
+			PlayingFromPlaylist = LastSelectedSongFromPlaylist;
+		}		
+		#endregion
 
 		private void DebugCmd_Click(object sender, EventArgs e) {
 
 		}
+
+		private void PlayTimer_Tick(object sender, EventArgs e) {
+			if (CurrentlySeeking == false) {
+				if (BufferingMidPlay == false) {
+					if (ActiveSong.PctOfSongDataBuffered < 1) {
+						//Console.WriteLine((ActiveSong.PctOfSongDataBuffered - (Config.Instance.BufferAtPercent / 2)) + " - " + (Convert.ToDouble(ActiveSong.BytePosition) / ActiveSong.ByteLength));
+						if ((ActiveSong.PctOfSongDataBuffered - (Config.Instance.BufferAtPercent / 2)) < (Convert.ToDouble(ActiveSong.BytePosition) / ActiveSong.ByteLength)) {
+							BufferingMidPlay = true;
+							Bass.BASS_Pause();
+							PlayCmd.Enabled = false;
+						}
+					}
+				} else {
+					if ((ActiveSong.PctOfSongDataBuffered - Config.Instance.BufferAtPercent) > (Convert.ToDouble(ActiveSong.BytePosition) / ActiveSong.ByteLength)) {
+						PlayCmd.Enabled = true;
+						Bass.BASS_Start();
+						BufferingMidPlay = false;
+					}
+				}
+				//TimeSpan tempTS = new TimeSpan(0, 0, 0, ActiveSong.PlayPosition, 0);
+				SongTrack.Maximum = ActiveSong.ByteLength;
+				SongTrack.Value = ActiveSong.BytePosition;
+			}
+		}
+
+
+
 
 
 

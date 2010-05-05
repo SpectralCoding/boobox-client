@@ -88,7 +88,6 @@ namespace BooBoxClient {
 				} else {
 					byte[] realBytes = new byte[receiveLen];
 					Buffer.BlockCopy(SocketPacket.DataBuffer, 0, realBytes, 0, receiveLen);
-					//Functions.MainFrm.UpdateFileBufferingProgressBar("Increment", realBytes.Length);
 					ActiveSong.AppendSongData(realBytes);
 				}
 				WaitForData(SocketPacket.Socket);
