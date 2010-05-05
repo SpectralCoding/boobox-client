@@ -56,7 +56,9 @@
     <Compile Include="AboutFrm.Designer.cs">
       <DependentUpon>AboutFrm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ActiveSong.cs" />
     <Compile Include="CommInfo.cs" />
+    <Compile Include="CommStream.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="ConnectionFrm.cs">
       <SubType>Form</SubType>

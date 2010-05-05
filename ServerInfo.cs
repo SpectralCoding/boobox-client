@@ -81,7 +81,9 @@ namespace BooBoxClient {
 			switch (tokenData[0]) {
 				case "HELLO":
 					#region HELLO
-					Forms.MainFrm.UpdateStatusLabel("Exchanging information with \"" + ConnectionInfo.Description + "\" (" + ConnectionMode.ToString() + " mode).");
+					if (ConnectionMode != ConnectionMode.SongRequest) {
+						Forms.MainFrm.UpdateStatusLabel("Exchanging information with \"" + ConnectionInfo.Description + "\" (" + ConnectionMode.ToString() + " mode).");
+					}
 					ConnectionInfo.Name = tokenData[1];
 					Log.AddServerText("Connected to \"" + ConnectionInfo.Name + "\".", Index);
 					Send(Protocol.CreateHELLOR(Config.Instance.ClientName));
@@ -137,38 +139,47 @@ namespace BooBoxClient {
 				case "OK":
 					#region OK
 					Log.AddServerText("Fully connected to \"" + ConnectionInfo.Name + "\"!", Index);
-					ServerManager.ConfirmOnline(ConnectionInfo.InternalGUID, ConnectionInfo.GUID);
+					ServerManager.SetOnline(ConnectionInfo.InternalGUID, ConnectionInfo.GUID);
 					ConnectionStatus = ConnectionStatus.Connected;
 					if (ConnectionMode == ConnectionMode.FirstConnect) {
+						#region FirstConnect
 						Log.AddServerText("Connection is in FirstConnect mode, verifying Client data is up to date with \"" + ConnectionInfo.Name + "\".", Index);
 						Log.AddServerText("Requesting Library from \"" + ConnectionInfo.Name + "\".", Index);
 						Send(Protocol.CreateREQUESTLIBRARY(ConnectionInfo.LastLibraryQuery));
 						Log.AddServerText("Requesting Playlist List from \"" + ConnectionInfo.Name + "\".", Index);
 						Forms.MainFrm.UpdateStatusLabel("Verifying Library and Playlist congruency with \"" + ConnectionInfo.Name + "\".");
-						Send(Protocol.CreateREQUESTPLAYLISTLIST());
+						Send(Protocol.CreateREQUESTPLAYLISTLIST()); 
+						#endregion
 					} else if (ConnectionMode == ConnectionMode.LibraryRequest) {
+						#region LibraryRequest
 						Forms.MainFrm.UpdateStatusLabel("Verifying Library congruency with \"" + ConnectionInfo.Name + "\".");
 						Log.AddServerText("Requesting Library from \"" + ConnectionInfo.Name + "\".", Index);
 						Send(Protocol.CreateREQUESTLIBRARY(DateTime.Parse("1/1/1900")));
+						#endregion
 					} else if (ConnectionMode == ConnectionMode.SongRequest) {
-						/*
-						if (ServerInfo.RequestSongFilename != null) {
-							Functions.Log = "[SI" + ServerInfo.Index + "] Requested song from \"" + ServerInfo.Name + "\"";
-							ServerInfo.Send("REQUEST SONG " + ServerInfo.RequestSongFilename);
-							Functions.StatusChange("Buffering");
+						#region SongRequest
+						if (ConnectionParams[0] != null) {
+							Log.AddServerText("Requested song (MD5: " + ConnectionParams[0] + ") from \"" + ConnectionInfo.Name + "\"", Index);
+							Send(Protocol.CreateREQUESTSONG(ConnectionParams[0]));
 						}
-						*/
+						#endregion
 					} else if (ConnectionMode == ConnectionMode.OnlineTest) {
+						#region OnlineTest
 						Forms.MainFrm.UpdateStatusLabel("Ready");
 						Send(Protocol.CreateGOODBYE());
+						#endregion
 					} else if (ConnectionMode == ConnectionMode.PlaylistRequest) {
+						#region PlaylistRequest
 						Forms.MainFrm.UpdateStatusLabel("Requesting playlist from \"" + ConnectionInfo.Name + "\".");
 						Log.AddServerText("Requesting Playlist from \"" + ConnectionInfo.Name + "\".", Index);
 						Send(Protocol.CreateREQUESTPLAYLIST(ConnectionParams[0]));
+						#endregion
 					} else if (ConnectionMode == ConnectionMode.PlaylistListRequest) {
+						#region PlaylistListRequest
 						Forms.MainFrm.UpdateStatusLabel("Requesting playlist list from \"" + ConnectionInfo.Name + "\".");
 						Log.AddServerText("Requesting Playlist List from \"" + ConnectionInfo.Name + "\".", Index);
 						Send(Protocol.CreateREQUESTPLAYLISTLIST());
+						#endregion
 					}
 					break;
 					#endregion
@@ -234,14 +245,6 @@ namespace BooBoxClient {
 								}
 								break;
 								#endregion
-							case "SONGINFO":
-								#region SONGINFO
-								/*
-								ActiveSong.ImportXMLData(requestData[1]);
-								Functions.Log = "[SI" + ServerInfo.Index + "] Received XML Data for \"" + ActiveSong.SongInfo.Title + "\"";
-								*/
-								break;
-								#endregion
 							case "SONGKEY":
 								#region SONGKEY
 								/*
@@ -249,8 +252,12 @@ namespace BooBoxClient {
 								Functions.MainFrm.UpdateSongBufferingProgressBar("SetMin", ActiveSong.SongInfo.StartByte);
 								Functions.MainFrm.UpdateSongBufferingProgressBar("SetMax", ActiveSong.SongInfo.EndByte);
 								Functions.MainFrm.UpdateSongBufferingProgressBar("Value", ActiveSong.SongInfo.StartByte);
-								CommStream.ConnectToServerStream(ServerInfo.GUID, requestData[1], ActiveSong.SongInfo.FileName);
 								*/
+								requestData = tokenData[1].Split(spaceDelim, 3);
+								ActiveSong.SongInfo = Library.MD5ToSongInfo(requestData[1]);
+								String[] inputString = new String[1];
+								inputString[0] = requestData[2];
+								CommStream.ConnectToServer(ConnectionInfo, ConnectionMode.SongRequest, inputString);
 								break;
 								#endregion
 						}

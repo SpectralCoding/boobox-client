@@ -24,7 +24,7 @@ namespace BooBoxClient {
 		/// <param name="ConnectionMode">Mode describing the type of connection</param>
 		/// <param name="Params">Optional params to be passed to the ServerInfo object</param>
 		public static void ConnectToServer(ConnectionInfo ConnectionInfo, ConnectionMode ConnectionMode, String[] Params) {
-			if (ConnectionMode != ConnectionMode.FirstConnect) {
+			if ((ConnectionMode != ConnectionMode.FirstConnect) && (ConnectionMode != ConnectionMode.SongRequest)) {
 				Forms.MainFrm.UpdateStatusLabel("Connecting to \"" + ConnectionInfo.Description + "\" (" + ConnectionMode.ToString() + " mode).");
 			}
 			Log.AddStatusText("Connecting to server (" + ConnectionMode.ToString() + " mode): " + ConnectionInfo.Description);
@@ -42,9 +42,13 @@ namespace BooBoxClient {
 				serverConnection.Connect(connectionEndpoint);
 			} catch (SocketException Se) {
 				if (Se.ErrorCode == 10061) {
+					ServerManager.SetOffline(ConnectionInfo.InternalGUID);
 					Log.AddStatusText("Info server @ " + ConnectionInfo.IPAddress + ":" + ConnectionInfo.InfoPort + " refused connection.");
-					if ((ConnectionMode != ConnectionMode.FirstConnect) && (ConnectionMode != ConnectionMode.OnlineTest)) {
+					if ((ConnectionMode != ConnectionMode.FirstConnect) && (ConnectionMode != ConnectionMode.OnlineTest) && (ConnectionMode != ConnectionMode.SongRequest)) {
 						MessageBox.Show("The Info Server refused connection. Is the server running? Are ports forwarded?");
+					}
+					if (ConnectionMode == ConnectionMode.OnlineTest) {
+						Forms.MainFrm.UpdateStatusLabel("Server \"" + ConnectionInfo.Description + "\" is offline. Song skipped.");
 					}
 				}
 			}

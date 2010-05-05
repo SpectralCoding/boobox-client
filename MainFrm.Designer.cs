@@ -644,6 +644,7 @@
 			this.ActivePlaylistDGV.ShowEditingIcon = false;
 			this.ActivePlaylistDGV.Size = new System.Drawing.Size(613, 287);
 			this.ActivePlaylistDGV.TabIndex = 11;
+			this.ActivePlaylistDGV.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.ActivePlaylistDGV_CellMouseDoubleClick);
 			this.ActivePlaylistDGV.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.ActivePlaylistDGV_ColumnHeaderMouseClick);
 			this.ActivePlaylistDGV.SelectionChanged += new System.EventHandler(this.ActivePlaylistDGV_SelectionChanged);
 			this.ActivePlaylistDGV.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ActivePlaylistDGV_MouseUp);

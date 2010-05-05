@@ -208,10 +208,23 @@ namespace BooBoxClient {
 				}
 			}
 		}
-		public delegate void UpdateActivePlaylistDGVDelegate(List<SongInfo> SongList);
+		public delegate void UpdateActivePlaylistDGVDelegate();
+		public void UpdateActivePlaylistDGV() {
+			if (this.InvokeRequired) {
+				Thread WorkerThread = new Thread(delegate() { this.Invoke(new UpdateActivePlaylistDGVDelegate(UpdateActivePlaylistDGV)); }); WorkerThread.Start();
+			} else {
+				List<SongInfo> tempSIL = new List<SongInfo>();
+				for (int i = 0; i < ActivePlaylistDGV.RowCount; i++) {
+					tempSIL.Add((SongInfo)ActivePlaylistDGV.Rows[i].Tag);
+					ActivePlaylistDGV.Rows[i].Cells[0].Value = i;
+				}
+				UpdateActivePlaylistDGV(tempSIL);
+			}
+		}
+		public delegate void UpdateActivePlaylistDGVSLDelegate(List<SongInfo> SongList);
 		public void UpdateActivePlaylistDGV(List<SongInfo> SongList) {
 			if (this.InvokeRequired) {
-				Thread WorkerThread = new Thread(delegate() { this.Invoke(new UpdateActivePlaylistDGVDelegate(UpdateActivePlaylistDGV), SongList); }); WorkerThread.Start();
+				Thread WorkerThread = new Thread(delegate() { this.Invoke(new UpdateActivePlaylistDGVSLDelegate(UpdateActivePlaylistDGV), SongList); }); WorkerThread.Start();
 			} else {
 				int newRowNum, artistCount = 0, albumCount = 0;
 				ArrayList artistList = new ArrayList();
@@ -987,6 +1000,9 @@ namespace BooBoxClient {
 		private void ClearSelectionPLCMMI_Click(object sender, EventArgs e) {
 			ActivePlaylistDGV.ClearSelection();
 		}
+		private void ActivePlaylistDGV_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e) {
+			ServerManager.RequestSong((SongInfo)ActivePlaylistDGV.Rows[e.RowIndex].Tag);
+		}
 		#endregion
 
 		#region Active Playlist Tab
@@ -1155,23 +1171,7 @@ namespace BooBoxClient {
 		}
 		#endregion
 
-		private void SongTrack_Scroll(object sender, EventArgs e) {
-			MoveTimeStamp();
-		}
-
-		private void DebugCmd_Click(object sender, EventArgs e) {
-			//ServerManager.RefreshPlaylistLists();
-			//PlaylistManager.PrintPlaylistTree();
-			Console.WriteLine("i++:");
-			for (int i = 0; i < 10; i++) {
-				Console.Write(i + " ");
-			}
-			Console.WriteLine("\n++i:");
-			for (int i = 0; i < 10; ++i) {
-				Console.Write(i + " ");
-			}
-		}
-
+		#region Control Button Event Handlers
 		private void RepeatToggleCmd_Click(object sender, EventArgs e) {
 			if (Config.Instance.RepeatMode == RepeatMode.All) {
 				Config.Instance.RepeatMode = RepeatMode.One;
@@ -1182,7 +1182,6 @@ namespace BooBoxClient {
 			}
 			PushSettingsToForm();
 		}
-
 		private void ShuffleToggleCmd_Click(object sender, EventArgs e) {
 			if (Config.Instance.ShuffleMode == ShuffleMode.Off) {
 				Config.Instance.ShuffleMode = ShuffleMode.On;
@@ -1191,6 +1190,17 @@ namespace BooBoxClient {
 			}
 			PushSettingsToForm();
 		}
+		#endregion
+
+		private void SongTrack_Scroll(object sender, EventArgs e) {
+			MoveTimeStamp();
+		}
+
+		private void DebugCmd_Click(object sender, EventArgs e) {
+
+		}
+
+
 
 	}
 }

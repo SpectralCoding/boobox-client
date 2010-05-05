@@ -39,7 +39,7 @@ namespace BooBoxClient {
 		/// </summary>
 		/// <param name="InternalGUID">InternalGUID of the server</param>
 		/// <param name="GUID">Actual GUID of the server</param>
-		public static void ConfirmOnline(String InternalGUID, String GUID) {
+		public static void SetOnline(String InternalGUID, String GUID) {
 			Boolean tempBool;
 			ServerStatus tempSS = new ServerStatus();
 			for (int i = 0; i < ServerStatusList.Count; i++) {
@@ -51,6 +51,25 @@ namespace BooBoxClient {
 					ServerStatusList[i] = tempSS;
 					if (tempBool != tempSS.Online) {
 						Library.UpdateMainFrmDGV();
+						Forms.MainFrm.UpdateActivePlaylistDGV();
+					}
+					break;
+				}
+			}
+		}
+
+		public static void SetOffline(String InternalGUID) {
+			Boolean tempBool;
+			ServerStatus tempSS = new ServerStatus();
+			for (int i = 0; i < ServerStatusList.Count; i++) {
+				if (ServerStatusList[i].InternalGUID == InternalGUID) {
+					tempSS = ServerStatusList[i];
+					tempBool = tempSS.Online;
+					tempSS.Online = false;
+					ServerStatusList[i] = tempSS;
+					if (tempBool != tempSS.Online) {
+						Library.UpdateMainFrmDGV();
+						Forms.MainFrm.UpdateActivePlaylistDGV();
 					}
 					break;
 				}
@@ -73,6 +92,18 @@ namespace BooBoxClient {
 			return false;
 		}
 
+		public static Boolean RequestSong(SongInfo inputSongInfo) {
+			if (ServerOnline(inputSongInfo.ServerGUID)) {
+				String[] inputStr = new String[1];
+				inputStr[0] = inputSongInfo.MD5;
+				Forms.MainFrm.UpdateStatusLabel("Requesting \"" + inputSongInfo.Title + "\" from \"" + Functions.ServerGUIDToConnectionInfo(Config.Instance.ConnectionInfoList, inputSongInfo.ServerGUID).Description + "\".");
+				CommInfo.ConnectToServer(Functions.ServerGUIDToConnectionInfo(Config.Instance.ConnectionInfoList, inputSongInfo.ServerGUID), ConnectionMode.SongRequest, inputStr);
+				return true;
+			} else {
+				Forms.MainFrm.UpdateStatusLabel("Server \"" + Functions.ServerGUIDToConnectionInfo(Config.Instance.ConnectionInfoList, inputSongInfo.ServerGUID).Description + "\" is offline. Song skipped.");
+				return false;
+			}
+		}
 
 	}
 }
