@@ -60,6 +60,10 @@ namespace BooBoxClient {
 		}
 
 		private void OKCmd_Click(object sender, EventArgs e) {
+			IPHostnameTxt.Text = IPHostnameTxt.Text.Trim();
+			PortTxt.Text = PortTxt.Text.Trim();
+			PasswordTxt.Text = PasswordTxt.Text.Trim();
+			DescriptionTxt.Text = DescriptionTxt.Text.Trim();
 			ConnectionInfo tempConnInfo = new ConnectionInfo();
 			if (Mode == "Edit") {
 				tempConnInfo = OrgConnInfo;

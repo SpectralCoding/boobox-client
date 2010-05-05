@@ -15,8 +15,7 @@ namespace BooBoxClient {
 
 		// TODO: Avoid server name collisions by putting duplicate server names in the format of "Server Name (IP:Port)"
 		// TODO: Duplicate servers appears when you edit a server.
-		// TODO: First connection to a server shows all songs in red. Server not marked as "online".
-		// TODO: Trim() hostname on Add/Edit Connection.
+		// TODO: (Fixed?) First connection to a server shows all songs in red. Server not marked as "online".
 
 		#region Form Variables
 		private Boolean DisablePlaylistButtonUpdating = false;
@@ -99,17 +98,22 @@ namespace BooBoxClient {
 				#region RepeatMode
 				if (Config.Instance.RepeatMode == RepeatMode.Off) {
 					RepeatOffMenuItem.Checked = true; RepeatOneMenuItem.Checked = false; RepeatAllMenuItem.Checked = false;
+					RepeatToggleCmd.Text = "Repeat Off";
 				} else if (Config.Instance.RepeatMode == RepeatMode.One) {
 					RepeatOffMenuItem.Checked = false; RepeatOneMenuItem.Checked = true; RepeatAllMenuItem.Checked = false;
+					RepeatToggleCmd.Text = "Repeat One";
 				} else if (Config.Instance.RepeatMode == RepeatMode.All) {
 					RepeatOffMenuItem.Checked = false; RepeatOneMenuItem.Checked = false; RepeatAllMenuItem.Checked = true;
+					RepeatToggleCmd.Text = "Repeat All";
 				}
 				#endregion
 				#region ShuffleMode
 				if (Config.Instance.ShuffleMode == ShuffleMode.Off) {
 					ShuffleOffMenuItem.Checked = true; ShuffleOnMenuItem.Checked = false;
+					ShuffleToggleCmd.Text = "Shuffle Off";
 				} else if (Config.Instance.ShuffleMode == ShuffleMode.On) {
 					ShuffleOffMenuItem.Checked = false; ShuffleOnMenuItem.Checked = true;
+					ShuffleToggleCmd.Text = "Shuffle On";
 				}
 				#endregion
 			}
@@ -684,7 +688,6 @@ namespace BooBoxClient {
 			);
 		}
 		private void AddBySongMLCMMI_Click(object sender, EventArgs e) {
-			// TODO: System.NullReferenceException: Object reference not set to an instance of an object.
 			String playlistName = ((MenuItem)sender).Text;
 			List<SongInfo> tempSIL = new List<SongInfo>();
 			for (int i = 0; i < MusicLibraryDGV.SelectedRows.Count; i++) {
@@ -1064,25 +1067,6 @@ namespace BooBoxClient {
 				MessageBox.Show("Playlist not copied.");
 			}
 		}
-		#endregion
-
-		private void SongTrack_Scroll(object sender, EventArgs e) {
-			MoveTimeStamp();
-		}
-
-		private void DebugCmd_Click(object sender, EventArgs e) {
-			//ServerManager.RefreshPlaylistLists();
-			//PlaylistManager.PrintPlaylistTree();
-			Console.WriteLine("i++:");
-			for (int i = 0; i < 10; i++) {
-				Console.Write(i + " ");
-			}
-			Console.WriteLine("\n++i:");
-			for (int i = 0; i < 10; ++i) {
-				Console.Write(i + " ");
-			}
-		}
-
 		private void ToTopCmd_Click(object sender, EventArgs e) {
 			ArrayList SelectionAL = new ArrayList();
 			for (int i = 0; i < ActivePlaylistDGV.SelectedRows.Count; i++) { SelectionAL.Add(ActivePlaylistDGV.SelectedRows[i].Index); }
@@ -1169,10 +1153,44 @@ namespace BooBoxClient {
 			SaveCurrentPlaylist();
 			ScrollActivePlaylistDGV(ActivePlaylistDGV.Rows.Count - 1);
 		}
+		#endregion
 
+		private void SongTrack_Scroll(object sender, EventArgs e) {
+			MoveTimeStamp();
+		}
 
+		private void DebugCmd_Click(object sender, EventArgs e) {
+			//ServerManager.RefreshPlaylistLists();
+			//PlaylistManager.PrintPlaylistTree();
+			Console.WriteLine("i++:");
+			for (int i = 0; i < 10; i++) {
+				Console.Write(i + " ");
+			}
+			Console.WriteLine("\n++i:");
+			for (int i = 0; i < 10; ++i) {
+				Console.Write(i + " ");
+			}
+		}
 
+		private void RepeatToggleCmd_Click(object sender, EventArgs e) {
+			if (Config.Instance.RepeatMode == RepeatMode.All) {
+				Config.Instance.RepeatMode = RepeatMode.One;
+			} else if (Config.Instance.RepeatMode == RepeatMode.One) {
+				Config.Instance.RepeatMode = RepeatMode.Off;
+			} else if (Config.Instance.RepeatMode == RepeatMode.Off) {
+				Config.Instance.RepeatMode = RepeatMode.All;
+			}
+			PushSettingsToForm();
+		}
 
+		private void ShuffleToggleCmd_Click(object sender, EventArgs e) {
+			if (Config.Instance.ShuffleMode == ShuffleMode.Off) {
+				Config.Instance.ShuffleMode = ShuffleMode.On;
+			} else if (Config.Instance.ShuffleMode == ShuffleMode.On) {
+				Config.Instance.ShuffleMode = ShuffleMode.Off;
+			}
+			PushSettingsToForm();
+		}
 
 	}
 }

@@ -23,8 +23,8 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.StatusStrip = new System.Windows.Forms.StatusStrip();
 			this.ProgressBarStatusStrip = new System.Windows.Forms.ToolStripProgressBar();
 			this.ProgressBarLblStatusStrip = new System.Windows.Forms.ToolStripStatusLabel();
@@ -131,8 +131,8 @@
 			this.PreviousCmd = new System.Windows.Forms.Button();
 			this.NextCmd = new System.Windows.Forms.Button();
 			this.PlayCmd = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
+			this.RepeatToggleCmd = new System.Windows.Forms.Button();
+			this.ShuffleToggleCmd = new System.Windows.Forms.Button();
 			this.OpenFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
@@ -602,7 +602,7 @@
 			this.CopyToLocalAPCmd.Location = new System.Drawing.Point(393, 4);
 			this.CopyToLocalAPCmd.Name = "CopyToLocalAPCmd";
 			this.CopyToLocalAPCmd.Size = new System.Drawing.Size(85, 23);
-			this.CopyToLocalAPCmd.TabIndex = 28;
+			this.CopyToLocalAPCmd.TabIndex = 8;
 			this.CopyToLocalAPCmd.Text = "Copy To Local";
 			this.CopyToLocalAPCmd.UseVisualStyleBackColor = true;
 			this.CopyToLocalAPCmd.Click += new System.EventHandler(this.CopyToLocalAPCmd_Click);
@@ -612,8 +612,8 @@
 			this.ActivePlaylistDGV.AllowUserToAddRows = false;
 			this.ActivePlaylistDGV.AllowUserToDeleteRows = false;
 			this.ActivePlaylistDGV.AllowUserToResizeRows = false;
-			dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-			this.ActivePlaylistDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+			this.ActivePlaylistDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.ActivePlaylistDGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
@@ -643,7 +643,7 @@
 			this.ActivePlaylistDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.ActivePlaylistDGV.ShowEditingIcon = false;
 			this.ActivePlaylistDGV.Size = new System.Drawing.Size(613, 287);
-			this.ActivePlaylistDGV.TabIndex = 27;
+			this.ActivePlaylistDGV.TabIndex = 11;
 			this.ActivePlaylistDGV.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.ActivePlaylistDGV_ColumnHeaderMouseClick);
 			this.ActivePlaylistDGV.SelectionChanged += new System.EventHandler(this.ActivePlaylistDGV_SelectionChanged);
 			this.ActivePlaylistDGV.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ActivePlaylistDGV_MouseUp);
@@ -761,7 +761,7 @@
 			this.DelCmd.Location = new System.Drawing.Point(625, 157);
 			this.DelCmd.Name = "DelCmd";
 			this.DelCmd.Size = new System.Drawing.Size(33, 40);
-			this.DelCmd.TabIndex = 18;
+			this.DelCmd.TabIndex = 14;
 			this.DelCmd.Text = "Del";
 			this.DelCmd.UseVisualStyleBackColor = true;
 			this.DelCmd.Click += new System.EventHandler(this.DelCmd_Click);
@@ -773,7 +773,7 @@
 			this.ToBottomCmd.Location = new System.Drawing.Point(625, 264);
 			this.ToBottomCmd.Name = "ToBottomCmd";
 			this.ToBottomCmd.Size = new System.Drawing.Size(33, 56);
-			this.ToBottomCmd.TabIndex = 20;
+			this.ToBottomCmd.TabIndex = 16;
 			this.ToBottomCmd.Text = "\\/ \\/";
 			this.ToBottomCmd.UseVisualStyleBackColor = true;
 			this.ToBottomCmd.Click += new System.EventHandler(this.ToBottomCmd_Click);
@@ -785,7 +785,7 @@
 			this.DownCmd.Location = new System.Drawing.Point(625, 203);
 			this.DownCmd.Name = "DownCmd";
 			this.DownCmd.Size = new System.Drawing.Size(33, 56);
-			this.DownCmd.TabIndex = 19;
+			this.DownCmd.TabIndex = 15;
 			this.DownCmd.Text = "\\/";
 			this.DownCmd.UseVisualStyleBackColor = true;
 			this.DownCmd.Click += new System.EventHandler(this.DownCmd_Click);
@@ -797,7 +797,7 @@
 			this.UpCmd.Location = new System.Drawing.Point(625, 95);
 			this.UpCmd.Name = "UpCmd";
 			this.UpCmd.Size = new System.Drawing.Size(33, 56);
-			this.UpCmd.TabIndex = 17;
+			this.UpCmd.TabIndex = 13;
 			this.UpCmd.Text = "/\\";
 			this.UpCmd.UseVisualStyleBackColor = true;
 			this.UpCmd.Click += new System.EventHandler(this.UpCmd_Click);
@@ -809,7 +809,7 @@
 			this.ToTopCmd.Location = new System.Drawing.Point(625, 33);
 			this.ToTopCmd.Name = "ToTopCmd";
 			this.ToTopCmd.Size = new System.Drawing.Size(33, 56);
-			this.ToTopCmd.TabIndex = 16;
+			this.ToTopCmd.TabIndex = 12;
 			this.ToTopCmd.Text = "/\\ /\\";
 			this.ToTopCmd.UseVisualStyleBackColor = true;
 			this.ToTopCmd.Click += new System.EventHandler(this.ToTopCmd_Click);
@@ -845,7 +845,7 @@
 			this.PlaylistAPComb.Location = new System.Drawing.Point(6, 6);
 			this.PlaylistAPComb.Name = "PlaylistAPComb";
 			this.PlaylistAPComb.Size = new System.Drawing.Size(381, 21);
-			this.PlaylistAPComb.TabIndex = 8;
+			this.PlaylistAPComb.TabIndex = 7;
 			this.PlaylistAPComb.SelectedIndexChanged += new System.EventHandler(this.PlaylistAPComb_SelectedIndexChanged);
 			this.PlaylistAPComb.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PlaylistAPComb_KeyPress);
 			// 
@@ -869,8 +869,8 @@
 			this.MusicLibraryDGV.AllowUserToAddRows = false;
 			this.MusicLibraryDGV.AllowUserToDeleteRows = false;
 			this.MusicLibraryDGV.AllowUserToResizeRows = false;
-			dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-			this.MusicLibraryDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+			this.MusicLibraryDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
 			this.MusicLibraryDGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
@@ -899,7 +899,7 @@
 			this.MusicLibraryDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.MusicLibraryDGV.ShowEditingIcon = false;
 			this.MusicLibraryDGV.Size = new System.Drawing.Size(653, 287);
-			this.MusicLibraryDGV.TabIndex = 26;
+			this.MusicLibraryDGV.TabIndex = 17;
 			this.MusicLibraryDGV.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.MusicLibraryDGV_ColumnHeaderMouseClick);
 			this.MusicLibraryDGV.SelectionChanged += new System.EventHandler(this.MusicLibraryDGV_SelectionChanged);
 			this.MusicLibraryDGV.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MusicLibraryDGV_MouseUp);
@@ -1008,7 +1008,7 @@
 			this.NewPlaylistMLComb.Location = new System.Drawing.Point(574, 297);
 			this.NewPlaylistMLComb.Name = "NewPlaylistMLComb";
 			this.NewPlaylistMLComb.Size = new System.Drawing.Size(85, 23);
-			this.NewPlaylistMLComb.TabIndex = 23;
+			this.NewPlaylistMLComb.TabIndex = 21;
 			this.NewPlaylistMLComb.Text = "New Playlist";
 			this.NewPlaylistMLComb.UseVisualStyleBackColor = true;
 			this.NewPlaylistMLComb.Click += new System.EventHandler(this.NewPlaylistMLComb_Click);
@@ -1020,7 +1020,7 @@
 			this.DeletePlaylistMLCmd.Location = new System.Drawing.Point(483, 297);
 			this.DeletePlaylistMLCmd.Name = "DeletePlaylistMLCmd";
 			this.DeletePlaylistMLCmd.Size = new System.Drawing.Size(85, 23);
-			this.DeletePlaylistMLCmd.TabIndex = 22;
+			this.DeletePlaylistMLCmd.TabIndex = 20;
 			this.DeletePlaylistMLCmd.Text = "Delete Playlist";
 			this.DeletePlaylistMLCmd.UseVisualStyleBackColor = true;
 			this.DeletePlaylistMLCmd.Click += new System.EventHandler(this.DeletePlaylistMLCmd_Click);
@@ -1032,7 +1032,7 @@
 			this.AddToPlaylistMLCmd.Location = new System.Drawing.Point(392, 297);
 			this.AddToPlaylistMLCmd.Name = "AddToPlaylistMLCmd";
 			this.AddToPlaylistMLCmd.Size = new System.Drawing.Size(85, 23);
-			this.AddToPlaylistMLCmd.TabIndex = 21;
+			this.AddToPlaylistMLCmd.TabIndex = 19;
 			this.AddToPlaylistMLCmd.Text = "Add To Playlist";
 			this.AddToPlaylistMLCmd.UseVisualStyleBackColor = true;
 			this.AddToPlaylistMLCmd.Click += new System.EventHandler(this.AddToPlaylistMLCmd_Click);
@@ -1045,7 +1045,7 @@
 			this.PlaylistMLComb.Location = new System.Drawing.Point(6, 299);
 			this.PlaylistMLComb.Name = "PlaylistMLComb";
 			this.PlaylistMLComb.Size = new System.Drawing.Size(380, 21);
-			this.PlaylistMLComb.TabIndex = 20;
+			this.PlaylistMLComb.TabIndex = 18;
 			this.PlaylistMLComb.SelectedIndexChanged += new System.EventHandler(this.PlaylistMLComb_SelectedIndexChanged);
 			this.PlaylistMLComb.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PlaylistMLComb_KeyPress);
 			// 
@@ -1077,7 +1077,7 @@
 			this.SongTrack.Maximum = 10000000;
 			this.SongTrack.Name = "SongTrack";
 			this.SongTrack.Size = new System.Drawing.Size(414, 23);
-			this.SongTrack.TabIndex = 20;
+			this.SongTrack.TabIndex = 5;
 			this.SongTrack.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.SongTrack.Scroll += new System.EventHandler(this.SongTrack_Scroll);
 			// 
@@ -1091,7 +1091,7 @@
 			this.VolumeTrack.Maximum = 100;
 			this.VolumeTrack.Name = "VolumeTrack";
 			this.VolumeTrack.Size = new System.Drawing.Size(152, 23);
-			this.VolumeTrack.TabIndex = 26;
+			this.VolumeTrack.TabIndex = 6;
 			this.VolumeTrack.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.VolumeTrack.Value = 50;
 			// 
@@ -1101,7 +1101,7 @@
 			this.PreviousCmd.Location = new System.Drawing.Point(7, 24);
 			this.PreviousCmd.Name = "PreviousCmd";
 			this.PreviousCmd.Size = new System.Drawing.Size(50, 23);
-			this.PreviousCmd.TabIndex = 25;
+			this.PreviousCmd.TabIndex = 0;
 			this.PreviousCmd.Text = "< <";
 			this.PreviousCmd.UseVisualStyleBackColor = true;
 			// 
@@ -1111,7 +1111,7 @@
 			this.NextCmd.Location = new System.Drawing.Point(144, 24);
 			this.NextCmd.Name = "NextCmd";
 			this.NextCmd.Size = new System.Drawing.Size(50, 23);
-			this.NextCmd.TabIndex = 24;
+			this.NextCmd.TabIndex = 2;
 			this.NextCmd.Text = "> >";
 			this.NextCmd.UseVisualStyleBackColor = true;
 			// 
@@ -1121,27 +1121,29 @@
 			this.PlayCmd.Location = new System.Drawing.Point(63, 24);
 			this.PlayCmd.Name = "PlayCmd";
 			this.PlayCmd.Size = new System.Drawing.Size(75, 23);
-			this.PlayCmd.TabIndex = 23;
+			this.PlayCmd.TabIndex = 1;
 			this.PlayCmd.Text = "Play";
 			this.PlayCmd.UseVisualStyleBackColor = true;
 			// 
-			// button1
+			// RepeatToggleCmd
 			// 
-			this.button1.Location = new System.Drawing.Point(7, 53);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(90, 23);
-			this.button1.TabIndex = 27;
-			this.button1.Text = "Repeat Off";
-			this.button1.UseVisualStyleBackColor = true;
+			this.RepeatToggleCmd.Location = new System.Drawing.Point(7, 53);
+			this.RepeatToggleCmd.Name = "RepeatToggleCmd";
+			this.RepeatToggleCmd.Size = new System.Drawing.Size(90, 23);
+			this.RepeatToggleCmd.TabIndex = 3;
+			this.RepeatToggleCmd.Text = "Repeat Off";
+			this.RepeatToggleCmd.UseVisualStyleBackColor = true;
+			this.RepeatToggleCmd.Click += new System.EventHandler(this.RepeatToggleCmd_Click);
 			// 
-			// button2
+			// ShuffleToggleCmd
 			// 
-			this.button2.Location = new System.Drawing.Point(104, 53);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(90, 23);
-			this.button2.TabIndex = 28;
-			this.button2.Text = "Shuffle Off";
-			this.button2.UseVisualStyleBackColor = true;
+			this.ShuffleToggleCmd.Location = new System.Drawing.Point(104, 53);
+			this.ShuffleToggleCmd.Name = "ShuffleToggleCmd";
+			this.ShuffleToggleCmd.Size = new System.Drawing.Size(90, 23);
+			this.ShuffleToggleCmd.TabIndex = 4;
+			this.ShuffleToggleCmd.Text = "Shuffle Off";
+			this.ShuffleToggleCmd.UseVisualStyleBackColor = true;
+			this.ShuffleToggleCmd.Click += new System.EventHandler(this.ShuffleToggleCmd_Click);
 			// 
 			// OpenFileDialog
 			// 
@@ -1217,8 +1219,8 @@
 			this.Controls.Add(this.AlbumArtPicBox);
 			this.Controls.Add(this.VolumeUpPicBox);
 			this.Controls.Add(this.VolumeDownPicBox);
-			this.Controls.Add(this.button2);
-			this.Controls.Add(this.button1);
+			this.Controls.Add(this.ShuffleToggleCmd);
+			this.Controls.Add(this.RepeatToggleCmd);
 			this.Controls.Add(this.VolumeTrack);
 			this.Controls.Add(this.PreviousCmd);
 			this.Controls.Add(this.NextCmd);
@@ -1301,8 +1303,8 @@
 		private System.Windows.Forms.Button PreviousCmd;
 		private System.Windows.Forms.Button NextCmd;
 		private System.Windows.Forms.Button PlayCmd;
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button RepeatToggleCmd;
+		private System.Windows.Forms.Button ShuffleToggleCmd;
 		private System.Windows.Forms.PictureBox VolumeDownPicBox;
 		private System.Windows.Forms.PictureBox VolumeUpPicBox;
 		private System.Windows.Forms.Button NewPlaylistAPCmd;

@@ -83,9 +83,9 @@ namespace BooBoxClient {
 								case "md5":
 									tempSI.MD5 = XmlReader.Value;
 									break;
-								case "playcount":
-									tempSI.PlayCount = Convert.ToInt32(XmlReader.Value);
-									break;
+								//case "playcount":
+								//	tempSI.PlayCount = Convert.ToInt32(XmlReader.Value);
+								//	break;
 								case "playlength":
 									tempSI.PlayLength = Convert.ToInt64(XmlReader.Value);
 									break;
